@@ -1,0 +1,84 @@
+{
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "jest"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      },
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "indent": [
+      "error",
+      2, // 2-spaces
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-plusplus": "off",
+    "max-classes-per-file": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/state-in-constructor": "off",
+    "react/self-closing-comp": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "no-extra-parens": [
+      "warn",
+      "all",
+      {
+        "ignoreJSX": "all",
+        "nestedBinaryExpressions": false,
+        "conditionalAssign": false
+      }
+    ],
+    "no-unused-vars": 2,
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "camelcase": "off"
+  }
+}
