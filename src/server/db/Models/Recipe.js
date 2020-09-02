@@ -5,7 +5,7 @@ const {
 } = Sequelize;
 const { db } = require('../db');
 
-const Receipe = db.define('Receipe', {
+const Recipe = db.define('Recipe', {
   id: {
     type: UUID,
     defaultValue: UUIDV4,
@@ -49,4 +49,4 @@ steps: {
 });
 
 
-module.exports = { Receipe };
+module.exports = { Recipe };

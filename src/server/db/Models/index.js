@@ -1,5 +1,5 @@
 const { User } = require('./User');
-const { Receipe } = require('./Receipe');
+const { Recipe } = require('./Recipe');
 const { Allergen } = require('./Allergen');
 const { FoodPreference } = require('./FoodPreference');
 
@@ -15,22 +15,22 @@ Allergen.belongsTo(User);
 User.hasMany(FoodPreference);
 FoodPreference.belongsTo(User);
 
-// Relations between Receipe and Allergen
-Receipe.belongsToMany(Allergen,{through:'Receipe_Allergen'});
-//Receipe.hasMany(Allergen);
-//Allergen.belongsTo(Receipe);
+// Relations between Recipe and Allergen
+Recipe.belongsToMany(Allergen,{through:'Recipe_Allergen'});
+//Recipe.hasMany(Allergen);
+//Allergen.belongsTo(Recipe);
 
-// Relations between Receipe and FoodPreference
-Receipe.belongsToMany(FoodPreference,{through:'Receipe_FoodPreference'});
-Receipe.hasMany(FoodPreference);
-FoodPreference.belongsTo(Receipe);
+// Relations between Recipe and FoodPreference
+Recipe.belongsToMany(FoodPreference,{through:'Recipe_FoodPreference'});
+Recipe.hasMany(FoodPreference);
+FoodPreference.belongsTo(Recipe);
 
 
 
 
 module.exports = {
   User,
-  Receipe,
+  Recipe,
   Allergen,
   FoodPreference,
  };
