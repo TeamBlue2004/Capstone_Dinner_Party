@@ -2,8 +2,8 @@ import express from 'express';
 import path from 'path';
 import app from './server';
 
-const DIST_PATH = path.join(__dirname, '../../../dist');
-const PUBLIC_PATH = path.join(__dirname, '../../../public');
+const DIST_PATH = path.join(__dirname, '../../dist');
+const PUBLIC_PATH = path.join(__dirname, '../../public');
 
 app.use(express.json());
 

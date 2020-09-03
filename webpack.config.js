@@ -10,6 +10,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    watchContentBase: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
