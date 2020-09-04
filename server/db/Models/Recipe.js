@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-const {
-  UUID, UUIDV4, STRING, BOOLEAN,
-} = Sequelize;
+const { UUID, UUIDV4, STRING, BOOLEAN, TEXT } = Sequelize;
 const { db } = require('../db');
 
 const Recipe = db.define('Recipe', {
@@ -11,7 +9,7 @@ const Recipe = db.define('Recipe', {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
- name: {
+  name: {
     type: STRING,
     allowNull: false,
     unique: true,
@@ -30,23 +28,19 @@ const Recipe = db.define('Recipe', {
     type: BOOLEAN,
     allowNull: false,
     defaultValue: false,
-},
-vegetarian: {
-  type: BOOLEAN,
-  allowNull: false,
-  defaultValue: false,
-},
-steps: {
-  type: TEXT,
-  allowNull: false,
-  validate: {
-    notEmpty: true,
   },
-},
-
-  
- 
+  vegetarian: {
+    type: BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  steps: {
+    type: TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
-
 
 module.exports = { Recipe };

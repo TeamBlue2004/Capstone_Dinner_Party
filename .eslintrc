@@ -79,6 +79,7 @@
         ]
       }
     ],
-    "camelcase": "off"
+    "camelcase": "off",
+    "@typescript-eslint/no-var-requires": "off"
   }
 }

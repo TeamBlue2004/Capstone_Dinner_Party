@@ -4,15 +4,15 @@
   "description": "Capstone project - Potentially Event planning App",
   "main": "index.ts",
   "scripts": {
-    "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "eslint src/**/*.ts{,x}",
+    "format": "prettier --write server client/**/*.ts{,x}",
+    "lint": "eslint server client/**/*.ts{,x}",
     "lint:watch": "node node_modules/eslint-watch/bin/esw src/**/*.ts{,x} -w",
     "compile": "tsc",
     "compile:watch": "tsc --watch",
     "build": "npm run compile && webpack --mode=\"production\"",
     "start:dev-build": "webpack --mode=\"development\" --watch",
     "start": "node server/index.js",
-    "start:dev-server": "node-dev --respawn ./js/server/index.js"
+    "start:dev-server": "node-dev --respawn server/index.js"
   },
   "repository": {
     "type": "git",
@@ -52,7 +52,9 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "express": "^4.17.1",
+    "pg": "^8.3.3",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "sequelize": "^6.3.5"
   }
 }

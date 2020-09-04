@@ -1,9 +1,6 @@
 const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
 
-const {
-  UUID, UUIDV4, STRING, BOOLEAN,
-} = Sequelize;
+const { UUID, UUIDV4, STRING, INTEGER } = Sequelize;
 const { db } = require('../db');
 
 const User = db.define('User', {
@@ -21,21 +18,20 @@ const User = db.define('User', {
     },
   },
   firstName: {
-  type: STRING,
-  allowNull: false,
-},
-lastName: {
-  type: STRING,
-  allowNull: false,
-},
-email: {
-  type: STRING,
-  allowNull: false,
-  validate: {
-    isEmail: true,
+    type: STRING,
+    allowNull: false,
   },
-},
-
+  lastName: {
+    type: STRING,
+    allowNull: false,
+  },
+  email: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+  },
   addressUnit: {
     type: STRING,
     allowNull: true,
@@ -63,16 +59,6 @@ email: {
       notEmpty: true,
     },
   },
- 
 });
-
-User.beforeCreate((user) => bcrypt.hash(user.password, 10)
-  .then((hash) => {
-    // eslint-disable-next-line no-param-reassign
-    user.password = hash;
-  })
-  .catch((e) => {
-    throw e;
-  }));
 
 module.exports = { User };

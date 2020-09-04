@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 
-const {
-  UUID, UUIDV4, STRING, BOOLEAN,
-} = Sequelize;
+const { UUID, UUIDV4, STRING } = Sequelize;
 const { db } = require('../db');
 
 const FoodPreference = db.define('FoodPreference', {
@@ -22,4 +20,3 @@ const FoodPreference = db.define('FoodPreference', {
 });
 
 module.exports = { FoodPreference };
-
