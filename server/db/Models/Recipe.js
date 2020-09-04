@@ -17,13 +17,6 @@ const Recipe = db.define('Recipe', {
       notEmpty: true,
     },
   },
-  ingredients: {
-    type: TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
   vegan: {
     type: BOOLEAN,
     allowNull: false,
