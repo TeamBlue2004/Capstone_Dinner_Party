@@ -1,22 +1,7 @@
-const express = require('express');
-const path = require('path');
-const chalk = require('chalk');
+const { startServer } = require('./api/index');
 
-const app = express();
+const startApplication = async () => {
+  await startServer();
+};
 
-const PORT = process.env.PORT || 3000;
-const DIST_PATH = path.join(__dirname, '../dist');
-const PUBLIC_PATH = path.join(__dirname, '../public');
-
-app.use(express.static(DIST_PATH));
-app.use(express.static(PUBLIC_PATH));
-
-app.get('/health', (req, res) => {
-  res.send({
-    message: 'I am healthy.',
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(chalk.green(`Application listening on PORT:${PORT}`));
-});
+startApplication();
