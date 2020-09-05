@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const API_KEY = process.env.SPOONACULAR_KEY;
 
-const initialData = async () => {
+const seedData = async () => {
   await fetchRecipes(10, API_KEY).then(async (response) => {
     response.forEach(async (res) => {
       const { ingredients, recipe } = res;
@@ -19,4 +19,4 @@ const initialData = async () => {
   });
 };
 
-initialData();
+seedData();

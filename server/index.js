@@ -1,8 +1,8 @@
 const { startServer } = require('./api/index');
-const { syncAndSeed } = require('./db/syncAndSeed');
+const { syncDB } = require('./db/syncDB');
 
 const startApplication = async () => {
-  await syncAndSeed({ force: false });
+  await syncDB({ force: false });
   await startServer();
 };
 

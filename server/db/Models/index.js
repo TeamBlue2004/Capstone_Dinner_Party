@@ -5,40 +5,40 @@ const { FoodPreference } = require('./FoodPreference');
 const { Ingredient } = require('./Ingredient');
 const { Event } = require('./Event');
 
-// // User can have many friends
+// User can have many friends
 // User.belongsToMany(User, { through: 'Friends' });
 
-// // Relations between User and Allergen
+// Relations between User and Allergen
 User.hasMany(Allergen);
 Allergen.belongsTo(User);
 
-// // Relations between User and FoodPreference
+// Relations between User and FoodPreference
 User.hasMany(FoodPreference);
 FoodPreference.belongsTo(User);
 
-// // Relations between Recipe and Allergen
+// Relations between Recipe and Allergen
 Recipe.belongsToMany(Allergen, { through: 'Recipe_Allergen' });
 Allergen.belongsToMany(Recipe, { through: 'Recipe_Allergen' });
-// // Recipe.hasMany(Allergen);
-// // Allergen.belongsTo(Recipe);
+// Recipe.hasMany(Allergen);
+// Allergen.belongsTo(Recipe);
 
-// // Relations between Recipe and FoodPreference
+// Relations between Recipe and FoodPreference
 Recipe.belongsToMany(FoodPreference, { through: 'Recipe_FoodPreference' });
 FoodPreference.belongsToMany(Recipe, { through: 'Recipe_FoodPreference' });
-// // Recipe.hasMany(FoodPreference);
-// // FoodPreference.belongsTo(Recipe);
+// Recipe.hasMany(FoodPreference);
+// FoodPreference.belongsTo(Recipe);
 
-// // Relations between Recipe and Ingredient
+// Relations between Recipe and Ingredient
 Recipe.belongsToMany(Ingredient, { through: 'Recipe_Ingredient' });
 Ingredient.belongsToMany(Recipe, { through: 'Recipe_Ingredient' });
-// // Recipe.hasMany(Allergen);
-// // Allergen.belongsTo(Recipe);
+// Recipe.hasMany(Allergen);
+/// // Allergen.belongsTo(Recipe);
 
-// // Relations between Event and User
+// Relations between Event and User
 User.belongsToMany(Event, { through: 'Event_User' });
 Event.belongsToMany(User, { through: 'Event_User' });
-// // Recipe.hasMany(Allergen);
-// // Allergen.belongsTo(Recipe);
+// Recipe.hasMany(Allergen);
+// Allergen.belongsTo(Recipe);
 
 module.exports = {
   User,
