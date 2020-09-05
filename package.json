@@ -4,9 +4,9 @@
   "description": "Capstone project - Potentially Event planning App",
   "main": "index.ts",
   "scripts": {
-    "format": "prettier --write server client/**/*.ts{,x}",
-    "lint": "eslint server client/**/*.ts{,x}",
-    "lint:watch": "node node_modules/eslint-watch/bin/esw src/**/*.ts{,x} -w",
+    "format": "prettier --write server client",
+    "lint": "eslint server client",
+    "lint:watch": "node node_modules/eslint-watch/bin/esw server client -w",
     "compile": "tsc",
     "compile:watch": "tsc --watch",
     "build": "npm run compile && webpack --mode=\"production\"",
