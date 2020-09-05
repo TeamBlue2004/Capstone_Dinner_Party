@@ -18,3 +18,8 @@ Node-dev & watch
 ```bash
 npm run start:dev-server
 ```
+
+Seed Data
+```bash
+npm run seed
+```
