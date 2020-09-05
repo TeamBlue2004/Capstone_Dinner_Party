@@ -18,3 +18,14 @@ Node-dev & watch
 ```bash
 npm run start:dev-server
 ```
+
+Sync database
+```bash
+npm run syncDB
+```
+
+Seed data
+```bash
+npm run seed
+```
+

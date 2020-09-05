@@ -11,8 +11,10 @@
     "compile:watch": "tsc --watch",
     "build": "npm run compile && webpack --mode=\"production\"",
     "start:dev-build": "webpack --mode=\"development\" --watch",
+    "syncDB": "node server/db/syncDB",
     "start": "node server/index.js",
-    "start:dev-server": "node-dev --respawn server/index.js"
+    "start:dev-server": "node-dev --respawn server/index.js",
+    "seed": "node server/db/Data/seed"
   },
   "repository": {
     "type": "git",
@@ -50,6 +52,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
