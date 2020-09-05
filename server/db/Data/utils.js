@@ -1,8 +1,10 @@
 const parseRecipes = (recipes) => {
   return recipes.map((recipe) => {
-    const ingredients = recipe.extendedIngredients.reduce((a, b) => {
-      return `${a + b.originalString};`;
-    }, '');
+    const ingredients = recipe.extendedIngredients.map((ingredient) => {
+      return {
+        name: ingredient.originalName,
+      };
+    });
     return {
       recipe: {
         name: recipe.title,

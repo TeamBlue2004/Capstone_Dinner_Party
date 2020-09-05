@@ -12,7 +12,8 @@
     "build": "npm run compile && webpack --mode=\"production\"",
     "start:dev-build": "webpack --mode=\"development\" --watch",
     "start": "node server/index.js",
-    "start:dev-server": "node-dev --respawn server/index.js"
+    "start:dev-server": "node-dev --respawn server/index.js",
+    "seed": "node server/db/Data/seed"
   },
   "repository": {
     "type": "git",

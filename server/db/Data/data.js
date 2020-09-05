@@ -8,13 +8,6 @@ const fetchRecipes = async (number, apiKey) => {
     .then((response) => parseRecipes(response.data.recipes));
 };
 
-const test = async () => {
-  return axios
-    .get('https://acme-users-api-rev.herokuapp.com/api/users')
-    .then((response) => response);
-};
-
 module.exports = {
   fetchRecipes,
-  test,
 };
