@@ -13,6 +13,4 @@ const syncDB = async ({ force = false }) => {
   }
 };
 
-module.exports = {
-  syncDB,
-};
+syncDB({ force: false });
