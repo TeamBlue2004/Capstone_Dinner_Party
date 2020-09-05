@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 
 class App extends Component {
-  render() {
+  render(): ReactElement {
     return <h1>Hello</h1>;
   }
 }
