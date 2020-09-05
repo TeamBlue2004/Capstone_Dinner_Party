@@ -17,17 +17,17 @@ User.hasMany(FoodPreference);
 FoodPreference.belongsTo(User);
 
 // Relations between Recipe and Allergen
-Recipe.belongsToMany(Allergen, { through: 'Recipe_Allergen' });
+// Recipe.belongsToMany(Allergen, { through: 'Recipe_Allergen' });
 // Recipe.hasMany(Allergen);
 // Allergen.belongsTo(Recipe);
 
 // Relations between Recipe and FoodPreference
-Recipe.belongsToMany(FoodPreference, { through: 'Recipe_FoodPreference' });
+// Recipe.belongsToMany(FoodPreference, { through: 'Recipe_FoodPreference' });
 // Recipe.hasMany(FoodPreference);
 // FoodPreference.belongsTo(Recipe);
 
 // Relations between Recipe and Ingredient
-Recipe.belongsToMany(Ingredient, { through: 'Recipe_Ingredient' });
+// Recipe.belongsToMany(Ingredient, { through: 'Recipe_Ingredient' });
 // Recipe.hasMany(Allergen);
 // Allergen.belongsTo(Recipe);
 
