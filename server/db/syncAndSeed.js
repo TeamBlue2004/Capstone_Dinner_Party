@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const { db } = require('./db');
+require('./Models/index');
 
 const syncAndSeed = async ({ force = false }) => {
   console.log(chalk.red(`Force = ${force}`));

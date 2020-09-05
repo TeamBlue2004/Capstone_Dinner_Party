@@ -8,12 +8,12 @@ const initialData = async () => {
   await fetchRecipes(10, API_KEY).then(async (response) => {
     response.forEach(async (res) => {
       const { ingredients, recipe } = res;
-      await Recipe.create(recipe);
+      const createdRecipe = await Recipe.create(recipe);
       await ingredients.forEach(async (ingredient) => {
         if (ingredient.name !== '') {
-          await Ingredient.create(ingredient);
+          const createdIngredient = await Ingredient.create(ingredient);
+          await createdIngredient.setRecipes(createdRecipe);
         }
-        // await ingredient.setRecipes(recipe);
       });
     });
   });
