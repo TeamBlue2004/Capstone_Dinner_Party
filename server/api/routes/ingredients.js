@@ -7,7 +7,7 @@ ingredientsRouter.get('/ingredients', async (req, res) => {
     const ingredients = await Ingredient.findAll({
       include: [Recipe],
     });
-    res.send(ingredients);
+    res.status(200).send(ingredients);
   } catch (e) {
     console.error(e);
     res.status(500).send({ message: 'Server error' });
