@@ -1,10 +1,12 @@
 const chalk = require('chalk');
 const { app } = require('./server');
 const applyMiddleware = require('./middleware');
+const { initRoutes } = require('./routes/index');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
+initRoutes();
 applyMiddleware();
 
 app.get('/health', (req, res) => {
