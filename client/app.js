@@ -11,7 +11,11 @@ export default class App extends Component {
           {/* default welcome page should be login and if logged in then redirect to home */}
           <Route exact path="/home" render={(props) => <Home {...props} />} />
           <Route exact path="/events" render={() => <Events />} />
-          <Route exact path="/recipes" render={() => <Recipes />} />
+          <Route
+            exact
+            path="/recipes"
+            render={(props) => <Recipes {...props} />}
+          />
         </Switch>
       </HashRouter>
     );

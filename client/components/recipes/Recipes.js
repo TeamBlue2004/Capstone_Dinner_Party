@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-const { recipes } = require('../../store/actions/recipes/recipes');
+import { recipes } from '../../store/actions/recipes/recipes';
+import { RecipesSearch } from '../index';
 
 class Recipes extends Component {
-  componentDidMount() {
-    const { loadRecipes } = this.props;
-    loadRecipes();
-  }
-
   render() {
-    return <h1>Recipes</h1>;
+    return <RecipesSearch {...this.props} />;
   }
 }
 

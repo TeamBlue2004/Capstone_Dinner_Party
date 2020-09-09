@@ -8,8 +8,8 @@ const setRecipes = (recipes) => {
   };
 };
 
-const fetchRecipes = () => async (dispatch) => {
-  const { data } = await axios.get(`/api/recipes/`);
+const fetchRecipes = (query) => async (dispatch) => {
+  const { data } = await axios.get(`/api/recipes/${query}`);
   return dispatch(setRecipes(data));
 };
 

@@ -3,6 +3,7 @@ const recipesRouter = require('express').Router();
 const { Recipe, Ingredient } = require('../../db/Models/index.js');
 
 recipesRouter.get('/recipes', async (req, res) => {
+  console.log(req.query);
   try {
     const recipes = await Recipe.findAll({
       include: [Ingredient],

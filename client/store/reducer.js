@@ -5,10 +5,7 @@ const { TYPES } = require('./types');
 const recipesReducer = (state = [], action) => {
   switch (action.type) {
     case TYPES.FETCH_RECIPES:
-      return {
-        ...state,
-        recipes: action.recipes,
-      };
+      return action.recipes;
     default:
       return state;
   }
