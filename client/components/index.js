@@ -3,6 +3,6 @@ import Header from './header/Header';
 import Home from './home/Home';
 import Events from './events/Events';
 import Recipes from './recipes/Recipes';
-import RecipesSearch from './recipesSearch/RecipesSearch';
+import RecipesSearch from './recipesSearch/RecipeSearch';
 
 export { Header, Home, Events, Recipes, RecipesSearch };

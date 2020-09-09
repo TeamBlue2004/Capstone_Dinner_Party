@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/recipes/recipes';
-import RecipesSearch from '../recipesSearch/RecipesSearch';
+import RecipesSearch from '../recipesSearch/RecipeSearch';
 
 class Recipes extends Component {
   componentDidMount() {
