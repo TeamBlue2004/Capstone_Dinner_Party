@@ -13,7 +13,7 @@ const fetchRecipes = (query) => async (dispatch) => {
   return dispatch(setRecipes(data));
 };
 
-export const recipes = {
+export const recipesActions = {
   fetchRecipes,
   setRecipes,
 };

@@ -1,45 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { recipes } from '../../store/actions/recipes/recipes';
+import { recipesActions } from '../../store/actions/recipes/recipes';
 
 class RecipesSearch extends Component {
   state = {
     input: '',
-  }
+  };
 
-  componentDidMount(){
-    const { history: {location: { search }}, loadRecipes } = this.props;
+  componentDidMount() {
+    const {
+      history: {
+        location: { search },
+      },
+      loadRecipes,
+    } = this.props;
     loadRecipes(search);
   }
 
   searchHandler = (event) => {
     this.setState({ input: event.target.value });
-  }
+  };
 
-  submitIngredient = (event) => {
+  submitIngredient = () => {
     const { input } = this.state;
-    const { history } = this.props;
+    const { history, loadRecipes } = this.props;
     history.push({
-        pathname: '/recipes',
-        search: `?ingredients=${input}`
-      })
-  }
+      pathname: '/recipes',
+      search: `?ingredients=${input}`,
+    });
+    loadRecipes(history.location.search);
+  };
 
   render() {
     const { input } = this.state;
     return (
       <div className="md-form">
-          <form onSubmit={this.submitIngredient}>
-            <input
+        <form onSubmit={this.submitIngredient}>
+          <input
             className="form-control"
             type="text"
             placeholder="Enter Ingredient"
             aria-label="Search"
             value={input}
             onChange={this.searchHandler}
-            />
-          </form>
+          />
+        </form>
       </div>
     );
   }
@@ -54,15 +60,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadRecipes: (query) => {
-      dispatch(recipes.fetchRecipes(query));
+      dispatch(recipesActions.fetchRecipes(query));
     },
   };
 };
 
 RecipesSearch.propTypes = {
-  state: PropTypes.objectOf({
-    input: PropTypes.string.isRequired,
-  }), 
+  history: PropTypes.objectOf({
+    location: PropTypes.objectOf({
+      search: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
   loadRecipes: PropTypes.func.isRequired,
 };
 

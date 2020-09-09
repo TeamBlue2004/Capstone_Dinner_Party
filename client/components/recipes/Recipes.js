@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { recipes } from '../../store/actions/recipes/recipes';
-import { RecipesSearch } from '../index';
+import { recipesActions } from '../../store/actions/recipes/recipes';
+import RecipesSearch from '../recipesSearch/RecipesSearch';
 
 class Recipes extends Component {
   componentDidMount() {
@@ -16,7 +16,24 @@ class Recipes extends Component {
   }
 
   render() {
-    return <RecipesSearch {...this.props} />;
+    const { recipes } = this.props;
+    const {
+      history: {
+        location: { search },
+      },
+    } = this.props;
+    const listRecipes = recipes.map((recipe) => <li>{recipe.name}</li>);
+    return (
+      <div className="recipes-container">
+        <div className="recipes-search">
+          <RecipesSearch {...this.props} />
+        </div>
+        <div className="recipes-list">
+          <h2>Recipes with {search}</h2>
+          <ul>{listRecipes}</ul>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -28,14 +45,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadRecipes: () => {
-      dispatch(recipes.fetchRecipes());
+    loadRecipes: (query) => {
+      dispatch(recipesActions.fetchRecipes(query));
     },
   };
 };
 
 Recipes.propTypes = {
-  history: PropTypes.objectOf({
+  recipes: PropTypes.objectOf({
+    recipes: PropTypes.array.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
     location: PropTypes.objectOf({
       search: PropTypes.string,
     }).isRequired,

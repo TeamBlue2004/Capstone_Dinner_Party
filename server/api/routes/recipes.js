@@ -16,7 +16,6 @@ recipesRouter.get('/recipes', async (req, res) => {
         },
       },
     });
-    console.log(recipes);
     res.status(200).send(recipes);
   } catch (e) {
     console.error(e);
