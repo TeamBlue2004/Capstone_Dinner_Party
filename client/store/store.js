@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunks from 'redux-thunk';
+import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducer from './reducer';
 
 const middleware = [
-  thunks,
+  ReduxThunk,
   createLogger({
     collapsed: true,
   }),

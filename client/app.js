@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-
 import { Header, Events, Home, Recipes } from './components/index';
 
 export default class App extends Component {

@@ -13,9 +13,7 @@ const fetchRecipes = () => async (dispatch) => {
   return dispatch(setRecipes(data));
 };
 
-export default {
-  recipes: {
-    setRecipes,
-    fetchRecipes,
-  },
+export const recipes = {
+  fetchRecipes,
+  setRecipes,
 };

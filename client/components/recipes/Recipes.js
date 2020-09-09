@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 
-const { recipes } = require('../../store/actions/index');
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Recipes extends Component {
+const { recipes } = require('../../store/actions/recipes/recipes');
+
+class Recipes extends Component {
   componentDidMount() {
-    console.log(this.props);
-    // const { fetchRecipes } = recipes;
-    // fetchRecipes();
+    const { loadRecipes } = this.props;
+    loadRecipes();
   }
 
   render() {
     return <h1>Recipes</h1>;
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    recipes: state.recipes,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadRecipes: () => {
+      dispatch(recipes.fetchRecipes());
+    },
+  };
+};
+
+Recipes.propTypes = {
+  loadRecipes: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recipes);
