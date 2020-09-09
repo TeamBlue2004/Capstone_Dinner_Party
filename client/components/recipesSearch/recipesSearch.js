@@ -10,7 +10,6 @@ class RecipesSearch extends Component {
 
   componentDidMount(){
     const { history: {location: { search }}, loadRecipes } = this.props;
-    console.log(search);
     loadRecipes(search);
   }
 
@@ -60,8 +59,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-// Recipes.propTypes = {
-//   loadRecipes: PropTypes.func.isRequired,
-// };
+RecipesSearch.propTypes = {
+  state: PropTypes.objectOf({
+    input: PropTypes.string.isRequired,
+  }), 
+  loadRecipes: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesSearch);

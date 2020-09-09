@@ -5,6 +5,16 @@ import { recipes } from '../../store/actions/recipes/recipes';
 import { RecipesSearch } from '../index';
 
 class Recipes extends Component {
+  componentDidMount() {
+    const {
+      history: {
+        location: { search },
+      },
+      loadRecipes,
+    } = this.props;
+    loadRecipes(search);
+  }
+
   render() {
     return <RecipesSearch {...this.props} />;
   }
@@ -25,6 +35,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Recipes.propTypes = {
+  history: PropTypes.objectOf({
+    location: PropTypes.objectOf({
+      search: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
   loadRecipes: PropTypes.func.isRequired,
 };
 
