@@ -34,6 +34,11 @@ const Recipe = db.define('Recipe', {
       notEmpty: true,
     },
   },
+  favorite: {
+    type: BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
 
 module.exports = { Recipe };

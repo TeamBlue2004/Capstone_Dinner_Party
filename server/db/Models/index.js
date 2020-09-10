@@ -40,6 +40,10 @@ Event.belongsToMany(User, { through: 'Event_User' });
 // Recipe.hasMany(Allergen);
 // Allergen.belongsTo(Recipe);
 
+// Relations between User and Recipe
+User.belongsToMany(Recipe, { through: 'User_Recipe' });
+Recipe.belongsToMany(User, { through: 'User_Recipe' });
+
 module.exports = {
   User,
   Recipe,
