@@ -6,6 +6,7 @@ import { recipesActions } from '../../store/actions/index';
 class RecipesSearch extends Component {
   state = {
     input: '',
+    ingredients: [],
   };
 
   componentDidMount() {
@@ -18,34 +19,57 @@ class RecipesSearch extends Component {
     loadRecipes(search);
   }
 
-  searchHandler = (event) => {
+  inputHandler = (event) => {
     this.setState({ input: event.target.value });
   };
 
-  submitIngredient = () => {
-    const { input } = this.state;
+  addIngredient = () => {
+    const { input, ingredients } = this.state;
+    const updatedQuery = [...ingredients, input];
+    this.setState({ ingredients: updatedQuery }, () =>
+      console.log(ingredients)
+    );
+  };
+
+  searchRecipes = () => {
+    const { ingredients } = this.state;
     const { history, loadRecipes } = this.props;
-    history.push({
-      pathname: '/recipes',
-      search: `?ingredients=${input}`,
-    });
-    loadRecipes(history.location.search);
+    // history.push({
+    //   pathname: '/recipes',
+    //   search: `?ingredients=${input}`,
+    // });
+    // loadRecipes(history.location.search);
   };
 
   render() {
-    const { input } = this.state;
+    const { input, ingredients } = this.state;
+    const selectedIngredients = ingredients.map((ingredient) => (
+      <li key={ingredient}>{ingredient}</li>
+    ));
     return (
       <div className="md-form">
-        <form onSubmit={this.submitIngredient}>
+        <form onSubmit={this.addIngredient}>
           <input
             className="form-control"
             type="text"
             placeholder="Enter Ingredient"
             aria-label="Search"
             value={input}
-            onChange={this.searchHandler}
+            onChange={this.inputHandler}
           />
         </form>
+        <div className="ingredients">
+          <ul>{selectedIngredients}</ul>
+        </div>
+        <div className="search-recipes">
+          <button
+            type="submit"
+            onSubmit={this.searchRecipes}
+            value="Search Recipes"
+          >
+            Search Recipes
+          </button>
+        </div>
       </div>
     );
   }
