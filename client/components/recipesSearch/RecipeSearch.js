@@ -66,8 +66,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 RecipesSearch.propTypes = {
-  history: PropTypes.objectOf({
-    location: PropTypes.objectOf({
+  history: PropTypes.shape({
+    location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
   }).isRequired,

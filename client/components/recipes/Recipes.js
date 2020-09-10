@@ -52,12 +52,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Recipes.propTypes = {
-  recipes: PropTypes.objectOf({
-    recipes: PropTypes.array.isRequired,
-  }).isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.shape({
-    location: PropTypes.objectOf({
-      search: PropTypes.string,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   loadRecipes: PropTypes.func.isRequired,
