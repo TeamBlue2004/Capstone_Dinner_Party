@@ -9,10 +9,10 @@
     "lint:watch": "node node_modules/eslint-watch/bin/esw server client -w",
     "build": "webpack --mode=\"production\"",
     "start:dev-build": "webpack --mode=\"development\" --watch",
-    "syncDB": "node server/db/syncDB",
     "start": "node server/index.js",
     "start:dev-server": "node-dev --respawn server/index.js",
-    "seed": "node server/db/Data/seed"
+    "seed": "node server/db/Data/seed",
+    "syncDB": "node server/db/syncDB"
   },
   "repository": {
     "type": "git",
@@ -66,6 +66,7 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.5"
   }

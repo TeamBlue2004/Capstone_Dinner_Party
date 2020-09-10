@@ -1,11 +1,20 @@
 const recipesRouter = require('express').Router();
 // const { check, validationResult } = require('express-validator');
+const { Op } = require('sequelize');
 const { Recipe, Ingredient } = require('../../db/Models/index.js');
 
 recipesRouter.get('/recipes', async (req, res) => {
+  const { ingredients } = req.query;
   try {
     const recipes = await Recipe.findAll({
-      include: [Ingredient],
+      include: {
+        model: Ingredient,
+        where: {
+          name: {
+            [Op.iLike]: `%${ingredients}%`,
+          },
+        },
+      },
     });
     res.status(200).send(recipes);
   } catch (e) {
