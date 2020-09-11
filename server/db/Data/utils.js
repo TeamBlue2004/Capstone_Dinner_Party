@@ -8,8 +8,11 @@ const parseRecipes = (recipes) => {
     return {
       recipe: {
         name: recipe.title,
+        image: recipe.image,
         vegan: recipe.vegan,
         vegetarian: recipe.vegetarian,
+        dairyFree: recipe.dairyFree,
+        glutenFree: recipe.glutenFree,
         steps: recipe.instructions,
       },
       ingredients,
