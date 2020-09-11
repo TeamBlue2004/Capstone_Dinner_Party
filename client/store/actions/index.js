@@ -1,5 +1,3 @@
-const recipes = require('./recipes/recipes');
+import { recipesActions } from './recipesActions';
 
-module.exports = {
-  recipes,
-};
+export { recipesActions };

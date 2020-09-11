@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { recipesActions } from '../../store/actions/recipes/recipes';
+import { recipesActions } from '../../store/actions/index';
 
 class RecipesSearch extends Component {
   state = {
