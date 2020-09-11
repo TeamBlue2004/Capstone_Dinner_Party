@@ -33,6 +33,15 @@ class RecipesSearch extends Component {
     this.setState({ ingredients: updatedQuery });
   };
 
+  filters = (vegan, vegetarian, dairyFree, glutenFree) => {
+    let filterQuery = '';
+    if (vegan === true) filterQuery += '&vegan=true';
+    if (vegetarian === true) filterQuery += '&vegetarian=true';
+    if (dairyFree === true) filterQuery += '&dairyFree=true';
+    if (glutenFree === true) filterQuery += '&glutenFree=true';
+    return filterQuery;
+  };
+
   searchRecipes = () => {
     const {
       ingredients,
@@ -43,9 +52,15 @@ class RecipesSearch extends Component {
     } = this.state;
     const { history, loadRecipes } = this.props;
     const jointIngredients = ingredients.join(',');
+    const searchURL = `?ingredients=${jointIngredients}${this.filters(
+      vegan,
+      vegetarian,
+      dairyFree,
+      glutenFree
+    )}`;
     history.push({
       pathname: '/recipes',
-      search: `?ingredients=${jointIngredients}&vegan=${vegan}&vegetarian=${vegetarian}&dairyFree=${dairyFree}&glutenFree=${glutenFree}`,
+      search: searchURL,
     });
     loadRecipes(history.location.search);
   };
