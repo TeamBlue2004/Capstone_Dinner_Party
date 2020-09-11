@@ -1,6 +1,4 @@
 const Sequelize = require('sequelize');
-const { User } = require('./User');
-const { Recipe } = require('./Recipe');
 
 const { BOOLEAN } = Sequelize;
 const { db } = require('../db');
