@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { TYPES } = require('../../types');
+import axios from 'axios';
+import { TYPES } from '../types';
 
 const setRecipes = (recipes) => {
   return {
