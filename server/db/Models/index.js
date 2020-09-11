@@ -4,6 +4,7 @@ const { Allergen } = require('./Allergen');
 const { FoodPreference } = require('./FoodPreference');
 const { Ingredient } = require('./Ingredient');
 const { Event } = require('./Event');
+const { User_Recipe } = require('./User_Recipe');
 
 // User can have many friends
 // User.belongsToMany(User, { through: 'Friends' });
@@ -39,6 +40,10 @@ User.belongsToMany(Event, { through: 'Event_User' });
 Event.belongsToMany(User, { through: 'Event_User' });
 // Recipe.hasMany(Allergen);
 // Allergen.belongsTo(Recipe);
+
+// Relations between Recipe and User
+User.belongsToMany(Recipe, { through: User_Recipe });
+Recipe.belongsToMany(User, { through: User_Recipe });
 
 module.exports = {
   User,

@@ -9,10 +9,10 @@
     "lint:watch": "node node_modules/eslint-watch/bin/esw server client -w",
     "build": "webpack --mode=\"production\"",
     "start:dev-build": "webpack --mode=\"development\" --watch",
-    "syncDB": "node server/db/syncDB",
     "start": "node server/index.js",
     "start:dev-server": "node-dev --respawn server/index.js",
-    "seed": "node server/db/Data/seed"
+    "seed": "node server/db/Data/seed",
+    "syncDB": "node server/db/syncDB"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
     "eslint": "^7.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -46,7 +47,10 @@
     "eslint-watch": "^7.0.0",
     "html-webpack-plugin": "^4.3.0",
     "node-dev": "^5.2.0",
+    "node-sass": "^4.14.1",
     "prettier": "^2.1.1",
+    "sass-loader": "^10.0.2",
+    "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
@@ -66,6 +70,7 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.5"
   }
