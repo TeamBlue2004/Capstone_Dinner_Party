@@ -26,19 +26,18 @@ class RecipesSearch extends Component {
   addIngredient = () => {
     const { input, ingredients } = this.state;
     const updatedQuery = [...ingredients, input];
-    this.setState({ ingredients: updatedQuery }, () =>
-      console.log(ingredients)
-    );
+    this.setState({ ingredients: updatedQuery });
   };
 
   searchRecipes = () => {
     const { ingredients } = this.state;
     const { history, loadRecipes } = this.props;
-    // history.push({
-    //   pathname: '/recipes',
-    //   search: `?ingredients=${input}`,
-    // });
-    // loadRecipes(history.location.search);
+    const jointIngredients = ingredients.join(',');
+    history.push({
+      pathname: '/recipes',
+      search: `?ingredients=${jointIngredients}`,
+    });
+    loadRecipes(history.location.search);
   };
 
   render() {
@@ -58,13 +57,51 @@ class RecipesSearch extends Component {
             onChange={this.inputHandler}
           />
         </form>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="inlineCheckbox1"
+            value="option1"
+          />
+          <label className="form-check-label" htmlFor="inlineCheckbox1">
+            Vegan
+          </label>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="inlineCheckbox1"
+            value="option1"
+          />
+          <label className="form-check-label" htmlFor="inlineCheckbox1">
+            Vegetarian
+          </label>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="inlineCheckbox1"
+            value="option1"
+          />
+          <label className="form-check-label" htmlFor="inlineCheckbox1">
+            Gluten Free
+          </label>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="inlineCheckbox1"
+            value="option1"
+          />
+          <label className="form-check-label" htmlFor="inlineCheckbox1">
+            Dairy Free
+          </label>
+        </div>
         <div className="ingredients">
           <ul>{selectedIngredients}</ul>
         </div>
         <div className="search-recipes">
           <button
             type="submit"
-            onSubmit={this.searchRecipes}
+            onClick={this.searchRecipes}
             value="Search Recipes"
           >
             Search Recipes

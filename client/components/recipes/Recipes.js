@@ -28,6 +28,7 @@ class Recipes extends Component {
         <div className="recipes-search">
           <RecipesSearch {...this.props} />
         </div>
+
         <div className="recipes-list">
           <h2>Recipes with {search}</h2>
           <ul>{listRecipes}</ul>

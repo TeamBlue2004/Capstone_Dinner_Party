@@ -5,14 +5,19 @@ const { Recipe, Ingredient } = require('../../db/Models/index.js');
 
 recipesRouter.get('/recipes', async (req, res) => {
   const { ingredients } = req.query;
+  const parseIngredients = ingredients.split(',').map((ingredient) => {
+    return {
+      name: {
+        [Op.iLike]: `%${ingredient}%`,
+      },
+    };
+  });
   try {
     const recipes = await Recipe.findAll({
       include: {
         model: Ingredient,
         where: {
-          name: {
-            [Op.iLike]: `%${ingredients}%`,
-          },
+          [Op.or]: parseIngredients,
         },
       },
     });
