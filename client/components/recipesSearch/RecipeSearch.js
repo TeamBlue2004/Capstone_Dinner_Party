@@ -7,6 +7,10 @@ class RecipesSearch extends Component {
   state = {
     input: '',
     ingredients: [],
+    vegan: false,
+    vegetarian: false,
+    dairyFree: false,
+    glutenFree: false,
   };
 
   componentDidMount() {
@@ -30,14 +34,24 @@ class RecipesSearch extends Component {
   };
 
   searchRecipes = () => {
-    const { ingredients } = this.state;
+    const {
+      ingredients,
+      vegan,
+      vegetarian,
+      dairyFree,
+      glutenFree,
+    } = this.state;
     const { history, loadRecipes } = this.props;
     const jointIngredients = ingredients.join(',');
     history.push({
       pathname: '/recipes',
-      search: `?ingredients=${jointIngredients}`,
+      search: `?ingredients=${jointIngredients}&vegan=${vegan}&vegetarian=${vegetarian}&dairyFree=${dairyFree}&glutenFree=${glutenFree}`,
     });
     loadRecipes(history.location.search);
+  };
+
+  checkboxChecker = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
   };
 
   render() {
@@ -61,8 +75,9 @@ class RecipesSearch extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            id="inlineCheckbox1"
-            value="option1"
+            name="vegan"
+            value="vegan"
+            onChange={this.checkboxChecker}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Vegan
@@ -70,8 +85,9 @@ class RecipesSearch extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            id="inlineCheckbox1"
-            value="option1"
+            name="vegetarian"
+            value="vegetarian"
+            onChange={this.checkboxChecker}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Vegetarian
@@ -79,8 +95,9 @@ class RecipesSearch extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            id="inlineCheckbox1"
-            value="option1"
+            name="glutenFree"
+            value="glutenFree"
+            onChange={this.checkboxChecker}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Gluten Free
@@ -88,8 +105,9 @@ class RecipesSearch extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            id="inlineCheckbox1"
-            value="option1"
+            name="dairyFree"
+            value="dairyFree"
+            onChange={this.checkboxChecker}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Dairy Free

@@ -22,17 +22,29 @@ class Recipes extends Component {
         location: { search },
       },
     } = this.props;
-    const listRecipes = recipes.map((recipe) => <li>{recipe.name}</li>);
     return (
       <div className="recipes-container">
         <div className="recipes-search">
           <RecipesSearch {...this.props} />
         </div>
 
-        <div className="recipes-list">
-          <h2>Recipes with {search}</h2>
-          <ul>{listRecipes}</ul>
-        </div>
+        {recipes.map((recipe) => {
+          return (
+            <div className="card">
+              <img
+                className="card-img-top"
+                src={recipe.image}
+                alt={recipe.name}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{recipe.name}</h5>
+                <a href="/recipe" className="btn btn-primary">
+                  View Recipe
+                </a>
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }
