@@ -85,7 +85,7 @@ class RecipesSearch extends Component {
     loadRecipes(history.location.search);
   };
 
-  checkboxChecker = (event) => {
+  checkboxHandler = (event) => {
     this.setState({ [event.target.name]: event.target.checked });
   };
 
@@ -143,7 +143,7 @@ class RecipesSearch extends Component {
             type="checkbox"
             name="vegan"
             checked={vegan}
-            onChange={this.checkboxChecker}
+            onChange={this.checkboxHandler}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Vegan

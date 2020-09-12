@@ -13,9 +13,8 @@ const parseIngredients = (ingredients) => {
 const filters = (...args) => {
     const where = {};
     args.forEach((arg) => {
-        for (let key in arg) {
-            if (arg[key]) where[key] = arg[key]
-        }
+        const [key, value] = Object.entries(arg).flat();
+        if (value) where[key] = value;
     });
     return where;
 };
