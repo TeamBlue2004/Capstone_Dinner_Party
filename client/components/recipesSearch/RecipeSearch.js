@@ -43,7 +43,7 @@ class RecipesSearch extends Component {
     }
   };
 
-  inputHandler = (event) => {
+  searchHandler = (event) => {
     this.setState({ input: event.target.value });
   };
 
@@ -53,13 +53,26 @@ class RecipesSearch extends Component {
     this.setState({ ingredients: updatedQuery });
   };
 
-  filters = (...args) => {
-    let filterQuery = '';
+  deleteIngredient = (event) => {
+    const { ingredients } = this.state;
+    const removedIngredient = event.target.parentNode.id;
+    const filteredIngredients = ingredients.filter(
+      (ingredient) => ingredient !== removedIngredient
+    );
+    this.setState({ ingredients: filteredIngredients });
+  };
+
+  checkboxHandler = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
+  };
+
+  sensitivities = (...args) => {
+    let query = '';
     args.forEach((arg) => {
       const sensitivity = Object.entries(arg).flat();
-      if (sensitivity[1]) filterQuery += `&${sensitivity[0]}=${sensitivity[1]}`;
+      if (sensitivity[1]) query += `&${sensitivity[0]}=${sensitivity[1]}`;
     });
-    return filterQuery;
+    return query;
   };
 
   searchRecipes = () => {
@@ -72,7 +85,7 @@ class RecipesSearch extends Component {
     } = this.state;
     const { history, loadRecipes } = this.props;
     const jointIngredients = ingredients.join(',');
-    const searchURL = `?ingredients=${jointIngredients}${this.filters(
+    const searchURL = `?ingredients=${jointIngredients}${this.sensitivities(
       { vegan },
       { vegetarian },
       { dairyFree },
@@ -85,19 +98,6 @@ class RecipesSearch extends Component {
     loadRecipes(history.location.search);
   };
 
-  checkboxHandler = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
-  };
-
-  deleteIngredient = (event) => {
-    const { ingredients } = this.state;
-    const removedIngredient = event.target.parentNode.id;
-    const filteredIngredients = ingredients.filter(
-      (ingredient) => ingredient !== removedIngredient
-    );
-    this.setState({ ingredients: filteredIngredients });
-  };
-
   render() {
     const {
       input,
@@ -107,24 +107,6 @@ class RecipesSearch extends Component {
       glutenFree,
       dairyFree,
     } = this.state;
-    const selectedIngredients =
-      ingredients &&
-      ingredients.map((ingredient) => (
-        <li
-          key={ingredient}
-          id={ingredient}
-          className="list-group-item d-flex justify-content-between align-items-center"
-        >
-          {ingredient}
-          <button
-            type="button"
-            onClick={this.deleteIngredient}
-            className="badge badge-primary badge-pill"
-          >
-            X
-          </button>
-        </li>
-      ));
     return (
       <div className="md-form">
         <form onSubmit={this.addIngredient}>
@@ -134,10 +116,10 @@ class RecipesSearch extends Component {
             placeholder="Enter Ingredient"
             aria-label="Search"
             value={input}
-            onChange={this.inputHandler}
+            onChange={this.searchHandler}
           />
         </form>
-        <div className="form-check form-check-inline">
+        <div className="form-check form-check">
           <input
             className="form-check-input"
             type="checkbox"
@@ -153,7 +135,7 @@ class RecipesSearch extends Component {
             type="checkbox"
             name="vegetarian"
             checked={vegetarian}
-            onChange={this.checkboxChecker}
+            onChange={this.checkboxHandler}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Vegetarian
@@ -163,7 +145,7 @@ class RecipesSearch extends Component {
             type="checkbox"
             name="glutenFree"
             checked={glutenFree}
-            onChange={this.checkboxChecker}
+            onChange={this.checkboxHandler}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Gluten Free
@@ -173,14 +155,30 @@ class RecipesSearch extends Component {
             type="checkbox"
             name="dairyFree"
             checked={dairyFree}
-            onChange={this.checkboxChecker}
+            onChange={this.checkboxHandler}
           />
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Dairy Free
           </label>
         </div>
         <div className="ingredients">
-          <ul className="list-group">{selectedIngredients}</ul>
+          <ul className="list-group">
+            {ingredients &&
+              ingredients.map((ingredient) => {
+                return (
+                  <li
+                    key={ingredient}
+                    id={ingredient}
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>{ingredient}</span>
+                    <button type="button" onClick={this.deleteIngredient}>
+                      X
+                    </button>
+                  </li>
+                );
+              })}
+          </ul>
         </div>
         <div className="search-recipes">
           <button

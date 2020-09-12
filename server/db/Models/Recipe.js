@@ -9,6 +9,14 @@ const Recipe = db.define('Recipe', {
     defaultValue: UUIDV4,
     primaryKey: true,
   },
+  name: {
+    type: STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
+    },
+  },
   image: {
     type: STRING,
     allowNull: false,
@@ -44,7 +52,7 @@ const Recipe = db.define('Recipe', {
       notEmpty: true,
     },
   },
-  tableName: 'Recipe',
+  // tableName: 'Recipe',
 });
 
 module.exports = { Recipe };
