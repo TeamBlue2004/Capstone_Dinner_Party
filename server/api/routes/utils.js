@@ -12,14 +12,15 @@ const parseIngredients = (ingredients) => {
 
 const filters = (vegan, vegetarian, dairyFree, glutenFree) => {
     const where = {};
-    if (vegan === true) { where.vegan = vegan; }
+    if (vegan === true) {
+        where.vegan = vegan;
+    }
     // if (vegetarian === true) where.vegetarian = vegetarian;
     // if (dairyFree === true) where.dairyFree = dairyFree;
     // if (glutenFree === true) where.glutenFree = glutenFree;
     // console.log(vegan, where);
     return where;
 };
-
 
 module.exports = {
     parseIngredients,

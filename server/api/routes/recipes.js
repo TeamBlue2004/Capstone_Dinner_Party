@@ -13,7 +13,7 @@ recipesRouter.get('/recipes', async (req, res) => {
       include: {
         model: Ingredient,
         where: {
-          [Op.or]: parseIngredients(ingredients),
+          [Op.and]: parseIngredients(ingredients),
         },
       },
     });
