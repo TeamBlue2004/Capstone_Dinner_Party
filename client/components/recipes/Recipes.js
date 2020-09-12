@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import RecipesSearch from '../recipesSearch/RecipeSearch';
+import './recipes.scss';
 
 class Recipes extends Component {
   componentDidMount() {
@@ -17,20 +19,30 @@ class Recipes extends Component {
 
   render() {
     const { recipes } = this.props;
-    const {
-      history: {
-        location: { search },
-      },
-    } = this.props;
-    const listRecipes = recipes.map((recipe) => <li>{recipe.name}</li>);
     return (
       <div className="recipes-container">
         <div className="recipes-search">
           <RecipesSearch {...this.props} />
         </div>
-        <div className="recipes-list">
-          <h2>Recipes with {search}</h2>
-          <ul>{listRecipes}</ul>
+        <div className="recipes-results">
+          {recipes.map((recipe) => {
+            return (
+              <Link
+                to={`/recipe/${recipe.id}`}
+                key={recipe.id}
+                className="card"
+              >
+                <img
+                  className="card-img-top"
+                  src={recipe.image}
+                  alt={recipe.name}
+                />
+                <div className="card-body">
+                  <h4 className="card-title">{recipe.name}</h4>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     );
