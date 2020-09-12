@@ -7,8 +7,20 @@ import Events from './events/Events';
 import Event from './event/Event';
 import AddEventForm from './addEventForm/AddEventForm';
 
+// Friends
+import Friends from './friends/Friends';
+
 // Recipes
 import Recipes from './recipes/Recipes';
 import RecipesSearch from './recipesSearch/RecipeSearch';
 
-export { Header, Home, Events, Event, AddEventForm, Recipes, RecipesSearch };
+export {
+  Header,
+  Home,
+  Events,
+  Event,
+  AddEventForm,
+  Friends,
+  Recipes,
+  RecipesSearch,
+};

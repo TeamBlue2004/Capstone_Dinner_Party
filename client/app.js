@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import { Header, Events, Home, Recipes } from './components/index';
+import { Header, Home, Events, Friends, Recipes } from './components/index';
 
 import '../public/styles.scss';
 
@@ -14,6 +14,7 @@ export default class App extends Component {
             {/* default welcome page should be login and if logged in then redirect to home */}
             <Route exact path="/home" render={(props) => <Home {...props} />} />
             <Route exact path="/events" render={() => <Events />} />
+            <Route exact path="/friends" render={() => <Friends />} />
             <Route
               exact
               path="/recipes"

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { UUID, UUIDV4, STRING, DATEONLY, TIME } = Sequelize;
+const { UUID, UUIDV4, STRING, DATE } = Sequelize;
 const { db } = require('../db');
 
 const Event = db.define(
@@ -11,39 +11,22 @@ const Event = db.define(
       defaultValue: UUIDV4,
       primaryKey: true,
     },
-    place: {
-      type: STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: true,
-      },
-    },
     host: {
       type: STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: true,
       },
     },
-
-    date: {
-      type: DATEONLY,
+    datetime: {
+      type: DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    startTime: {
-      type: TIME,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    endTime: {
-      type: TIME,
+    location: {
+      type: STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
