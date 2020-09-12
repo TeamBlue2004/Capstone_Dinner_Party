@@ -9,12 +9,10 @@ const seedData = async () => {
     response.forEach(async (res) => {
       const { ingredients, recipe } = res;
       const createdRecipe = await Recipe.create(recipe);
-      await ingredients.forEach(async (ingredient) => {
-        if (ingredient.name !== '') {
-          const createdIngredient = await Ingredient.create(ingredient);
-          await createdIngredient.setRecipes(createdRecipe);
-        }
-      });
+      if (ingredients.name !== '') {
+        const createdIngredient = await Ingredient.create(ingredients);
+        await createdIngredient.setRecipes(createdRecipe);
+      }
     });
   });
 };

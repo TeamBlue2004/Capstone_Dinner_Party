@@ -19,12 +19,30 @@ const Recipe = db.define(
         notEmpty: true,
       },
     },
+    image: {
+      type: STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
     vegan: {
       type: BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
     vegetarian: {
+      type: BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    glutenFree: {
+      type: BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    dairyFree: {
       type: BOOLEAN,
       allowNull: false,
       defaultValue: false,
