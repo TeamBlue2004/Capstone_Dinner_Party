@@ -61,6 +61,11 @@ const User = db.define(
         notEmpty: true,
       },
     },
+    profilePic: {
+      type: STRING,
+      defaultValue:
+        'https://www4.minijuegosgratis.com/v3/games/thumbnails/226277_1.jpg',
+    },
   },
   {
     tableName: 'User',
