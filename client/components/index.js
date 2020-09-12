@@ -5,6 +5,8 @@ import Header from './header/Header';
 
 // Home
 import Home from './home/Home';
+import Login from './login/Login';
+import Register from './register/Register';
 
 // Events
 import Events from './events/Events';
@@ -25,8 +27,15 @@ export {
   Events,
   Event,
   AddEventForm,
+<<<<<<< HEAD
   Friends,
   Recipe,
   Recipes,
   RecipesSearch,
+=======
+  Recipes,
+  RecipesSearch,
+  Login,
+  Register,
+>>>>>>> rebaselogin
 };
