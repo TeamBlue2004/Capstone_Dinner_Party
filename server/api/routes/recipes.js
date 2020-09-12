@@ -6,10 +6,9 @@ const { parseIngredients, filters } = require('./utils');
 
 recipesRouter.get('/recipes', async (req, res) => {
   const { ingredients, vegan, vegetarian, dairyFree, glutenFree } = req.query;
-  console.log(filters(vegan, vegetarian, dairyFree, glutenFree));
   try {
     const recipes = await Recipe.findAll({
-      // where: filters(vegan, vegetarian, dairyFree, glutenFree),
+      where: filters(vegan, vegetarian, dairyFree, glutenFree),
       include: {
         model: Ingredient,
         where: {
