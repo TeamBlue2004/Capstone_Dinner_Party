@@ -10,12 +10,13 @@ const parseIngredients = (ingredients) => {
     });
 };
 
-const filters = (vegan, vegetarian, dairyFree, glutenFree) => {
+const filters = (...args) => {
     const where = {};
-    if (vegan) where.vegan = vegan;
-    if (vegetarian) where.vegetarian = vegetarian;
-    if (dairyFree) where.dairyFree = dairyFree;
-    if (glutenFree) where.glutenFree = glutenFree;
+    args.forEach((arg) => {
+        for (let key in arg) {
+            if (arg[key]) where[key] = arg[key]
+        }
+    });
     return where;
 };
 
