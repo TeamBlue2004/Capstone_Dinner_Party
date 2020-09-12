@@ -1,8 +1,9 @@
 const { app } = require('../server');
 const { recipesRouter } = require('./recipes');
 const { ingredientsRouter } = require('./ingredients');
+const eventsRouter = require('./events');
 
-const routes = [recipesRouter, ingredientsRouter];
+const routes = [recipesRouter, ingredientsRouter, eventsRouter];
 
 const initRoutes = () => {
   return routes.forEach((route) => {
