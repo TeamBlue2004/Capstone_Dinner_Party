@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import './recipe.scss';
 
 class Recipe extends Component {
   componentDidMount() {
-    // const {
-    //   history: {
-    //     location: { search },
-    //   },
-    //   loadRecipes,
-    // } = this.props;
-    console.log(this.props);
-    // loadRecipes(search);
+    const {
+      match: {
+        params: { id },
+      },
+      loadRecipe,
+    } = this.props;
+    loadRecipe(id);
   }
 
   render() {
-    // const { recipe } = this.props;
     return (
       <div className="recipe-container">
         <div className="recipes-results">
@@ -48,26 +46,26 @@ class Recipe extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    recipes: state.recipes,
+    recipe: state.recipes.recipe,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadRecipes: (query) => {
-      dispatch(recipesActions.fetchRecipe(query));
+    loadRecipe: (id) => {
+      dispatch(recipesActions.fetchRecipe(id));
     },
   };
 };
 
-// Recipe.propTypes = {
-//   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   history: PropTypes.shape({
-//     location: PropTypes.shape({
-//       search: PropTypes.string.isRequired,
-//     }).isRequired,
-//   }).isRequired,
-//   loadRecipes: PropTypes.func.isRequired,
-// };
+Recipe.propTypes = {
+  // recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  loadRecipe: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

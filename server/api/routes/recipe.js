@@ -3,12 +3,9 @@ const recipeRouter = require('express').Router();
 const { Recipe, Ingredient } = require('../../db/Models/index.js');
 
 recipeRouter.get('/recipe/:id', async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
-    const recipe = await Recipe.findOne({
-      where: {
-        id,
-      },
+    const recipe = await Recipe.findByPk(id, {
       include: {
         model: Ingredient,
       },

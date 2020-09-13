@@ -51,7 +51,7 @@ class Recipes extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    recipes: state.recipes,
+    recipes: state.recipes.recipes,
   };
 };
 
