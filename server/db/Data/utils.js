@@ -1,20 +1,23 @@
 const parseRecipes = (recipes) => {
   return recipes.map((recipe) => {
-    const ingredients = recipe.extendedIngredients.reduce((a, b) => {
-      return `${a + b.originalName};`;
-    }, '');
+    const ingredients = recipe.extendedIngredients.map((ingredient) => {
+      return ingredient.originalString;
+    });
+    const steps = recipe.analyzedInstructions[0].steps
+      .map((instruction) => instruction.step)
+      .join(';');
     return {
       recipe: {
         name: recipe.title,
         image: recipe.image,
         vegan: recipe.vegan,
         vegetarian: recipe.vegetarian,
-        dairyFree: recipe.dairyFree,
         glutenFree: recipe.glutenFree,
-        steps: recipe.instructions,
+        dairyFree: recipe.dairyFree,
+        steps,
       },
       ingredients: {
-        name: ingredients,
+        name: ingredients.join(';'),
       },
     };
   });

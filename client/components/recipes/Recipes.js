@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
@@ -38,11 +37,6 @@ class Recipes extends Component {
                   ButtonModal={ViewRecipeButton}
                   data={recipe.id}
                 />
-                {/* <Link
-                  to={`/recipe/${recipe.id}`}
-                  key={recipe.id}
-                  className="card"
-                > */}
                 <img
                   className="card-img-top"
                   src={recipe.image}
@@ -51,7 +45,6 @@ class Recipes extends Component {
                 <div className="card-body">
                   <h4 className="card-title">{recipe.name}</h4>
                 </div>
-                {/* </Link> */}
               </div>
             );
           })}

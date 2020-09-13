@@ -1,25 +1,34 @@
-.card-top img.recipe {
-    max-width: 350px !important;
-    width: 100%;
+.card-top .recipe-image {
+    width: 350px !important;
 }
 
 .card-top {
     display: flex;
-    justify-content: space-between
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .card-body h5 {
     margin-top: 3%;
 }
 
-.card-body ul {
+.card-body .ingredients {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body .ingredients ul {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 525px;
 }
 
-.card-body ol {
+.card-body .instructions {
     margin: 1% 0;
     padding-left: 1%;
 }
@@ -37,7 +46,7 @@
 }
 
 .modal-dialog {
-    max-width: 1000px !important;
+    max-width: 900px !important;
 }
 
 .buttons {

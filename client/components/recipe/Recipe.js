@@ -17,19 +17,23 @@ class Recipe extends Component {
     return (
       <div className="card-body">
         <div className="card-top">
-          <img
-            className="recipe card-img-top"
-            src={recipe.image}
-            alt={recipe.name}
-          />
-          <ul className="ingredients">
-            {recipe &&
-              recipe.Ingredients &&
-              recipe.Ingredients[0] &&
-              recipe.Ingredients[0].name
-                .split(';')
-                .map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
-          </ul>
+          <div className="recipe-image">
+            <img
+              className="card-img-top"
+              src={recipe.image}
+              alt={recipe.name}
+            />
+          </div>
+          <div className="ingredients">
+            <ul>
+              {recipe &&
+                recipe.Ingredients &&
+                recipe.Ingredients[0] &&
+                recipe.Ingredients[0].name
+                  .split(';')
+                  .map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
+            </ul>
+          </div>
         </div>
         <h5>Instructions</h5>
         <hr />

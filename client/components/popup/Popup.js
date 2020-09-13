@@ -19,7 +19,6 @@ export default class Popup extends Component {
     const { show } = this.state;
     const { BodyModal, ButtonModal, title, data } = this.props;
     const { handleClose, handleShow } = this;
-
     return (
       <>
         {ButtonModal && <ButtonModal onClick={handleShow} />}
