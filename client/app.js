@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import { Header, Home, Events, Friends, Recipes } from './components/index';
+import {
+  Header,
+  Home,
+  Events,
+  Friends,
+  Recipe,
+  Recipes,
+} from './components/index';
 
 import '../public/styles.scss';
 
@@ -19,6 +26,11 @@ export default class App extends Component {
               exact
               path="/recipes"
               render={(props) => <Recipes {...props} />}
+            />
+            <Route
+              exact
+              path="/recipe/:id"
+              render={(props) => <Recipe {...props} />}
             />
           </Switch>
         </div>
