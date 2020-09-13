@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddRecipeToFavoriteButton from '../buttons/AddRecipeToFavoriteButton';
@@ -9,55 +8,39 @@ import './recipe.scss';
 
 class Recipe extends Component {
   componentDidMount() {
-    const {
-      match: {
-        params: { id },
-      },
-      loadRecipe,
-    } = this.props;
-    loadRecipe(id);
+    const { data, loadRecipe } = this.props;
+    loadRecipe(data);
   }
 
   render() {
+    const { recipe } = this.props;
     return (
-      <div className="recipe-container">
-        <div className="recipe">
-          <div className="card">
-            <div className="card-body">
-              <h4 className="card-title">{recipe.name}</h4>
-              <img
-                className="card-img-top"
-                src={recipe.image}
-                alt={recipe.name}
-              />
-              <ul className="ingredients">
-                <h5>Ingredients</h5>
-                {recipe &&
-                  recipe.Ingredients &&
-                  recipe.Ingredients[0] &&
-                  recipe.Ingredients[0].name
-                    .split(';')
-                    .map((ingredient) => (
-                      <li key={ingredient}>{ingredient}</li>
-                    ))}
-              </ul>
-              <ol className="instructions">
-                <h5>Instructions</h5>
-                {recipe &&
-                  recipe.steps &&
-                  recipe.steps
-                    .split('.')
-                    .map((step) => <li key={step}>{step}</li>)}
-              </ol>
-              <AddRecipeToFavoriteButton />
-              <AddRecipeToEventButton />
-            </div>
-          </div>
-          <Link
-            to={`/recipe/${recipe.id}`}
-            key={recipe.id}
-            className="card"
-          ></Link>
+      <div className="card-body">
+        <div className="card-top">
+          <img
+            className="recipe card-img-top"
+            src={recipe.image}
+            alt={recipe.name}
+          />
+          <ul className="ingredients">
+            {recipe &&
+              recipe.Ingredients &&
+              recipe.Ingredients[0] &&
+              recipe.Ingredients[0].name
+                .split(';')
+                .map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
+          </ul>
+        </div>
+        <h5>Instructions</h5>
+        <hr />
+        <ol className="instructions">
+          {recipe &&
+            recipe.steps &&
+            recipe.steps.split('.').map((step) => <li key={step}>{step}</li>)}
+        </ol>
+        <div className="buttons">
+          <AddRecipeToFavoriteButton />
+          <AddRecipeToEventButton />
         </div>
       </div>
     );
@@ -79,7 +62,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Recipe.propTypes = {
-  // recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
+  recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,

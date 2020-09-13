@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import RecipesSearch from '../recipesSearch/RecipeSearch';
 import './recipes.scss';
-// import Popup from '../popup/Popup';
-// import Recipe from '../../../server/db/Models/Recipe';
+import Popup from '../popup/Popup';
+import Recipe from '../recipe/Recipe';
+import ViewRecipeButton from '../buttons/ViewRecipeButton';
 
 class Recipes extends Component {
   componentDidMount() {
@@ -26,14 +27,22 @@ class Recipes extends Component {
         <div className="recipes-search">
           <RecipesSearch {...this.props} />
         </div>
+        <h3>{`Found ${recipes.length} result(s)...`}</h3>
         <div className="recipes-results">
           {recipes.map((recipe) => {
             return (
-              <Link
-                to={`/recipe/${recipe.id}`}
-                key={recipe.id}
-                className="card"
-              >
+              <div key={recipe.id} className="card">
+                <Popup
+                  title={recipe.name}
+                  BodyModal={Recipe}
+                  ButtonModal={ViewRecipeButton}
+                  data={recipe.id}
+                />
+                {/* <Link
+                  to={`/recipe/${recipe.id}`}
+                  key={recipe.id}
+                  className="card"
+                > */}
                 <img
                   className="card-img-top"
                   src={recipe.image}
@@ -42,7 +51,8 @@ class Recipes extends Component {
                 <div className="card-body">
                   <h4 className="card-title">{recipe.name}</h4>
                 </div>
-              </Link>
+                {/* </Link> */}
+              </div>
             );
           })}
         </div>

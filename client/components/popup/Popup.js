@@ -17,7 +17,7 @@ export default class Popup extends Component {
 
   render() {
     const { show } = this.state;
-    const { BodyModal, ButtonModal, title } = this.props;
+    const { BodyModal, ButtonModal, title, data } = this.props;
     const { handleClose, handleShow } = this;
 
     return (
@@ -28,7 +28,7 @@ export default class Popup extends Component {
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <BodyModal />
+            <BodyModal data={data} />
           </Modal.Body>
         </Modal>
       </>
@@ -40,10 +40,12 @@ Popup.defaultProps = {
   ButtonModal: null,
   BodyModal: null,
   title: '',
+  data: '',
 };
 
 Popup.propTypes = {
   ButtonModal: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   BodyModal: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   title: PropTypes.string,
+  data: PropTypes.string,
 };

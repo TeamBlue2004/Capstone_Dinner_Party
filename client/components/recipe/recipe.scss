@@ -1,0 +1,49 @@
+.card-top img.recipe {
+    max-width: 350px !important;
+    width: 100%;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between
+}
+
+.card-body h5 {
+    margin-top: 3%;
+}
+
+.card-body ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 525px;
+}
+
+.card-body ol {
+    margin: 1% 0;
+    padding-left: 1%;
+}
+
+.card-img-top {
+    border: 1px solid gray;
+}
+
+.modal-header {
+    padding: 1rem 2rem !important;
+}
+
+.modal-body {
+    padding: 0.6rem !important;
+}
+
+.modal-dialog {
+    max-width: 1000px !important;
+}
+
+.buttons {
+    text-align: right;
+}
+
+.buttons button {
+    margin-left: 2%;
+}
