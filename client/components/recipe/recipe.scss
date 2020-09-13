@@ -1,6 +1,3 @@
-.card-top .recipe-image {
-    width: 350px !important;
-}
 
 .card-top {
     display: flex;
@@ -20,6 +17,15 @@
     padding: 0;
 }
 
+.card-top .recipe-image {
+    max-width: 350px !important;
+
+}
+
+.card-top .recipe-image img {
+    border: 1px solid gray;
+}
+
 .card-body .ingredients ul {
     display: flex;
     flex-direction: column;
@@ -28,14 +34,15 @@
     padding: 0;
 }
 
+.card-body .ingredients ul li {
+    flex: 1,
+}
+
 .card-body .instructions {
     margin: 1% 0;
     padding-left: 1%;
 }
 
-.card-img-top {
-    border: 1px solid gray;
-}
 
 .modal-header {
     padding: 1rem 2rem !important;

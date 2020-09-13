@@ -40,7 +40,7 @@ class Recipe extends Component {
         <ol className="instructions">
           {recipe &&
             recipe.steps &&
-            recipe.steps.split('.').map((step) => <li key={step}>{step}</li>)}
+            recipe.steps.split(';').map((step) => <li key={step}>{step}</li>)}
         </ol>
         <div className="buttons">
           <AddRecipeToFavoriteButton />
