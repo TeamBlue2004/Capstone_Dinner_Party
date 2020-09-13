@@ -2,7 +2,7 @@ const eventsRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
 const chalk = require('chalk');
 
-const { Event } = require('../../db/Models/index');
+const { Event, User } = require('../../db/Models/index');
 
 // eventsRouter.get();
 
@@ -41,5 +41,35 @@ eventsRouter.post(
 // eventsRouter.put();
 
 // eventsRouter.delete();
+
+eventsRouter.get('/events/userevents/:userId', async (req, res) => {
+  const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
+  console.log('inside route axios  call for eager data loading ', req.userId);
+  console.log('hardcoded userid is --- ', userId);
+  // const { userId } = req.userId;
+  try {
+    // find out events associated with a user from through table
+    const userEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+    console.log('userEventList is --- ', userEventList);
+
+    // eventsArr.push(event);
+
+    res.status(200).send(userEventList);
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send({ message: 'Server error while fetching event list for a user' });
+  }
+});
 
 module.exports = eventsRouter;
