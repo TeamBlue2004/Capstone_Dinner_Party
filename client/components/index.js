@@ -11,6 +11,7 @@ import AddEventForm from './addEventForm/AddEventForm';
 import Friends from './friends/Friends';
 
 // Recipes
+import Recipe from './recipe/Recipe';
 import Recipes from './recipes/Recipes';
 import RecipesSearch from './recipesSearch/RecipeSearch';
 
@@ -21,6 +22,7 @@ export {
   Event,
   AddEventForm,
   Friends,
+  Recipe,
   Recipes,
   RecipesSearch,
 };

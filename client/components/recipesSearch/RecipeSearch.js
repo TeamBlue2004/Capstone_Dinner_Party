@@ -38,9 +38,18 @@ class RecipesSearch extends Component {
     const vegetarian = searchParams.get('vegetarian');
     const dairyFree = searchParams.get('dairyFree');
     const glutenFree = searchParams.get('glutenFree');
-    if (ingredients) {
-      this.setState({ ingredients, vegan, vegetarian, dairyFree, glutenFree });
-    }
+    const params = [
+      { ingredients },
+      { vegan },
+      { vegetarian },
+      { dairyFree },
+      { glutenFree },
+    ];
+    params.forEach((param) => {
+      const [state] = Object.entries(param);
+      if (state[1] === 'true') state[1] = true; // convert 'true' into true
+      if (state[1]) this.setState({ [state[0]]: state[1] });
+    });
   };
 
   searchHandler = (event) => {
@@ -84,7 +93,7 @@ class RecipesSearch extends Component {
       glutenFree,
     } = this.state;
     const { history, loadRecipes } = this.props;
-    const jointIngredients = ingredients.join(',');
+    const jointIngredients = ingredients && ingredients.join(',');
     const searchURL = `?ingredients=${jointIngredients}${this.sensitivities(
       { vegan },
       { vegetarian },
