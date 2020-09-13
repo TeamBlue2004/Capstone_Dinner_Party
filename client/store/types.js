@@ -1,6 +1,7 @@
 export const TYPES = {
   // Recipe types
   FETCH_RECIPES: 'FETCH_RECIPES',
+  FETCH_FAVORITE_RECIPES: 'FETCH_FAVORITE_RECEIPES',
 
   // Event types
   FETCH_EVENTS: 'FETCH_EVENTS',
