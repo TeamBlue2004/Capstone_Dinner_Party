@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import RecipesSearch from '../recipesSearch/RecipeSearch';
 import './recipes.scss';
+// import Popup from '../popup/Popup';
+// import Recipe from '../../../server/db/Models/Recipe';
 
 class Recipes extends Component {
   componentDidMount() {
