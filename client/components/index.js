@@ -1,5 +1,9 @@
 // Import and Export all components from one file
+
+// Header
 import Header from './header/Header';
+
+// Home
 import Home from './home/Home';
 
 // Events

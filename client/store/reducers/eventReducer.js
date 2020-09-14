@@ -1,9 +1,16 @@
 import { TYPES } from '../types';
 
-export const eventsReducer = (state = [], action) => {
+const initialEventsState = {
+  events: [],
+};
+
+export const eventsReducer = (state = initialEventsState, action) => {
   switch (action.type) {
     case TYPES.FETCH_EVENTS:
-      return action.events;
+      return {
+        ...state,
+        events: action.events,
+      };
     default:
       return state;
   }

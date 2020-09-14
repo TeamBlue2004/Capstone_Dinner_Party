@@ -22,17 +22,18 @@ const setRecipes = (recipes) => {
   };
 };
 
+const fetchRecipes = (query) => async (dispatch) => {
+  const { data } = await axios.get(`/api/recipes/${query}`);
+  return dispatch(setRecipes(data));
+};
+
+// Fetch user's favorite recipes based on userId
 const setFavoriteRecipes = (favRecipes) => {
   console.log('favRecipes --- ', favRecipes);
   return {
     type: TYPES.FETCH_FAVORITE_RECIPES,
     favRecipes,
   };
-};
-
-const fetchRecipes = (query) => async (dispatch) => {
-  const { data } = await axios.get(`/api/recipes/${query}`);
-  return dispatch(setRecipes(data));
 };
 
 const fetchFavoriteRecipes = (userId) => async (dispatch) => {
