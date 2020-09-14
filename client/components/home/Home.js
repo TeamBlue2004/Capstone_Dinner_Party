@@ -20,20 +20,28 @@ class Home extends Component {
   render() {
     const { eventsList, favoriteRecipesList } = this.props;
     console.log('render eventList --- ', eventsList);
+    console.log('render favoriteRecipesList --- ', favoriteRecipesList);
     return (
       <div>
         {eventsList.length !== 0 ? (
           <div>
-            <h2>{eventsList.length} coming events</h2>
+            <div>
+              <h2>{eventsList.length} coming events</h2>
+            </div>
+            <div className="eventbox">
+              {eventsList.map((event) => {
+                return <Link to={`/event/${event.id}`} key={event.id}></Link>;
+              })}
+            </div>
           </div>
         ) : (
           <div>No events</div>
         )}
-        <div>
+        {/* <div>
           {eventsList.map((event) => {
             return <Link to={`/event/${event.id}`} key={event.id}></Link>;
           })}
-        </div>
+        </div> */}
         {favoriteRecipesList ? (
           <div className="recipes-results">
             {favoriteRecipesList.map((recipe) => {
@@ -62,9 +70,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('state in home in mapStatetoProps --- ', state);
   return {
-    eventsList: state.events,
-    favoriteRecipesList: state.favoriteRecipes,
+    eventsList: state.events.events,
+    favoriteRecipesList: state.recipes.favRecipes,
   };
 };
 
