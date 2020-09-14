@@ -42,6 +42,11 @@ const fetchFavoriteRecipes = (userId) => async (dispatch) => {
   return dispatch(setFavoriteRecipes(data));
 };
 
+const fetchRecipesFromImage = () => async (dispatch) => {
+  const { data } = await axios.get(`/api/camera/`);
+  return dispatch(setRecipes(data));
+};
+
 export const recipesActions = {
   setRecipe,
   fetchRecipe,
@@ -49,4 +54,5 @@ export const recipesActions = {
   fetchFavoriteRecipes,
   setFavoriteRecipes,
   fetchRecipes,
+  fetchRecipesFromImage,
 };

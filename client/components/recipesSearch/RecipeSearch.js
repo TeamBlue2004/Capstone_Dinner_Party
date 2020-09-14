@@ -19,8 +19,10 @@ class RecipesSearch extends Component {
         location: { search },
       },
       loadRecipes,
+      loadRecipesFromImage,
     } = this.props;
     this.loadParams();
+    loadRecipesFromImage();
     loadRecipes(search);
   }
 
@@ -214,6 +216,9 @@ const mapDispatchToProps = (dispatch) => {
     loadRecipes: (query) => {
       dispatch(recipesActions.fetchRecipes(query));
     },
+    loadRecipesFromImage: () => {
+      dispatch(recipesActions.fetchRecipesFromImage());
+    },
   };
 };
 
@@ -225,6 +230,7 @@ RecipesSearch.propTypes = {
     }).isRequired,
   }).isRequired,
   loadRecipes: PropTypes.func.isRequired,
+  loadRecipesFromImage: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesSearch);
