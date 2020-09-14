@@ -13,7 +13,7 @@ export const recipesReducer = (state = initialRecipesState, action) => {
         recipe: action.recipe,
       };
     case TYPES.FETCH_RECIPES:
-     return {
+      return {
         ...state,
         recipes: action.recipes,
       };
