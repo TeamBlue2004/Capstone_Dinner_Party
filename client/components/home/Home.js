@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { eventsActions } from '../../store/actions/index';
+import { eventsActions, recipesActions } from '../../store/actions/index';
 
 class Home extends Component {
   constructor() {
@@ -12,12 +12,13 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { loadEvents } = this.props;
+    const { loadEvents, loadFavoriteRecipes } = this.props;
     loadEvents('63f7b479-db89-4b5f-804d-4e371250b66f');
+    loadFavoriteRecipes('63f7b479-db89-4b5f-804d-4e371250b66f');
   }
 
   render() {
-    const { eventsList } = this.props;
+    const { eventsList, favoriteRecipesList } = this.props;
     console.log('render eventList --- ', eventsList);
     return (
       <div>
@@ -33,6 +34,28 @@ class Home extends Component {
             return <Link to={`/event/${event.id}`} key={event.id}></Link>;
           })}
         </div>
+        {favoriteRecipesList ? (
+          <div className="recipes-results">
+            {favoriteRecipesList.map((recipe) => {
+              return (
+                <Link
+                  to={`/recipe/${recipe.id}`}
+                  key={recipe.id}
+                  className="card"
+                >
+                  <img
+                    className="card-img-top"
+                    src={recipe.image}
+                    alt={recipe.name}
+                  />
+                  <div className="card-body">
+                    <h4 className="card-title">{recipe.name}</h4>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -41,6 +64,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     eventsList: state.events,
+    favoriteRecipesList: state.favoriteRecipes,
   };
 };
 
@@ -50,12 +74,18 @@ const mapDispatchToProps = (dispatch) => {
       console.log('disptach is called for fetchEvents --');
       dispatch(eventsActions.fetchEvents(userId));
     },
+    loadFavoriteRecipes: (userId) => {
+      console.log('disptach is called for loadFavoriteRecipes --');
+      dispatch(recipesActions.fetchFavoriteRecipes(userId));
+    },
   };
 };
 
 Home.propTypes = {
   loadEvents: PropTypes.func.isRequired,
+  loadFavoriteRecipes: PropTypes.func.isRequired,
   eventsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favoriteRecipesList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

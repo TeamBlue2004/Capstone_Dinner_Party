@@ -17,6 +17,11 @@ export const recipesReducer = (state = initialRecipesState, action) => {
         ...state,
         recipes: action.recipes,
       };
+    case TYPES.FETCH_FAVORITE_RECIPES:
+      return {
+        ...state,
+        favRecipes: action.favRecipes,
+      };
     default:
       return state;
   }

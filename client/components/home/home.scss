@@ -1,0 +1,16 @@
+.recipes-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    color: black;
+    margin: 1% 0;
+    max-width: 300px;
+    width: 100%;
+}
+
+.card:hover {
+    text-decoration: none;
+}
