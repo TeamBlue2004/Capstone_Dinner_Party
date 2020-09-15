@@ -1,0 +1,75 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react",
+    "plugin:prettier/recommended",
+    "eslint:recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "jest"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "rules": {
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      },
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "indent": [
+      "error",
+      2, // 2-spaces
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-plusplus": "off",
+    "max-classes-per-file": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/state-in-constructor": "off",
+    "react/self-closing-comp": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "no-extra-parens": [
+      "warn",
+      "all",
+      {
+        "ignoreJSX": "all",
+        "nestedBinaryExpressions": false,
+        "conditionalAssign": false
+      }
+    ],
+    "no-unused-vars": 2,
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "camelcase": "off",
+    "@typescript-eslint/no-var-requires": "off"
+  }
+}
