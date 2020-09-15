@@ -30,7 +30,11 @@ class Home extends Component {
             </div>
             <div className="eventbox">
               {eventsList.map((event) => {
-                return <Link to={`/event/${event.id}`} key={event.id}></Link>;
+                return (
+                  <Link to={`/event/${event.id}`} key={event.id}>
+                    {event.id}
+                  </Link>
+                );
               })}
             </div>
           </div>
