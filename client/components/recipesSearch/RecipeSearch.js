@@ -19,10 +19,8 @@ class RecipesSearch extends Component {
         location: { search },
       },
       loadRecipes,
-      loadRecipesFromImage,
     } = this.props;
     this.loadParams();
-    loadRecipesFromImage();
     loadRecipes(search);
   }
 
@@ -84,6 +82,19 @@ class RecipesSearch extends Component {
       if (sensitivity[1]) query += `&${sensitivity[0]}=${sensitivity[1]}`;
     });
     return query;
+  };
+
+  cameraHandler = (event) => {
+    const { loadIngredientsFromImage } = this.props;
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      await loadIngredientsFromImage(
+        reader.result.replace(/^data:image\/(.*);base64,/, '')
+      ).then(response => console.log(response));
+    };
+    reader.readAsDataURL(file);
+    // console.log(ingredientsFromCamera);
   };
 
   searchRecipes = () => {
@@ -171,6 +182,16 @@ class RecipesSearch extends Component {
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Dairy Free
           </label>
+          <input
+            className="form-check-input"
+            type="file"
+            name="camera"
+            accept="image/*"
+            onChange={this.cameraHandler}
+          />
+          <label className="form-check-label" htmlFor="inlineCheckbox1">
+            Dairy Free
+          </label>
         </div>
         <div className="ingredients">
           <ul className="list-group">
@@ -216,8 +237,8 @@ const mapDispatchToProps = (dispatch) => {
     loadRecipes: (query) => {
       dispatch(recipesActions.fetchRecipes(query));
     },
-    loadRecipesFromImage: () => {
-      dispatch(recipesActions.fetchRecipesFromImage());
+    loadIngredientsFromImage: async (imgBase) => {
+      await dispatch(recipesActions.fetchIngredientsFromImage(imgBase));
     },
   };
 };
@@ -229,8 +250,9 @@ RecipesSearch.propTypes = {
       search: PropTypes.string,
     }).isRequired,
   }).isRequired,
+  // ingredientsFromCamera: PropTypes.arrayOf(PropTypes.string),
   loadRecipes: PropTypes.func.isRequired,
-  loadRecipesFromImage: PropTypes.func.isRequired,
+  loadIngredientsFromImage: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesSearch);

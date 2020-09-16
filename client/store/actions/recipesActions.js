@@ -42,9 +42,17 @@ const fetchFavoriteRecipes = (userId) => async (dispatch) => {
   return dispatch(setFavoriteRecipes(data));
 };
 
-const fetchRecipesFromImage = () => async (dispatch) => {
-  const { data } = await axios.get(`/api/camera/`);
-  return dispatch(setRecipes(data));
+// const setIngredientsFromCamera = (cameraIngredients) => {
+//   return {
+//     type: TYPES.FETCH_CAMERA_INGREDIENTS,
+//     cameraIngredients,
+//   };
+// };
+
+const fetchIngredientsFromImage = (imgBase) => async (dispatch) => {
+  const { data } = await axios.post(`/api/camera/`, { imgBase });
+  return data;
+  // return dispatch(setIngredientsFromCamera(data));
 };
 
 export const recipesActions = {
@@ -54,5 +62,5 @@ export const recipesActions = {
   fetchFavoriteRecipes,
   setFavoriteRecipes,
   fetchRecipes,
-  fetchRecipesFromImage,
+  fetchIngredientsFromImage,
 };

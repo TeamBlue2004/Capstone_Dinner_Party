@@ -4,6 +4,7 @@ const initialRecipesState = {
   recipe: [],
   recipes: [],
   favRecipes: [],
+  ingredientsFromCamera: [],
 };
 
 export const recipesReducer = (state = initialRecipesState, action) => {
