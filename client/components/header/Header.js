@@ -25,10 +25,7 @@ class Header extends Component {
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="#events">Events</Nav.Link>
               <Nav.Link href="#friends">Friends</Nav.Link>
-<<<<<<< HEAD
               <Nav.Link href="#recipes?ingredients=">Recipes</Nav.Link>
-=======
-              <Nav.Link href="#recipes">Recipes</Nav.Link>
               <a
                 role="button"
                 href=""
@@ -37,7 +34,6 @@ class Header extends Component {
               >
                 Logout
               </a>
->>>>>>> rebaselogin
             </Nav>
           </Navbar.Collapse>
         </Navbar>

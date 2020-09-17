@@ -27,15 +27,10 @@ export {
   Events,
   Event,
   AddEventForm,
-<<<<<<< HEAD
   Friends,
+  RecipesSearch,
+  Recipes,
   Recipe,
-  Recipes,
-  RecipesSearch,
-=======
-  Recipes,
-  RecipesSearch,
   Login,
   Register,
->>>>>>> rebaselogin
 };
