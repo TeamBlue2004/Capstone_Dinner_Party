@@ -13,7 +13,7 @@ export default class Events extends Component {
         <div className="p-2 d-flex flex-row justify-content-between align-items-center">
           <h2> My Events </h2>
           <Popup
-            title="Add Event"
+            title="Add New Event"
             BodyModal={AddEventForm}
             ButtonModal={AddEventButton}
           />

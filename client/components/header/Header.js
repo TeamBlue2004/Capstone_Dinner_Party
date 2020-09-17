@@ -15,7 +15,7 @@ export default class Header extends Component {
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="#events">Events</Nav.Link>
               <Nav.Link href="#friends">Friends</Nav.Link>
-              <Nav.Link href="#recipes">Recipes</Nav.Link>
+              <Nav.Link href="#recipes?ingredients=">Recipes</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

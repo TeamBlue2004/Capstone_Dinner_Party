@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { UUID, UUIDV4, STRING } = Sequelize;
+const { UUID, UUIDV4, TEXT } = Sequelize;
 const { db } = require('../db');
 
 const Ingredient = db.define(
@@ -12,7 +12,7 @@ const Ingredient = db.define(
       primaryKey: true,
     },
     name: {
-      type: STRING,
+      type: TEXT,
       allowNull: false,
       unique: true,
       validate: {
