@@ -252,7 +252,6 @@ class RecipesSearch extends Component {
 const mapStateToProps = (state) => {
   return {
     recipes: state.recipes,
-    fromCamera: state.recipes.ingredientsFromCamera,
   };
 };
 
@@ -260,9 +259,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadRecipes: (query) => {
       dispatch(recipesActions.fetchRecipes(query));
-    },
-    loadIngredientsFromImage: (imgBase) => {
-      dispatch(recipesActions.fetchIngredientsFromImage(imgBase));
     },
   };
 };
