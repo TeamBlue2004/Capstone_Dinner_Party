@@ -42,17 +42,17 @@ const fetchFavoriteRecipes = (userId) => async (dispatch) => {
   return dispatch(setFavoriteRecipes(data));
 };
 
-const setIngredientsFromCamera = (cameraIngredients) => {
-  return {
-    type: TYPES.FETCH_CAMERA_INGREDIENTS,
-    cameraIngredients,
-  };
-};
+// const setIngredientsFromCamera = (cameraIngredients) => {
+//   return {
+//     type: TYPES.FETCH_CAMERA_INGREDIENTS,
+//     cameraIngredients,
+//   };
+// };
 
-const fetchIngredientsFromImage = (imgBase) => async (dispatch) => {
-  const { data } = await axios.post(`/api/camera/`, { imgBase });
-  return dispatch(setIngredientsFromCamera(data));
-};
+// const fetchIngredientsFromImage = (imgBase) => async (dispatch) => {
+//   const { data } = await axios.post(`/api/camera/`, { imgBase });
+//   return dispatch(setIngredientsFromCamera(data));
+// };
 
 export const recipesActions = {
   setRecipe,
@@ -61,5 +61,5 @@ export const recipesActions = {
   fetchFavoriteRecipes,
   setFavoriteRecipes,
   fetchRecipes,
-  fetchIngredientsFromImage,
+  // fetchIngredientsFromImage,
 };
