@@ -24,11 +24,17 @@ form {
 }
 
 .ingredients {
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row;
-    flex-wrap: wrap;
-    overflow-y: scroll;
+    // display: flex;
+    // justify-content: space-between;
+    // flex-flow: row;
+    // flex-wrap: wrap;
+    position: relative; //
+}
+
+.ingredients .image-preview { 
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .ingredients .image-preview img[src="data:,"] { 
@@ -42,7 +48,6 @@ form {
 .ingredients .list-group {
     flex-direction: row !important;
     flex-wrap: wrap;
-    height: 10px;
     width: 50%;
 }
 

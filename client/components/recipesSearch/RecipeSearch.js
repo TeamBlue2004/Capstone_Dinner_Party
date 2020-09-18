@@ -74,13 +74,12 @@ class RecipesSearch extends Component {
     const filteredIngredients = ingredients.filter(
       (ingredient) => ingredient !== removedIngredient
     );
-    this.setState(
-      {
-        ingredients: filteredIngredients,
-        imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
-      },
-      () => console.log(imgSrc)
-    );
+    this.setState({
+      ingredients: filteredIngredients,
+      imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+    });
+    if (filteredIngredients.length === 0)
+      document.querySelector('input[type="file"]').value = '';
   };
 
   checkboxHandler = (event) => {
