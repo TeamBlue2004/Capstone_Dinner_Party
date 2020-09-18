@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { recipesActions } from '../../store/actions/index';
 
 class RecipesSearch extends Component {
@@ -58,7 +59,8 @@ class RecipesSearch extends Component {
 
   addIngredient = () => {
     const { input, ingredients } = this.state;
-    const updatedQuery = [...ingredients, input];
+    const { fromCamera } = this.props;
+    const updatedQuery = [...ingredients, input, ...fromCamera];
     this.setState({ ingredients: updatedQuery });
   };
 
@@ -84,17 +86,20 @@ class RecipesSearch extends Component {
     return query;
   };
 
-  cameraHandler = (event) => {
-    const { loadIngredientsFromImage } = this.props;
+  cameraHandler = async (event) => {
+    // const { loadIngredientsFromImage } = this.props;
     const file = event.target.files[0];
     const reader = new FileReader();
+    await reader.readAsDataURL(file);
     reader.onloadend = async () => {
-      await loadIngredientsFromImage(
-        reader.result.replace(/^data:image\/(.*);base64,/, '')
-      ).then(response => console.log(response));
+      const result = reader.result.replace(/^data:image\/(.*);base64,/, '');
+      await axios
+        .post(`/api/camera/`, { result })
+        .then((response) => this.setState({ ingredients: response.data }));
+      // await loadIngredientsFromImage(
+      //   reader.result.replace(/^data:image\/(.*);base64,/, '')
+      // );
     };
-    reader.readAsDataURL(file);
-    // console.log(ingredientsFromCamera);
   };
 
   searchRecipes = () => {
@@ -229,6 +234,7 @@ class RecipesSearch extends Component {
 const mapStateToProps = (state) => {
   return {
     recipes: state.recipes,
+    fromCamera: state.recipes.ingredientsFromCamera,
   };
 };
 
@@ -237,11 +243,15 @@ const mapDispatchToProps = (dispatch) => {
     loadRecipes: (query) => {
       dispatch(recipesActions.fetchRecipes(query));
     },
-    loadIngredientsFromImage: async (imgBase) => {
-      await dispatch(recipesActions.fetchIngredientsFromImage(imgBase));
+    loadIngredientsFromImage: (imgBase) => {
+      dispatch(recipesActions.fetchIngredientsFromImage(imgBase));
     },
   };
 };
+
+// RecipesSearch.defaultProps = {
+//   ingredientsFromCamera: [],
+// };
 
 RecipesSearch.propTypes = {
   history: PropTypes.shape({
@@ -252,7 +262,7 @@ RecipesSearch.propTypes = {
   }).isRequired,
   // ingredientsFromCamera: PropTypes.arrayOf(PropTypes.string),
   loadRecipes: PropTypes.func.isRequired,
-  loadIngredientsFromImage: PropTypes.func.isRequired,
+  // loadIngredientsFromImage: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesSearch);

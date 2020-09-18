@@ -6,7 +6,8 @@ require('dotenv').config();
 const API_KEY = process.env.CLARIFAI_KEY;
 
 cameraRouter.post('/camera', async (req, res) => {
-  const { imgBase } = req.body;
+  // const { imgBase } = req.body;
+  const { result } = req.body;
   try {
     const app = new Clarifai.App({
       apiKey: API_KEY,
@@ -17,7 +18,7 @@ cameraRouter.post('/camera', async (req, res) => {
       return response;
     };
 
-    detect(imgBase).then((response) => {
+    detect(result).then((response) => {
       const ingredients = response.outputs[0].data.concepts
         .filter(
           (prediction) =>
@@ -27,7 +28,6 @@ cameraRouter.post('/camera', async (req, res) => {
             prediction.name !== 'aliment'
         )
         .map((ingredient) => ingredient.name);
-      console.log(ingredients);
       res.status(200).send(ingredients);
     });
   } catch (e) {
