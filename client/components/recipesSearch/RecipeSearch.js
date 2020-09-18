@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { recipesActions } from '../../store/actions/index';
+import './recipesSearch.scss';
 
 class RecipesSearch extends Component {
   state = {
     input: '',
     ingredients: [],
+    imgSrc: 'data:,',
     vegan: false,
     vegetarian: false,
     dairyFree: false,
@@ -57,20 +59,28 @@ class RecipesSearch extends Component {
     this.setState({ input: event.target.value });
   };
 
-  addIngredient = () => {
+  addIngredient = (event) => {
+    event.preventDefault();
     const { input, ingredients } = this.state;
-    // const { fromCamera } = this.props; needs to be spread ...fromCamera below
     const updatedQuery = [...ingredients, input];
-    this.setState({ ingredients: updatedQuery });
+    this.setState({
+      ingredients: updatedQuery,
+    });
   };
 
   deleteIngredient = (event) => {
-    const { ingredients } = this.state;
+    const { ingredients, imgSrc } = this.state;
     const removedIngredient = event.target.parentNode.id;
     const filteredIngredients = ingredients.filter(
       (ingredient) => ingredient !== removedIngredient
     );
-    this.setState({ ingredients: filteredIngredients });
+    this.setState(
+      {
+        ingredients: filteredIngredients,
+        imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+      },
+      () => console.log(imgSrc)
+    );
   };
 
   checkboxHandler = (event) => {
@@ -87,18 +97,17 @@ class RecipesSearch extends Component {
   };
 
   cameraHandler = async (event) => {
-    // const { loadIngredientsFromImage } = this.props;
     const file = event.target.files[0];
     const reader = new FileReader();
-    await reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
     reader.onloadend = async () => {
       const imgBase = reader.result.replace(/^data:image\/(.*);base64,/, '');
-      await axios
-        .post(`/api/camera/`, { imgBase })
-        .then((response) => this.setState({ ingredients: response.data }));
-      // await loadIngredientsFromImage(
-      //   reader.result.replace(/^data:image\/(.*);base64,/, '')
-      // );
+      await axios.post(`/api/camera/`, { imgBase }).then((response) =>
+        this.setState({
+          ingredients: response.data,
+          imgSrc: URL.createObjectURL(file),
+        })
+      );
     };
   };
 
@@ -129,14 +138,30 @@ class RecipesSearch extends Component {
     const {
       input,
       ingredients,
+      imgSrc,
       vegan,
       vegetarian,
       glutenFree,
       dairyFree,
     } = this.state;
+
     return (
       <div className="md-form">
         <form onSubmit={this.addIngredient}>
+          <div className="camera-input">
+            <input
+              id="file-input"
+              className="file-input"
+              type="file"
+              name="camera"
+              accept="image/*"
+              onChange={this.cameraHandler}
+              capture="environment"
+            />
+            <label className="form-check-label" htmlFor="file-input">
+              <i className="fa fa-camera" aria-hidden="true"></i>
+            </label>
+          </div>
           <input
             className="form-control"
             type="text"
@@ -187,16 +212,6 @@ class RecipesSearch extends Component {
           <label className="form-check-label" htmlFor="inlineCheckbox1">
             Dairy Free
           </label>
-          <input
-            className="form-check-input"
-            type="file"
-            name="camera"
-            accept="image/*"
-            onChange={this.cameraHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Dairy Free
-          </label>
         </div>
         <div className="ingredients">
           <ul className="list-group">
@@ -206,7 +221,7 @@ class RecipesSearch extends Component {
                   <li
                     key={ingredient}
                     id={ingredient}
-                    className="list-group-item d-flex justify-content-between align-items-center"
+                    className="list-group-item"
                   >
                     <span>{ingredient}</span>
                     <button type="button" onClick={this.deleteIngredient}>
@@ -216,6 +231,9 @@ class RecipesSearch extends Component {
                 );
               })}
           </ul>
+          <div className="image-preview">
+            <img src={imgSrc} alt="" />
+          </div>
         </div>
         <div className="search-recipes">
           <button
@@ -249,10 +267,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-// RecipesSearch.defaultProps = {
-//   ingredientsFromCamera: [],
-// };
-
 RecipesSearch.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -260,9 +274,7 @@ RecipesSearch.propTypes = {
       search: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  // ingredientsFromCamera: PropTypes.arrayOf(PropTypes.string),
   loadRecipes: PropTypes.func.isRequired,
-  // loadIngredientsFromImage: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesSearch);
