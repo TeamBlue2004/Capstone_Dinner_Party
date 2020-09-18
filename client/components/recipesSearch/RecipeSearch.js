@@ -59,8 +59,8 @@ class RecipesSearch extends Component {
 
   addIngredient = () => {
     const { input, ingredients } = this.state;
-    const { fromCamera } = this.props;
-    const updatedQuery = [...ingredients, input, ...fromCamera];
+    // const { fromCamera } = this.props; needs to be spread ...fromCamera below
+    const updatedQuery = [...ingredients, input];
     this.setState({ ingredients: updatedQuery });
   };
 
@@ -92,9 +92,9 @@ class RecipesSearch extends Component {
     const reader = new FileReader();
     await reader.readAsDataURL(file);
     reader.onloadend = async () => {
-      const result = reader.result.replace(/^data:image\/(.*);base64,/, '');
+      const imgBase = reader.result.replace(/^data:image\/(.*);base64,/, '');
       await axios
-        .post(`/api/camera/`, { result })
+        .post(`/api/camera/`, { imgBase })
         .then((response) => this.setState({ ingredients: response.data }));
       // await loadIngredientsFromImage(
       //   reader.result.replace(/^data:image\/(.*);base64,/, '')
