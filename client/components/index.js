@@ -5,6 +5,8 @@ import Header from './header/Header';
 
 // Home
 import Home from './home/Home';
+import Login from './login/Login';
+import Register from './register/Register';
 
 // Events
 import Events from './events/Events';
@@ -26,7 +28,9 @@ export {
   Event,
   AddEventForm,
   Friends,
-  Recipe,
-  Recipes,
   RecipesSearch,
+  Recipes,
+  Recipe,
+  Login,
+  Register,
 };
