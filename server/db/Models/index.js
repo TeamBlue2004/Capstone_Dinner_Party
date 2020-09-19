@@ -7,7 +7,16 @@ const { Event } = require('./Event');
 const { User_Recipe } = require('./User_Recipe');
 
 // User can have many friends
-// User.belongsToMany(User, { through: 'Friends' });
+User.belongsToMany(User, {
+  as: 'friends',
+  foreignKey: 'user_id',
+  through: 'Users_Friends',
+});
+User.belongsToMany(User, {
+  as: 'userFriends',
+  foreignKey: 'friend_id',
+  through: 'Users_Friends',
+});
 
 // Relations between User and Allergen
 User.hasMany(Allergen);

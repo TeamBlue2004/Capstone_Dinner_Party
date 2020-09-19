@@ -12,6 +12,14 @@ const updateForm = (name, value) => ({
   value,
 });
 
+const getFriends = (friends) => {
+  console.log('getFriends action type --- ', friends);
+  return {
+    type: TYPES.FETCH_FRIENDS,
+    friends,
+  };
+};
+
 const register = (newUser) => {
   console.log(newUser);
   return axios
@@ -62,10 +70,19 @@ const createInput = (state) => {
   );
 };
 
+const fetchFriends = (userId) => async (dispatch) => {
+  console.log('fetchFriends action is called with  -- ', userId);
+  const { data } = await axios.get(`/api/events/userfriends/${userId}`);
+  console.log('data after axios db call for fetching friends -- ', data);
+  return dispatch(getFriends(data));
+};
+
 export const loginActions = {
   setLoggedIn,
   updateForm,
   login,
   register,
   createInput,
+  fetchFriends,
+  getFriends,
 };

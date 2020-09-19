@@ -101,6 +101,35 @@ userRouter.get('/users/profile', (req, res) => {
     });
 });
 
+userRouter.get('/users/userfriends/:userId', async (req, res) => {
+  const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
+  console.log('inside route axios for eager fetching friends ', req.userId);
+  console.log('hardcoded userid is --- ', userId);
+  // const { userId } = req.userId;
+  try {
+    // find out friends associated with a user from through table
+    // const userFriendsList = await User.findAll({
+    // //  where: { id: userId },
+    //   include: [{ model: User, as: 'userFriends' }],
+    // //  raw: false,
+    // });
+
+    const userRecord = await User.findOne({
+      where: { id: userId },
+    });
+
+    const userFriendsList = await userRecord.getFriends();
+
+    console.log('userFriendsList is --- ', userFriendsList);
+    res.status(200).send(userFriendsList);
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send({ message: 'Server error while fetching Users friendsList' });
+  }
+});
+
 module.exports = {
   userRouter,
 };

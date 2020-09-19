@@ -6,4 +6,7 @@ export const TYPES = {
 
   // Event types
   FETCH_EVENTS: 'FETCH_EVENTS',
+
+  // Friend types
+  FETCH_FRIENDS: 'FETCH_FRIENDS',
 };
