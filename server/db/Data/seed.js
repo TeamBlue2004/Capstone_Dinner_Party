@@ -1,5 +1,5 @@
 const { fetchRecipes } = require('./data');
-const { Ingredient, Recipe, User } = require('../Models/index');
+const { Ingredient, Recipe } = require('../Models/index');
 require('dotenv').config();
 
 const API_KEY = process.env.SPOONACULAR_KEY;
@@ -14,19 +14,6 @@ const seedData = async () => {
         await createdIngredient.setRecipes(createdRecipe);
       }
     });
-  });
-  await User.create({
-    firstName: 'test',
-    lastName: 'test',
-    email: 'test@gmail.com',
-    addressUnit: 'test',
-    addressCity: 'test',
-    addressState: 'test',
-    addressStreet: 'test',
-    addressZIP: 123454,
-    username: 'test',
-    password: 'password',
-    profilePic: 'test',
   });
 };
 
