@@ -6,4 +6,8 @@ export const TYPES = {
 
   // Event types
   FETCH_EVENTS: 'FETCH_EVENTS',
+
+  // Login types
+  UPDATE_FORM: 'UPDATE_FORM',
+  SET_LOGGEDIN: 'SET_LOGGEDIN',
 };
