@@ -36,32 +36,3 @@
 .card:hover {
     text-decoration: none;
 }
-
-.ingredients .list-group {
-    display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap;
-}
-
-.ingredients .list-group .list-group-item {
-    border-top-width: 1px;
-    border-radius: 4px;
-    max-width: 100px;
-    margin-right: 1%;
-    padding: 0.6%;
-}
-
-.ingredients .list-group .list-group-item {
-    font-size: 14px;
-}
-
-.list-group-item button {
-    background-color: unset;
-    border: 0;
-    color: black;
-    font-size: 10px;
-}
-
-.list-group-item button:hover {
-    color: gray;
-}

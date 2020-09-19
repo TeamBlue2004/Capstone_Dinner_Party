@@ -1,0 +1,76 @@
+form {
+    position: relative;
+}
+
+.camera-input {
+    padding-top: 4px;
+    padding-right: 1.6%;
+    position: absolute;
+    right: 0;
+    height: 100%;
+}
+
+.camera-input>input {
+    display: none;
+};
+
+.camera-input>label {
+    cursor: pointer;
+};
+
+.camera-input>label > i{
+    font-size: 27px;
+    vertical-align: top;
+}
+
+.ingredients {
+    // display: flex;
+    // justify-content: space-between;
+    // flex-flow: row;
+    // flex-wrap: wrap;
+    position: relative; //
+}
+
+.ingredients .image-preview { 
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.ingredients .image-preview img[src="data:,"] { 
+    height: 0; 
+}
+
+.ingredients .image-preview img {
+    height: 100px;
+}
+
+.ingredients .list-group {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+.ingredients .list-group .list-group-item {
+    border-top-width: 1px;
+    border-radius: 4px;
+    max-width: 100px;
+    margin-right: 1%;
+    padding: 0.6%;
+}
+
+.ingredients .list-group .list-group-item {
+    font-size: 14px;
+    padding: 4px;
+}
+
+.list-group-item button {
+    background-color: unset;
+    border: 0;
+    color: black;
+    font-size: 10px;
+}
+
+.list-group-item button:hover {
+    color: gray;
+}

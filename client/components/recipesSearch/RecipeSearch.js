@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { recipesActions } from '../../store/actions/index';
+import './recipesSearch.scss';
 
 class RecipesSearch extends Component {
   state = {
     input: '',
     ingredients: [],
+    imgSrc: 'data:,',
     vegan: false,
     vegetarian: false,
     dairyFree: false,
@@ -56,19 +59,27 @@ class RecipesSearch extends Component {
     this.setState({ input: event.target.value });
   };
 
-  addIngredient = () => {
+  addIngredient = (event) => {
+    event.preventDefault();
     const { input, ingredients } = this.state;
     const updatedQuery = [...ingredients, input];
-    this.setState({ ingredients: updatedQuery });
+    this.setState({
+      ingredients: updatedQuery,
+    });
   };
 
   deleteIngredient = (event) => {
-    const { ingredients } = this.state;
+    const { ingredients, imgSrc } = this.state;
     const removedIngredient = event.target.parentNode.id;
     const filteredIngredients = ingredients.filter(
       (ingredient) => ingredient !== removedIngredient
     );
-    this.setState({ ingredients: filteredIngredients });
+    this.setState({
+      ingredients: filteredIngredients,
+      imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+    });
+    if (filteredIngredients.length === 0)
+      document.querySelector('input[type="file"]').value = '';
   };
 
   checkboxHandler = (event) => {
@@ -82,6 +93,21 @@ class RecipesSearch extends Component {
       if (sensitivity[1]) query += `&${sensitivity[0]}=${sensitivity[1]}`;
     });
     return query;
+  };
+
+  cameraHandler = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const imgBase = reader.result.replace(/^data:image\/(.*);base64,/, '');
+      await axios.post(`/api/camera/`, { imgBase }).then((response) =>
+        this.setState({
+          ingredients: response.data,
+          imgSrc: URL.createObjectURL(file),
+        })
+      );
+    };
   };
 
   searchRecipes = () => {
@@ -111,14 +137,30 @@ class RecipesSearch extends Component {
     const {
       input,
       ingredients,
+      imgSrc,
       vegan,
       vegetarian,
       glutenFree,
       dairyFree,
     } = this.state;
+
     return (
       <div className="md-form">
         <form onSubmit={this.addIngredient}>
+          <div className="camera-input">
+            <input
+              id="file-input"
+              className="file-input"
+              type="file"
+              name="camera"
+              accept="image/*"
+              onChange={this.cameraHandler}
+              capture="environment"
+            />
+            <label className="form-check-label" htmlFor="file-input">
+              <i className="fa fa-camera" aria-hidden="true"></i>
+            </label>
+          </div>
           <input
             className="form-control"
             type="text"
@@ -178,7 +220,7 @@ class RecipesSearch extends Component {
                   <li
                     key={ingredient}
                     id={ingredient}
-                    className="list-group-item d-flex justify-content-between align-items-center"
+                    className="list-group-item"
                   >
                     <span>{ingredient}</span>
                     <button type="button" onClick={this.deleteIngredient}>
@@ -188,6 +230,9 @@ class RecipesSearch extends Component {
                 );
               })}
           </ul>
+          <div className="image-preview">
+            <img src={imgSrc} alt="" />
+          </div>
         </div>
         <div className="search-recipes">
           <button
