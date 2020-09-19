@@ -19,8 +19,6 @@ class Home extends Component {
 
   render() {
     const { eventsList, favoriteRecipesList } = this.props;
-    console.log('render eventList --- ', eventsList);
-    console.log('render favoriteRecipesList --- ', favoriteRecipesList);
     return (
       <div>
         {eventsList.length !== 0 ? (
@@ -74,7 +72,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state in home in mapStatetoProps --- ', state);
   return {
     eventsList: state.events.events,
     favoriteRecipesList: state.recipes.favRecipes,
@@ -84,11 +81,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadEvents: (userId) => {
-      console.log('disptach is called for fetchEvents --');
       dispatch(eventsActions.fetchEvents(userId));
     },
     loadFavoriteRecipes: (userId) => {
-      console.log('disptach is called for loadFavoriteRecipes --');
       dispatch(recipesActions.fetchFavoriteRecipes(userId));
     },
   };

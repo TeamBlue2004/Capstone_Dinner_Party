@@ -18,7 +18,6 @@ class Friends extends Component {
 
   render() {
     const { friendsList } = this.props;
-    console.log('render friendsList --- ', friendsList);
     return (
       <div>
         {friendsList.length !== 0 ? (
@@ -45,7 +44,6 @@ class Friends extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state in friends in mapStatetoProps --- ', state);
   return {
     friendsList: state.friends.friends,
   };
@@ -54,7 +52,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadFriends: (userId) => {
-      console.log('disptach is called for fetchEvents --');
       dispatch(loginActions.fetchFriends(userId));
     },
   };

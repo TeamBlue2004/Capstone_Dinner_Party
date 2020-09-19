@@ -103,8 +103,6 @@ userRouter.get('/users/profile', (req, res) => {
 
 userRouter.get('/users/userfriends/:userId', async (req, res) => {
   const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
-  console.log('inside route axios for eager fetching friends ', req.userId);
-  console.log('hardcoded userid is --- ', userId);
   // const { userId } = req.userId;
   try {
     // find out friends associated with a user from through table
