@@ -63,9 +63,12 @@ class RecipesSearch extends Component {
     event.preventDefault();
     const { input, ingredients } = this.state;
     const updatedQuery = [...ingredients, input];
-    this.setState({
-      ingredients: updatedQuery,
-    });
+    this.setState(
+      {
+        ingredients: updatedQuery,
+      },
+      () => this.searchRecipes()
+    );
   };
 
   deleteIngredient = (event) => {
@@ -74,16 +77,21 @@ class RecipesSearch extends Component {
     const filteredIngredients = ingredients.filter(
       (ingredient) => ingredient !== removedIngredient
     );
-    this.setState({
-      ingredients: filteredIngredients,
-      imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
-    });
+    this.setState(
+      {
+        ingredients: filteredIngredients,
+        imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+      },
+      () => this.searchRecipes()
+    );
     if (filteredIngredients.length === 0)
       document.querySelector('input[type="file"]').value = '';
   };
 
   checkboxHandler = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
+    this.setState({ [event.target.name]: event.target.checked }, () =>
+      this.searchRecipes()
+    );
   };
 
   sensitivities = (...args) => {
@@ -102,10 +110,13 @@ class RecipesSearch extends Component {
     reader.onloadend = async () => {
       const imgBase = reader.result.replace(/^data:image\/(.*);base64,/, '');
       await axios.post(`/api/camera/`, { imgBase }).then((response) =>
-        this.setState({
-          ingredients: response.data,
-          imgSrc: URL.createObjectURL(file),
-        })
+        this.setState(
+          {
+            ingredients: response.data,
+            imgSrc: URL.createObjectURL(file),
+          },
+          () => this.searchRecipes()
+        )
       );
     };
   };
@@ -233,15 +244,6 @@ class RecipesSearch extends Component {
           <div className="image-preview">
             <img src={imgSrc} alt="" />
           </div>
-        </div>
-        <div className="search-recipes">
-          <button
-            type="submit"
-            onClick={this.searchRecipes}
-            value="Search Recipes"
-          >
-            Search Recipes
-          </button>
         </div>
       </div>
     );
