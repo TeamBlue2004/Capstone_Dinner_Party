@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import PropTypes from 'prop-types';
 import { Navbar, Nav } from 'react-bootstrap';
 
-class Header extends Component {
-  logOut(e) {
-    e.preventDefault();
-    const { history } = this.props;
-    localStorage.removeItem('usertoken');
-    history.push(`/login`);
-    this.render();
-  }
-
+export default class Header extends Component {
   render() {
     return (
       <header>
@@ -26,14 +16,6 @@ class Header extends Component {
               <Nav.Link href="#events">Events</Nav.Link>
               <Nav.Link href="#friends">Friends</Nav.Link>
               <Nav.Link href="#recipes?ingredients=">Recipes</Nav.Link>
-              <a
-                role="button"
-                href=""
-                onClick={this.logOut.bind(this)}
-                className="nav-link"
-              >
-                Logout
-              </a>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -41,11 +23,3 @@ class Header extends Component {
     );
   }
 }
-
-Header.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(Header);
