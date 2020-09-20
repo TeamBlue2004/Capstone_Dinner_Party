@@ -155,6 +155,12 @@ class RecipesSearch extends Component {
       dairyFree,
     } = this.state;
 
+    const dietaryRestrictions = [
+      { vegan },
+      { vegetarian },
+      { glutenFree },
+      { dairyFree },
+    ];
     return (
       <div className="md-form">
         <form onSubmit={this.addIngredient}>
@@ -182,46 +188,29 @@ class RecipesSearch extends Component {
           />
         </form>
         <div className="form-check form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="vegan"
-            checked={vegan}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Vegan
-          </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="vegetarian"
-            checked={vegetarian}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Vegetarian
-          </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="glutenFree"
-            checked={glutenFree}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Gluten Free
-          </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="dairyFree"
-            checked={dairyFree}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Dairy Free
-          </label>
+          {dietaryRestrictions.map((restriction) => {
+            const keys = Object.entries(restriction);
+            const sensitivity = keys[0][0]
+              .split(/(?=[A-Z])/)
+              .reduce((acc, curr) => {
+                const uppCase = curr.charAt(0).toUpperCase() + curr.slice(1);
+                return `${acc} ${uppCase}`.trim();
+              }, '');
+            return (
+              <>
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name={keys[0][0]}
+                  checked={keys[0][1]}
+                  onChange={this.checkboxHandler}
+                />
+                <label className="form-check-label" htmlFor="inlineCheckbox1">
+                  {sensitivity}
+                </label>
+              </>
+            );
+          })}
         </div>
         <div className="ingredients">
           <ul className="list-group">
