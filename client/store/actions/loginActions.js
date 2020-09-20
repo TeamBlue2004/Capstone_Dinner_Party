@@ -34,6 +34,7 @@ const register = (newUser) => {
 };
 
 const login = (user) => {
+  console.log(user);
   return async (dispatch) => {
     try {
       await axios.post('/api/users/login', {
