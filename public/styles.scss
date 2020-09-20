@@ -1,6 +1,43 @@
 @import 'bootstrap/scss/bootstrap.scss';
 
-
 body {
   font-family: 'Roboto';
+}
+
+#app {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: lightblue;
+  box-sizing: border-box;
+}
+
+.headerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: green;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.mainContainer {
+  height: 100%;
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.routesContainer {
+  margin-left: 20px;
+  padding: 10px;
+  width: 40%;
+  border: solid black 2px;
+  overflow-y: scroll;
 }
