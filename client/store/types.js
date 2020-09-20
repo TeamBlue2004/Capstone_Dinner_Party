@@ -10,4 +10,5 @@ export const TYPES = {
   // Login types
   UPDATE_FORM: 'UPDATE_FORM',
   SET_LOGGEDIN: 'SET_LOGGEDIN',
+  SET_LOGGEDOUT: 'SET_LOGGEDOUT',
 };

@@ -61,19 +61,17 @@ userRouter.post('/users/register', (req, res) => {
 });
 
 userRouter.post('/users/login', async (req, res) => {
-  console.log('request was made to login', req.body);
+  console.log(chalk.red('request was made to login'));
   const user = await User.findOne({
     where: {
       username: req.body.username,
     },
   });
-  console.log(chalk.green(user.password, req.body.password));
   if (user) {
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      console.log(chalk.red('im here'));
       const usersSession = await Session.findByPk(req.session_id);
       await usersSession.setUser(user);
-      res.sendStatus(200);
+      res.status(200).send(user);
     }
   } else {
     res.status(400).json({ error: 'User does not exist' });

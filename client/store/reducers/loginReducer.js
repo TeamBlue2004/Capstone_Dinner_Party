@@ -16,9 +16,12 @@ export const loginReducer = (state = initialLoginState, action) => {
     case TYPES.SET_LOGGEDIN:
       return {
         ...state,
-        username: '',
-        password: '',
         loggedIn: true,
+      };
+    case TYPES.SET_LOGGEDOUT:
+      return {
+        ...state,
+        loggedIn: false,
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginActions } from '../../store/actions/index';
 import store from '../../store/store';
@@ -30,14 +31,14 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    const { history } = this.props;
-    const { loggedIn } = this.state;
+  // componentDidMount() {
+  //   const { history } = this.props;
+  //   const { loggedIn } = this.state;
 
-    if (loggedIn) {
-      history.push('/home');
-    }
-  }
+  //   if (loggedIn) {
+  //     history.push('/home');
+  //   }
+  // }
 
   // componentDidUpdate() {
   //   const { history } = this.props;
@@ -52,17 +53,15 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  async handleSubmit(e) {
+  handleSubmit = (e) => {
+    console.log('clicked', this.props);
     e.preventDefault();
+    const { loginUser, history } = this.props;
     const { username, password } = this.state;
     const user = { username, password };
-    const res = await loginActions.login(user);
-    const { history } = this.props;
-    if (res) {
-      console.log(res, 'res');
-      history.push(`/home`);
-    }
-  }
+    loginUser(user);
+    history.push(`/home`);
+  };
 
   render() {
     const { username, password } = this.state;
@@ -117,10 +116,26 @@ class Login extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (user) => {
+      dispatch(loginActions.login(user));
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.username,
+    password: state.password,
+    logggedIn: state.loggedIn,
+  };
+};
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default withRouter(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

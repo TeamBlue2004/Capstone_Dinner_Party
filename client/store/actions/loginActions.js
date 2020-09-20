@@ -6,6 +6,10 @@ const setLoggedIn = () => ({
   type: TYPES.SET_LOGGEDIN,
 });
 
+const setLoggedOut = () => ({
+  type: TYPES.SET_LOGGEDOUT,
+});
+
 const updateForm = (name, value) => ({
   type: TYPES.UPDATE_FORM,
   name,
@@ -33,20 +37,14 @@ const register = (newUser) => {
     });
 };
 
-const login = (user) => {
+const login = (user) => async (dispatch) => {
   console.log(user);
-  return async (dispatch) => {
-    try {
-      await axios.post('/api/users/login', {
-        username: user.username,
-        password: user.password,
-      });
-      dispatch(setLoggedIn);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  const { data } = await axios.post('/api/users/login', {
+    username: user.username,
+    password: user.password,
+  });
+  console.log(data, 'logged in');
+  return dispatch(setLoggedIn());
 };
 
 const createInput = (state) => {
@@ -68,4 +66,5 @@ export const loginActions = {
   login,
   register,
   createInput,
+  setLoggedOut,
 };

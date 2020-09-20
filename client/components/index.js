@@ -5,6 +5,9 @@ import Header from './header/Header';
 
 // Home
 import Home from './home/Home';
+import Login from './login/Login';
+import Register from './register/Register';
+import PrivateRoute from './privateRoute/PrivateRoute';
 
 // Events
 import Events from './events/Events';
@@ -29,4 +32,7 @@ export {
   Recipe,
   Recipes,
   RecipesSearch,
+  Login,
+  Register,
+  PrivateRoute,
 };

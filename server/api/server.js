@@ -26,7 +26,6 @@ const findUserBySession = (sessionId) =>
 app.use(async (req, res, next) => {
   if (!req.cookies.session_id) {
     const session = await Session.create();
-
     const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
     res.cookie('session_id', session.id, {
@@ -40,7 +39,6 @@ app.use(async (req, res, next) => {
   } else {
     req.session_id = req.cookies.session_id;
     const user = await findUserBySession(req.session_id);
-
     if (user) {
       req.user = user;
     }
