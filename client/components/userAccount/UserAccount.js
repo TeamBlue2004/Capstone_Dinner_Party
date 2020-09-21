@@ -1,8 +1,4 @@
-/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-did-update-set-state */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -34,17 +30,30 @@ class UserAccount extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { userData } = this.props;
+    const {
+      id,
+      firstName,
+      lastName,
+      email,
+      username,
+      addressUnit,
+      addressStreet,
+      addressCity,
+      addressState,
+      addressZip,
+    } = userData;
     if (prevProps !== this.props) {
-      this.setState({ id: this.props.userData.id });
-      this.setState({ firstName: this.props.userData.firstName });
-      this.setState({ lastName: this.props.userData.lastName });
-      this.setState({ email: this.props.userData.email });
-      this.setState({ username: this.props.userData.username });
-      this.setState({ addressUnit: this.props.userData.addressUnit });
-      this.setState({ addressStreet: this.props.userData.addressStreet });
-      this.setState({ addressCity: this.props.userData.addressCity });
-      this.setState({ addressState: this.props.userData.addressState });
-      this.setState({ addressZip: this.props.userData.addressZIP });
+      this.setState({ id });
+      this.setState({ firstName });
+      this.setState({ lastName });
+      this.setState({ email });
+      this.setState({ username });
+      this.setState({ addressUnit });
+      this.setState({ addressStreet });
+      this.setState({ addressCity });
+      this.setState({ addressState });
+      this.setState({ addressZip });
     }
   }
 
@@ -79,7 +88,8 @@ class UserAccount extends Component {
   };
 
   toggleEdit() {
-    this.setState({ isEditing: !this.state.isEditing });
+    const { isEditing } = this.state;
+    this.setState({ isEditing: !isEditing });
   }
 
   render() {
@@ -259,7 +269,19 @@ const mapDispatchToProps = (dispatch) => {
 
 UserAccount.propTypes = {
   loadUserDetails: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired,
+  userData: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    username: PropTypes.string,
+    email: PropTypes.string,
+    addressUnit: PropTypes.string,
+    addressStreet: PropTypes.string,
+    addressCity: PropTypes.string,
+    addressState: PropTypes.string,
+    addressZip: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
+
   editUser: PropTypes.func.isRequired,
 };
 
