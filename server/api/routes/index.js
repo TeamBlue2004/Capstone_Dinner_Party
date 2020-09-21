@@ -3,6 +3,7 @@ const { recipeRouter } = require('./recipe');
 const { recipesRouter } = require('./recipes');
 const { ingredientsRouter } = require('./ingredients');
 const { cameraRouter } = require('./camera');
+const { userRouter } = require('./users');
 const eventsRouter = require('./events');
 
 const routes = [
@@ -11,6 +12,7 @@ const routes = [
   recipesRouter,
   ingredientsRouter,
   cameraRouter,
+  userRouter,
 ];
 
 const initRoutes = () => {

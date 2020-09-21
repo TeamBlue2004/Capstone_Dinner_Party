@@ -5,9 +5,14 @@ const { FoodPreference } = require('./FoodPreference');
 const { Ingredient } = require('./Ingredient');
 const { Event } = require('./Event');
 const { User_Recipe } = require('./User_Recipe');
+const { Session } = require('./Session');
 
 // User can have many friends
 // User.belongsToMany(User, { through: 'Friends' });
+
+// User and Session
+User.hasMany(Session);
+Session.belongsTo(User);
 
 // Relations between User and Allergen
 User.hasMany(Allergen);
@@ -52,4 +57,5 @@ module.exports = {
   FoodPreference,
   Ingredient,
   Event,
+  Session,
 };
