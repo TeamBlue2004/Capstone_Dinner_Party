@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Navbar, Nav } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { loginActions } from '../../store/actions/index';
+
+import './header.scss';
 
 class Header extends Component {
   logOut = (e) => {
@@ -13,29 +15,32 @@ class Header extends Component {
   };
 
   render() {
+    const { loggedIn } = this.props;
     return (
-      <header>
-        <div className="d-flex justify-content-between align-items-center py-2 pl-3">
+      <>
+        <div className="logoNameContainer">
+          <Link to="/home">
+            <img alt="Not Found" src="./assets/dinnerpartylogo.png" />
+          </Link>
           <h1>Dinner Party</h1>
         </div>
-        <Navbar bg="light" expand="sm">
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#events">Events</Nav.Link>
-              <Nav.Link href="#friends">Friends</Nav.Link>
-              <Nav.Link href="#recipes?ingredients=">Recipes</Nav.Link>
-              <Nav.Link onClick={this.logOut} className="nav-link">
-                Logout
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </header>
+        <div>
+          {loggedIn && (
+            <button type="button" onClick={this.logOut}>
+              <i className="fas fa-sign-out-alt"></i>
+            </button>
+          )}
+        </div>
+      </>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.login.loggedIn,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -48,6 +53,7 @@ Header.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   logoutUser: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
