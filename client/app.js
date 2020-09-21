@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginActions } from './store/actions/index';
+import { userActions } from './store/actions/index';
 import {
   Header,
   Sidebar,
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginUser: () => dispatch(loginActions.logInWithSession()),
+    loginUser: () => dispatch(userActions.logInWithSession()),
   };
 };
 

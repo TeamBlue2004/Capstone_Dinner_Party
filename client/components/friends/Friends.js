@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { loginActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 
 class Friends extends Component {
   constructor() {
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadFriends: (userId) => {
       console.log('dispatch to action fetchfirends--', userId);
-      dispatch(loginActions.fetchFriends(userId));
+      dispatch(userActions.fetchFriends(userId));
     },
   };
 };

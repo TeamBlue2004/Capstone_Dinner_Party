@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 
 import './header.scss';
 
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logoutUser: () => dispatch(loginActions.logout()),
+    logoutUser: () => dispatch(userActions.logout()),
   };
 };
 

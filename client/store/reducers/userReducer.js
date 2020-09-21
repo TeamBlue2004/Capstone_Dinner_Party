@@ -9,7 +9,7 @@ const initialLoginState = {
   user: {},
 };
 
-export const loginReducer = (state = initialLoginState, action) => {
+export const userReducer = (state = initialLoginState, action) => {
   switch (action.type) {
     case TYPES.UPDATE_FORM:
       return {

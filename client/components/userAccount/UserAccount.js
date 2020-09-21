@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loginActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 
 class UserAccount extends Component {
   constructor(props) {
@@ -259,10 +259,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUserDetails: (userId) => {
-      dispatch(loginActions.fetchUserDetails(userId));
+      dispatch(userActions.fetchUserDetails(userId));
     },
     editUser: (userNewData) => {
-      dispatch(loginActions.updateUserDetails(userNewData));
+      dispatch(userActions.updateUserDetails(userNewData));
     },
   };
 };
