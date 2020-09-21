@@ -12,6 +12,7 @@ import {
   Login,
   Register,
   PrivateRoute,
+  UserAccount,
 } from './components/index';
 
 import '../public/styles.scss';
@@ -40,6 +41,12 @@ class App extends Component {
                 <PrivateRoute exact path="/events" component={Events} />
                 <PrivateRoute exact path="/friends" component={Friends} />
                 <PrivateRoute exact path="/recipes" component={Recipes} />
+                <PrivateRoute
+                  exact
+                  path="/useraccount"
+                  component={UserAccount}
+                />
+
                 {loggedIn ? null : (
                   <div>
                     <Route

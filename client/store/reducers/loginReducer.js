@@ -5,6 +5,8 @@ const initialLoginState = {
   password: '',
   id: '',
   loggedIn: false,
+  friends: [],
+  user: {},
 };
 
 export const loginReducer = (state = initialLoginState, action) => {
@@ -29,6 +31,21 @@ export const loginReducer = (state = initialLoginState, action) => {
         ...state,
         username: action.username.username,
         id: action.username.id,
+      };
+    case TYPES.FETCH_FRIENDS:
+      return {
+        ...state,
+        friends: action.friends,
+      };
+    case TYPES.FETCH_USER_DETAILS:
+      return {
+        ...state,
+        user: action.user,
+      };
+    case TYPES.EDIT_USER_DETAILS:
+      return {
+        ...state,
+        user: action.user,
       };
     default:
       return state;

@@ -29,6 +29,7 @@ class Header extends Component {
               <Nav.Link onClick={this.logOut} className="nav-link">
                 Logout
               </Nav.Link>
+              <Nav.Link href="#useraccount">User Account</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
