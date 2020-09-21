@@ -1,60 +1,19 @@
 import React, { Component } from 'react';
-// import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginActions } from '../../store/actions/index';
-import store from '../../store/store';
 
 class Login extends Component {
-  constructor() {
-    super();
-
-    const { username, password, loggedIn } = store.getState().login;
-
-    this.state = {
-      username,
-      password,
-      loggedIn,
-    };
-
-    store.subscribe(() => {
-      const { username, password, loggedIn } = store.getState().login;
-
-      this.setState({
-        username,
-        password,
-        loggedIn,
-      });
-    });
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  // componentDidMount() {
-  //   const { history } = this.props;
-  //   const { loggedIn } = this.state;
-
-  //   if (loggedIn) {
-  //     history.push('/home');
-  //   }
-  // }
-
-  // componentDidUpdate() {
-  //   const { history } = this.props;
-  //   const { loggedIn } = this.state;
-
-  //   if (loggedIn) {
-  //     history.push('/home');
-  //   }
-  // }
+  state = {
+    username: '',
+    password: '',
+  };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = (e) => {
-    console.log('clicked', this.props);
     e.preventDefault();
     const { loginUser, history } = this.props;
     const { username, password } = this.state;
@@ -65,7 +24,6 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
-    console.log(store.getState().login);
     return (
       <div className="container">
         <div className="row">
@@ -126,9 +84,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username,
-    password: state.password,
-    logggedIn: state.loggedIn,
+    username: state.login.username,
+    logggedIn: state.login.loggedIn,
   };
 };
 
@@ -136,6 +93,7 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  loginUser: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,67 +1,35 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { loginActions } from '../../store/actions/index';
 
 class Register extends Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: '',
-      lastName: '',
-      profilePic: '',
-      email: '',
-      addressUnit: '',
-      addressStreet: '',
-      addressCity: '',
-      addressZIP: '',
-      addressState: '',
-      username: '',
-      password: '',
-    };
+  state = {
+    firstName: '',
+    lastName: '',
+    profilePic: '',
+    email: '',
+    addressUnit: '',
+    addressStreet: '',
+    addressCity: '',
+    addressZIP: '',
+    addressState: '',
+    username: '',
+    password: '',
+  };
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
-    const {
-      firstName,
-      lastName,
-      profilePic,
-      email,
-      addressUnit,
-      addressCity,
-      addressState,
-      addressStreet,
-      addressZIP,
-      username,
-      password,
-    } = this.state;
-    const newUser = {
-      firstName,
-      lastName,
-      profilePic,
-      email,
-      addressUnit,
-      addressCity,
-      addressState,
-      addressStreet,
-      addressZIP,
-      username,
-      password,
-    };
+    const newUser = this.state;
 
     loginActions.register(newUser).then(() => {
       const { history } = this.props;
       history.push(`/login`);
     });
-  }
+  };
 
   render() {
     const {
@@ -224,4 +192,4 @@ Register.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(Register);
+export default Register;

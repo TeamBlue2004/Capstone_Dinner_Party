@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Login from '../login/Login';
 
 class PrivateRoute extends React.Component {
   render() {
@@ -13,7 +12,13 @@ class PrivateRoute extends React.Component {
     return (
       <Route
         {...rest}
-        render={(props) => (isAuth ? <Login /> : <Component {...props} />)}
+        render={(props) =>
+          isAuth ? (
+            <Redirect exact path to="/login" />
+          ) : (
+            <Component {...props} />
+          )
+        }
       />
     );
   }

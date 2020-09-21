@@ -1,9 +1,7 @@
 const userRouter = require('express').Router();
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const chalk = require('chalk');
 const { User } = require('../../db/Models/User');
 const { Session } = require('../../db/Models/Session');
 
@@ -13,11 +11,29 @@ userRouter.use(bodyParser.urlencoded({ extended: true }));
 
 process.env.SECRET_KEY = 'secret';
 
-userRouter.get('/users', async (req, res) => {
-  const users = await User.findAll();
-  res.send({
-    users,
-  });
+userRouter.get('/users/session', async (req, res) => {
+  try {
+    const session = await Session.findByPk(req.session_id);
+    if (session.UserId) {
+      const user = await User.findByPk(session.UserId);
+      res.status(200).send(user);
+    } else {
+      res.status(404).send({ message: 'not found' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
+userRouter.put('/users/logout', async (req, res) => {
+  const session = await Session.findByPk(req.session_id);
+  try {
+    await session.update({ UserId: null });
+    res.status(201).send({ message: `user loggedout` });
+  } catch (e) {
+    res.status(500).send({ message: 'Server error' });
+  }
 });
 
 userRouter.post('/users/register', (req, res) => {
@@ -61,7 +77,6 @@ userRouter.post('/users/register', (req, res) => {
 });
 
 userRouter.post('/users/login', async (req, res) => {
-  console.log(chalk.red('request was made to login'));
   const user = await User.findOne({
     where: {
       username: req.body.username,
@@ -76,26 +91,6 @@ userRouter.post('/users/login', async (req, res) => {
   } else {
     res.status(400).json({ error: 'User does not exist' });
   }
-});
-
-userRouter.get('/users/profile', (req, res) => {
-  const decoded = jwt.verify(req.headers.authorization, process.env.SECRET_KEY);
-
-  User.findOne({
-    where: {
-      id: decoded.id,
-    },
-  })
-    .then((user) => {
-      if (user) {
-        res.json(user);
-      } else {
-        res.send('User does not exist');
-      }
-    })
-    .catch((err) => {
-      res.send(`error: ${err}`);
-    });
 });
 
 module.exports = {

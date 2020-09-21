@@ -3,6 +3,7 @@ import { TYPES } from '../types';
 const initialLoginState = {
   username: '',
   password: '',
+  id: '',
   loggedIn: false,
 };
 
@@ -22,6 +23,12 @@ export const loginReducer = (state = initialLoginState, action) => {
       return {
         ...state,
         loggedIn: false,
+      };
+    case TYPES.SET_USER_DATA:
+      return {
+        ...state,
+        username: action.username.username,
+        id: action.username.id,
       };
     default:
       return state;

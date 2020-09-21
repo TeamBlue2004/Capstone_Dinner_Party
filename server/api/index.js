@@ -1,7 +1,4 @@
 const chalk = require('chalk');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const { app } = require('./server');
 const applyMiddleware = require('./middleware');
 const { initRoutes } = require('./routes/index');
@@ -18,11 +15,6 @@ app.get('/health', (req, res) => {
     message: 'I am healthy.',
   });
 });
-
-app.use(bodyParser.json());
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 const startServer = () => {
   return new Promise((res) => {
