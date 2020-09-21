@@ -5,12 +5,12 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { loginActions } from '../../store/actions/index';
 
 class Header extends Component {
-  logOut(e) {
+  logOut = (e) => {
     e.preventDefault();
     const { history, logoutUser } = this.props;
     logoutUser();
     history.push(`/login`);
-  }
+  };
 
   render() {
     return (
@@ -26,6 +26,9 @@ class Header extends Component {
               <Nav.Link href="#events">Events</Nav.Link>
               <Nav.Link href="#friends">Friends</Nav.Link>
               <Nav.Link href="#recipes?ingredients=">Recipes</Nav.Link>
+              <Nav.Link onClick={this.logOut} className="nav-link">
+                Logout
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

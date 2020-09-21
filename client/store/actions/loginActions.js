@@ -16,6 +16,7 @@ const setUserData = (username, id) => ({
 });
 
 const register = (newUser) => {
+  console.log(newUser);
   return axios.post('/api/users/register', {
     firstName: newUser.firstName,
     lastName: newUser.lastName,
