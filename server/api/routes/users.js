@@ -93,6 +93,68 @@ userRouter.post('/users/login', async (req, res) => {
   }
 });
 
+userRouter.get('/users/userfriends/:userId', async (req, res) => {
+  console.log('userfiends api is called -- ');
+  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
+  // const { userId } = req.userId;
+  try {
+    // find out friends associated with a user from through table
+    // const userFriendsList = await User.findAll({
+    // //  where: { id: userId },
+    //   include: [{ model: User, as: 'userFriends' }],
+    // //  raw: false,
+    // });
+
+    const userRecord = await User.findOne({
+      where: { id: userId },
+    });
+
+    const userFriendsList = await userRecord.getFriends();
+
+    console.log('userFriendsList is --- ', userFriendsList);
+    res.status(200).send(userFriendsList);
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send({ message: 'Server error while fetching Users friendsList' });
+  }
+});
+
+userRouter.get('/users/:userId', async (req, res) => {
+  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
+  // const { userId } = req.userId;
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+    res.status(200).send(user);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching details for loggedin user',
+    });
+  }
+});
+
+userRouter.put('/users/updateuser/:userid', async (req, res) => {
+  await User.findByPk(req.params.userid).then((user) => {
+    user.update(
+      {
+        username: req.body.user.username,
+        firstName: req.body.user.firstName,
+        lastName: req.body.user.lastName,
+        email: req.body.user.email,
+        addressUnit: req.body.user.addressUnit,
+        addressStreet: req.body.user.addressStreet,
+        addressCity: req.body.user.addressCity,
+        addressState: req.body.user.addressState,
+        addressZIP: req.body.user.addressZip,
+      },
+      { returning: true, plain: true }
+    );
+  });
+  res.sendStatus(200);
+});
+
 module.exports = {
   userRouter,
 };

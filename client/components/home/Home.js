@@ -12,8 +12,8 @@ class Home extends Component {
 
   componentDidMount() {
     const { loadEvents, loadFavoriteRecipes } = this.props;
-    loadEvents('63f7b479-db89-4b5f-804d-4e371250b66f');
-    loadFavoriteRecipes('63f7b479-db89-4b5f-804d-4e371250b66f');
+    loadEvents('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
+    loadFavoriteRecipes('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
   }
 
   render() {

@@ -23,6 +23,9 @@ import Recipe from './recipe/Recipe';
 import Recipes from './recipes/Recipes';
 import RecipesSearch from './recipesSearch/RecipeSearch';
 
+// UserAccount
+import UserAccount from './userAccount/UserAccount';
+
 export {
   Header,
   Sidebar,
@@ -37,4 +40,5 @@ export {
   Login,
   Register,
   PrivateRoute,
+  UserAccount,
 };
