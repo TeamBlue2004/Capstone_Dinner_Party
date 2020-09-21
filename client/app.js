@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { loginActions } from './store/actions/index';
 import {
   Header,
-  Events,
+  Sidebar,
   Home,
+  Events,
   Recipes,
   Friends,
   Login,
@@ -31,12 +32,15 @@ class App extends Component {
   render() {
     const { loggedIn } = this.props;
     return (
-      <div>
-        <HashRouter>
-          <div className="py-2">
-            <Switch>
-              <div>
-                <PrivateRoute path="/" component={Header} />
+      <HashRouter>
+        <div className="headerContainer">
+          <Header />
+        </div>
+        <Switch>
+          <div className="mainContainer">
+            <Sidebar />
+            <div className="routesContainer">
+              <div className="routes">
                 <PrivateRoute exact path="/home" component={Home} />
                 <PrivateRoute exact path="/events" component={Events} />
                 <PrivateRoute exact path="/friends" component={Friends} />
@@ -62,10 +66,10 @@ class App extends Component {
                   </div>
                 )}
               </div>
-            </Switch>
+            </div>
           </div>
-        </HashRouter>
-      </div>
+        </Switch>
+      </HashRouter>
     );
   }
 }

@@ -43,9 +43,7 @@ eventsRouter.post(
 // eventsRouter.delete();
 
 eventsRouter.get('/events/userevents/:userId', async (req, res) => {
-  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
-  console.log('inside route axios  call for eager data loading ', req.userId);
-  console.log('hardcoded userid is --- ', userId);
+  const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
   // const { userId } = req.userId;
   try {
     // find out events associated with a user from through table
@@ -59,8 +57,6 @@ eventsRouter.get('/events/userevents/:userId', async (req, res) => {
         },
       ],
     });
-    console.log('userEventList is --- ', userEventList);
-
     // eventsArr.push(event);
 
     res.status(200).send(userEventList);

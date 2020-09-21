@@ -1,0 +1,16 @@
+.sidebarContainer {
+  height: 100%;
+  width: 20%;
+  border: solid black 2px;
+  background-color: lightyellow;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebarItem {
+  margin: 10px;
+}

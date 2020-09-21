@@ -1,7 +1,8 @@
 // Import and Export all components from one file
 
-// Header
+// Page Layout
 import Header from './header/Header';
+import Sidebar from './sidebar/Sidebar';
 
 // Home
 import Home from './home/Home';
@@ -27,6 +28,7 @@ import UserAccount from './userAccount/UserAccount';
 
 export {
   Header,
+  Sidebar,
   Home,
   Events,
   Event,

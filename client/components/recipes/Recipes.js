@@ -11,11 +11,13 @@ import ViewRecipeButton from '../buttons/ViewRecipeButton';
 class Recipes extends Component {
   componentDidMount() {
     const {
+      history,
       history: {
         location: { search },
       },
       loadRecipes,
     } = this.props;
+    console.log('searchterm', history);
     loadRecipes(search);
   }
 

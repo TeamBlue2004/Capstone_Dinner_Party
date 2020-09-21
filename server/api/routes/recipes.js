@@ -24,9 +24,7 @@ recipesRouter.get('/recipes', async (req, res) => {
 });
 
 recipesRouter.get('/recipes/favorite/:userId', async (req, res) => {
-  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
-  console.log('inside route for favorite receipe eager loading ', req.userId);
-  console.log('hardcoded userid is --- ', userId);
+  const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
   // const { userId } = req.userId;
   try {
     const favRecipesList = await Recipe.findAll({
@@ -45,7 +43,6 @@ recipesRouter.get('/recipes/favorite/:userId', async (req, res) => {
         },
       ],
     });
-    console.log('favRecipesList is --- ', favRecipesList);
     res.status(200).send(favRecipesList);
   } catch (e) {
     console.error(e);
