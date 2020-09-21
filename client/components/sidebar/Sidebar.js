@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import './sidebar.scss';
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
   render() {
     return (
       <div className="sidebarContainer">
@@ -25,3 +26,5 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+export default connect(null, null)(Sidebar);

@@ -35,36 +35,33 @@ class App extends Component {
         <div className="headerContainer">
           <Header />
         </div>
-        <div className="mainContainer">
-          <Sidebar />
-          <div className="routesContainer">
-            <div className="routes">
-              <Switch>
-                <div>
-                  <PrivateRoute path="/" component={Header} />
-                  <PrivateRoute exact path="/home" component={Home} />
-                  <PrivateRoute exact path="/events" component={Events} />
-                  <PrivateRoute exact path="/friends" component={Friends} />
-                  <PrivateRoute exact path="/recipes" component={Recipes} />
-                  {loggedIn ? null : (
-                    <div>
-                      <Route
-                        exact
-                        path="/login"
-                        render={(props) => <Login {...props} />}
-                      />
-                      <Route
-                        exact
-                        path="/register"
-                        render={(props) => <Register {...props} />}
-                      />
-                    </div>
-                  )}
-                </div>
-              </Switch>
+        <Switch>
+          <div className="mainContainer">
+            <Sidebar />
+            <div className="routesContainer">
+              <div className="routes">
+                <PrivateRoute exact path="/home" component={Home} />
+                <PrivateRoute exact path="/events" component={Events} />
+                <PrivateRoute exact path="/friends" component={Friends} />
+                <PrivateRoute exact path="/recipes" component={Recipes} />
+                {loggedIn ? null : (
+                  <div>
+                    <Route
+                      exact
+                      path="/login"
+                      render={(props) => <Login {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/register"
+                      render={(props) => <Register {...props} />}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </Switch>
       </HashRouter>
     );
   }
