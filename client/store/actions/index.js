@@ -1,5 +1,5 @@
 import { recipesActions } from './recipesActions';
 import { eventsActions } from './eventsActions';
-import { loginActions } from './loginActions';
+import { userActions } from './userActions';
 
-export { recipesActions, eventsActions, loginActions };
+export { recipesActions, eventsActions, userActions };

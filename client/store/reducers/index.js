@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 // Import reducers
 import { recipesReducer } from './recipeReducer';
 import { eventsReducer } from './eventReducer';
-import { loginReducer } from './loginReducer';
+import { userReducer } from './userReducer';
 
 const reducer = combineReducers({
   recipes: recipesReducer,
   events: eventsReducer,
-  login: loginReducer,
+  login: userReducer,
 });
 
 export default reducer;

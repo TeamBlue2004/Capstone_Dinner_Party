@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { loginActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 
 class Register extends Component {
   state = {
@@ -25,7 +25,7 @@ class Register extends Component {
     e.preventDefault();
     const newUser = this.state;
 
-    loginActions.register(newUser).then(() => {
+    userActions.register(newUser).then(() => {
       const { history } = this.props;
       history.push(`/login`);
     });

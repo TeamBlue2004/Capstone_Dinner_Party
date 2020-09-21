@@ -106,7 +106,7 @@ const updateUserDetails = (user) => async (dispatch) => {
   return dispatch(setUser(data));
 };
 
-export const loginActions = {
+export const userActions = {
   setLoggedIn,
   login,
   register,

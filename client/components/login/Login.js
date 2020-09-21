@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loginActions } from '../../store/actions/index';
+import { userActions } from '../../store/actions/index';
 
 class Login extends Component {
   state = {
@@ -77,7 +77,7 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     loginUser: (user) => {
-      dispatch(loginActions.login(user));
+      dispatch(userActions.login(user));
     },
   };
 };
