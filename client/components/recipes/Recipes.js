@@ -32,20 +32,14 @@ class Recipes extends Component {
             <div className="recipes-results">
               {recipes.map((recipe) => {
                 return (
-                  <div key={recipe.id} className="card">
-                    <Popup
-                      title={recipe.name}
-                      BodyModal={Recipe}
-                      ButtonModal={ViewRecipeButton}
-                      data={recipe.id}
-                    />
-                    <img
-                      className="card-img-top"
-                      src={recipe.image}
-                      alt={recipe.name}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">{recipe.name}</h4>
+                  <div key={recipe.id} className="recipe">
+                    <div className="recipe-body">
+                      <img
+                        className="recipe-img"
+                        src={recipe.image}
+                        alt={recipe.name}
+                      />
+                      <span className="recipe-title">{recipe.name}</span>
                     </div>
                   </div>
                 );

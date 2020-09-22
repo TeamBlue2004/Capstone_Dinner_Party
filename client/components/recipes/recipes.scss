@@ -26,13 +26,20 @@
     justify-content: space-between;
 }
 
-.card {
+.recipe {
+    background-color: white;
+    border: 1px solid gray;
     color: black;
-    margin: 1% 0;
-    max-width: 300px;
+    padding: 2%;
     width: 100%;
+    border-radius: 4px;
 }
 
-.card:hover {
-    text-decoration: none;
+.recipe .recipe-body .recipe-img {
+    border-radius: 50%;
+    max-width: 50px;
+}
+
+.recipe:hover {
+    background-color: lightgray;
 }
