@@ -36,6 +36,13 @@ const setUser = (user) => {
   };
 };
 
+const setError = (error) => {
+  return {
+    type: TYPES.SET_USER_ERROR,
+    error,
+  };
+};
+
 const register = (newUser) => {
   return axios.post('/api/users/register', {
     firstName: newUser.firstName,
@@ -64,15 +71,24 @@ const logout = () => {
   };
 };
 
-const login = (user) => async (dispatch) => {
-  const { data } = await axios.post('/api/users/login', {
-    username: user.username,
-    password: user.password,
-  });
-  if (data) {
-    return dispatch(setLoggedIn());
-  }
-  return 'Error logging in';
+const login = (user) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        username: user.username,
+        password: user.password,
+      });
+      await dispatch(setLoggedIn());
+      dispatch(setUserData(data));
+      dispatch(setError(''));
+      console.log('im here good');
+      return true;
+    } catch (e) {
+      console.log('im here bad');
+      dispatch(setError(e.response.data.message));
+      return false;
+    }
+  };
 };
 
 const logInWithSession = () => {
@@ -88,7 +104,6 @@ const logInWithSession = () => {
 };
 
 const fetchFriends = (userId) => async (dispatch) => {
-  console.log('user fiends action is called ---');
   const { data } = await axios.get(`/api/users/userfriends/${userId}`);
   return dispatch(getFriends(data));
 };

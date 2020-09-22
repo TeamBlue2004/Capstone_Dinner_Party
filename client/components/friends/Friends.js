@@ -11,7 +11,6 @@ class Friends extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount ===');
     const { loadFriends, id } = this.props;
     loadFriends(id);
   }
@@ -47,17 +46,15 @@ class Friends extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state is --- ', state);
   return {
-    friendsList: state.login.friends,
-    id: state.login.id,
+    friendsList: state.user.friends,
+    id: state.user.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadFriends: (userId) => {
-      console.log('dispatch to action fetchfirends--', userId);
       dispatch(userActions.fetchFriends(userId));
     },
   };

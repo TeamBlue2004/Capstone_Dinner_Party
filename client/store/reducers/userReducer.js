@@ -7,6 +7,7 @@ const initialLoginState = {
   loggedIn: false,
   friends: [],
   user: {},
+  error: '',
 };
 
 export const userReducer = (state = initialLoginState, action) => {
@@ -46,6 +47,11 @@ export const userReducer = (state = initialLoginState, action) => {
       return {
         ...state,
         user: action.user,
+      };
+    case TYPES.SET_USER_ERROR:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;

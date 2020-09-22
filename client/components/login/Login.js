@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { userActions } from '../../store/actions/index';
+import './login.scss';
 
 class Login extends Component {
   state = {
@@ -13,7 +15,7 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { loginUser, history } = this.props;
     const { username, password } = this.state;
@@ -24,6 +26,7 @@ class Login extends Component {
 
   render() {
     const { username, password } = this.state;
+    const { error } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -67,12 +70,25 @@ class Login extends Component {
                 Register
               </a>
             </form>
+            {error && (
+              <div className="alert alert-warning" role="alert">
+                {error}
+              </div>
+            )}
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.user.username,
+    logggedIn: state.user.loggedIn,
+    error: state.user.error,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -82,18 +98,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = (state) => {
-  return {
-    username: state.login.username,
-    logggedIn: state.login.loggedIn,
-  };
-};
-
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   loginUser: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};
+Login.defaultProps = {
+  error: '',
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

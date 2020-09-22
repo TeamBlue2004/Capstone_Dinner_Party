@@ -255,8 +255,8 @@ class UserAccount extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    userData: state.login.user,
-    id: state.login.id,
+    userData: state.user.user,
+    id: state.user.id,
   };
 };
 

@@ -90,7 +90,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.login.loggedIn,
+    loggedIn: state.user.loggedIn,
   };
 };
 
