@@ -94,9 +94,7 @@ userRouter.post('/users/login', async (req, res) => {
 });
 
 userRouter.get('/users/userfriends/:userId', async (req, res) => {
-  console.log('userfiends api is called -- ');
-  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
-  // const { userId } = req.userId;
+  const { userId } = req.params;
   try {
     // find out friends associated with a user from through table
     // const userFriendsList = await User.findAll({
@@ -122,8 +120,7 @@ userRouter.get('/users/userfriends/:userId', async (req, res) => {
 });
 
 userRouter.get('/users/:userId', async (req, res) => {
-  const userId = 'dd6488cd-b8e3-4f45-91ee-6a7449fef285';
-  // const { userId } = req.userId;
+  const { userId } = req.params;
   try {
     const user = await User.findOne({ where: { id: userId } });
     res.status(200).send(user);
