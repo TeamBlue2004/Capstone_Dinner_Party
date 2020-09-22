@@ -87,9 +87,13 @@ userRouter.post('/users/login', async (req, res) => {
       const usersSession = await Session.findByPk(req.session_id);
       await usersSession.setUser(user);
       res.status(200).send(user);
+    } else {
+      res.status(400).send({ message: `Password is incorrect` });
     }
   } else {
-    res.status(400).json({ error: 'User does not exist' });
+    res
+      .status(400)
+      .send({ message: `User ${req.body.username} does not exist` });
   }
 });
 
@@ -109,7 +113,6 @@ userRouter.get('/users/userfriends/:userId', async (req, res) => {
 
     const userFriendsList = await userRecord.getFriends();
 
-    console.log('userFriendsList is --- ', userFriendsList);
     res.status(200).send(userFriendsList);
   } catch (e) {
     console.error(e);

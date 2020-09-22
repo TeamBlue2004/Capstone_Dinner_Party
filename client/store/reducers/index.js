@@ -8,7 +8,7 @@ import { userReducer } from './userReducer';
 const reducer = combineReducers({
   recipes: recipesReducer,
   events: eventsReducer,
-  login: userReducer,
+  user: userReducer,
 });
 
 export default reducer;

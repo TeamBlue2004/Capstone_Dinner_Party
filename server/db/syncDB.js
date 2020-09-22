@@ -13,4 +13,4 @@ const syncDB = async ({ force = false }) => {
   }
 };
 
-syncDB({ force: true });
+syncDB({ force: false });
