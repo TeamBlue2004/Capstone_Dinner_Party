@@ -12,8 +12,8 @@ class Friends extends Component {
 
   componentDidMount() {
     console.log('componentDidMount ===');
-    const { loadFriends } = this.props;
-    loadFriends('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
+    const { loadFriends, id } = this.props;
+    loadFriends(id);
   }
 
   render() {
@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
   console.log('state is --- ', state);
   return {
     friendsList: state.login.friends,
+    id: state.login.id,
   };
 };
 
@@ -65,6 +66,7 @@ const mapDispatchToProps = (dispatch) => {
 Friends.propTypes = {
   loadFriends: PropTypes.func.isRequired,
   friendsList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

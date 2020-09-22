@@ -11,9 +11,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { loadEvents, loadFavoriteRecipes } = this.props;
-    loadEvents('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
-    loadFavoriteRecipes('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
+    const { loadEvents, loadFavoriteRecipes, id } = this.props;
+    loadEvents(id);
+    loadFavoriteRecipes(id);
   }
 
   render() {
@@ -69,6 +69,7 @@ const mapStateToProps = (state) => {
   return {
     eventsList: state.events.events,
     favoriteRecipesList: state.recipes.favRecipes,
+    id: state.login.id,
   };
 };
 
@@ -88,6 +89,7 @@ Home.propTypes = {
   loadFavoriteRecipes: PropTypes.func.isRequired,
   eventsList: PropTypes.arrayOf(PropTypes.object).isRequired,
   favoriteRecipesList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

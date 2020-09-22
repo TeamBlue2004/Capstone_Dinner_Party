@@ -24,8 +24,7 @@ recipesRouter.get('/recipes', async (req, res) => {
 });
 
 recipesRouter.get('/recipes/favorite/:userId', async (req, res) => {
-  const userId = '63f7b479-db89-4b5f-804d-4e371250b66f';
-  // const { userId } = req.userId;
+  const { userId } = req.params;
   try {
     const favRecipesList = await Recipe.findAll({
       include: [

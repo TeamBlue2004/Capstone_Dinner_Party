@@ -25,8 +25,9 @@ class UserAccount extends Component {
   }
 
   componentDidMount() {
-    const { loadUserDetails } = this.props;
-    loadUserDetails('dd6488cd-b8e3-4f45-91ee-6a7449fef285');
+    const { loadUserDetails, id } = this.props;
+    console.log('id is --- ', id);
+    loadUserDetails(id);
   }
 
   componentDidUpdate(prevProps) {
@@ -253,7 +254,10 @@ class UserAccount extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { userData: state.login.user };
+  return {
+    userData: state.login.user,
+    id: state.login.id,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -281,6 +285,7 @@ UserAccount.propTypes = {
     addressZip: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
+  id: PropTypes.string.isRequired,
 
   editUser: PropTypes.func.isRequired,
 };
