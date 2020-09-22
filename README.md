@@ -4,11 +4,6 @@ Capstone project - Event planning App
 
 Main scripts:
 
-TS compile & watch
-```bash
-npm run compile:watch
-```
-
 Webpack build & watch
 ```bash
 npm run start:dev-build
@@ -28,4 +23,3 @@ Seed data
 ```bash
 npm run seed
 ```
-

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from './store/actions/index';
 import {
@@ -36,39 +36,48 @@ class App extends Component {
         <div className="headerContainer">
           <Header />
         </div>
-        <Switch>
-          <div className="mainContainer">
-            <Sidebar />
-            <div className="routesContainer">
-              <div className="routes">
-                <PrivateRoute exact path="/home" component={Home} />
-                <PrivateRoute exact path="/events" component={Events} />
-                <PrivateRoute exact path="/friends" component={Friends} />
-                <PrivateRoute exact path="/recipes" component={Recipes} />
-                <PrivateRoute
-                  exact
-                  path="/useraccount"
-                  component={UserAccount}
-                />
-
-                {loggedIn ? null : (
-                  <div>
-                    <Route
+        <div className="mainContainer">
+          {loggedIn ? (
+            <>
+              <Sidebar />
+              <div className="routesContainer">
+                <div className="routes">
+                  <Switch>
+                    <PrivateRoute exact path="/home" component={Home} />
+                    <PrivateRoute exact path="/events" component={Events} />
+                    <PrivateRoute exact path="/friends" component={Friends} />
+                    <PrivateRoute exact path="/recipes" component={Recipes} />
+                    <PrivateRoute
                       exact
-                      path="/login"
-                      render={(props) => <Login {...props} />}
+                      path="/useraccount"
+                      component={UserAccount}
                     />
-                    <Route
-                      exact
-                      path="/register"
-                      render={(props) => <Register {...props} />}
-                    />
-                  </div>
-                )}
+                  </Switch>
+                </div>
               </div>
-            </div>
-          </div>
-        </Switch>
+            </>
+          ) : (
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                  return <Redirect to="/login" />;
+                }}
+              />
+              <Route
+                exact
+                path="/login"
+                render={(props) => <Login {...props} />}
+              />
+              <Route
+                exact
+                path="/register"
+                render={(props) => <Register {...props} />}
+              />
+            </Switch>
+          )}
+        </div>
       </HashRouter>
     );
   }

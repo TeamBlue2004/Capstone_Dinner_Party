@@ -7,11 +7,9 @@ import { userActions } from '../../store/actions/index';
 import './header.scss';
 
 class Header extends Component {
-  logOut = (e) => {
-    e.preventDefault();
-    const { history, logoutUser } = this.props;
+  logOut = () => {
+    const { logoutUser } = this.props;
     logoutUser();
-    history.push(`/login`);
   };
 
   render() {
@@ -26,9 +24,9 @@ class Header extends Component {
         </div>
         <div>
           {loggedIn && (
-            <button type="button" onClick={this.logOut}>
+            <Link to="/login" onClick={this.logOut}>
               <i className="fas fa-sign-out-alt"></i>
-            </button>
+            </Link>
           )}
         </div>
       </>
@@ -49,9 +47,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Header.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   logoutUser: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired,
 };
