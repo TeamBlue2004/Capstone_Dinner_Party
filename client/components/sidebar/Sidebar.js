@@ -22,7 +22,7 @@ class Sidebar extends Component {
             <a href="#recipes?ingredients=">Recipes</a>
           </div>
           <div className="sidebarItem">
-            <a href="useraccount">User Account</a>
+            <a href="#useraccount">User Account</a>
           </div>
         </div>
       </div>
