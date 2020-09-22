@@ -18,30 +18,28 @@ class Friends extends Component {
   render() {
     const { friendsList } = this.props;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          {friendsList.length !== 0 ? (
+      <div>
+        {friendsList.length !== 0 ? (
+          <div>
             <div>
-              <div>
-                <h2>{friendsList.length} Friends</h2>
-              </div>
-              <div>
-                {friendsList.map((friend) => {
-                  return (
-                    <p key={friend.id}>
-                      {' '}
-                      <Link to={`/friend/${friend.id}`} key={friend.id}>
-                        {friend.id}
-                      </Link>
-                    </p>
-                  );
-                })}
-              </div>
+              <h2>{friendsList.length} Friends</h2>
             </div>
-          ) : (
-            <div>You have no friends</div>
-          )}
-        </div>
+            <div>
+              {friendsList.map((friend) => {
+                return (
+                  <p key={friend.id}>
+                    {' '}
+                    <Link to={`/friend/${friend.id}`} key={friend.id}>
+                      {friend.id}
+                    </Link>
+                  </p>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div>You have no friends</div>
+        )}
       </div>
     );
   }

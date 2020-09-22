@@ -11,47 +11,45 @@ import ViewRecipeButton from '../buttons/ViewRecipeButton';
 class Recipes extends Component {
   componentDidMount() {
     const {
+      history,
       history: {
         location: { search },
       },
       loadRecipes,
     } = this.props;
+    console.log('searchterm', history);
     loadRecipes(search);
   }
 
   render() {
     const { recipes } = this.props;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          <div className="recipes-container">
-            <div className="recipes-search">
-              <RecipesSearch {...this.props} />
-            </div>
-            <h3>{`Found ${recipes.length} result(s)...`}</h3>
-            <div className="recipes-results">
-              {recipes.map((recipe) => {
-                return (
-                  <div key={recipe.id} className="card">
-                    <Popup
-                      title={recipe.name}
-                      BodyModal={Recipe}
-                      ButtonModal={ViewRecipeButton}
-                      data={recipe.id}
-                    />
-                    <img
-                      className="card-img-top"
-                      src={recipe.image}
-                      alt={recipe.name}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">{recipe.name}</h4>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+      <div className="recipes-container">
+        <div className="recipes-search">
+          <RecipesSearch {...this.props} />
+        </div>
+        <h3>{`Found ${recipes.length} result(s)...`}</h3>
+        <div className="recipes-results">
+          {recipes.map((recipe) => {
+            return (
+              <div key={recipe.id} className="card">
+                <Popup
+                  title={recipe.name}
+                  BodyModal={Recipe}
+                  ButtonModal={ViewRecipeButton}
+                  data={recipe.id}
+                />
+                <img
+                  className="card-img-top"
+                  src={recipe.image}
+                  alt={recipe.name}
+                />
+                <div className="card-body">
+                  <h4 className="card-title">{recipe.name}</h4>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );

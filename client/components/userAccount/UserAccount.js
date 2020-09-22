@@ -107,150 +107,148 @@ class UserAccount extends Component {
       isEditing,
     } = this.state;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          {isEditing ? (
+      <div>
+        {isEditing ? (
+          <div>
             <div>
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={firstName}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={lastName}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Email</label>
+              <input
+                type="text"
+                name="email"
+                value={email}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>UserName</label>
+              <input
+                type="text"
+                name="username"
+                value={username}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Address Unit</label>
+              <input
+                type="text"
+                name="addressUnit"
+                value={addressUnit}
+                onChange={this.handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Address Street</label>
+              <input
+                type="text"
+                name="addressStreet"
+                value={addressStreet}
+                onChange={this.handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Address City</label>
+              <input
+                type="text"
+                name="addressCity"
+                value={addressCity}
+                onChange={this.handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Address State</label>
+              <input
+                type="text"
+                name="addressState"
+                value={addressState}
+                onChange={this.handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Address Zip</label>
+              <input
+                type="text"
+                name="addressZip"
+                value={addressZip}
+                onChange={this.handleChange}
+              />
+            </div>
+            <button type="button" onClick={this.updateUser}>
+              Save
+            </button>
+          </div>
+        ) : (
+          <div>
+            <form>
               <div>
-                <label>First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={firstName}
-                  onChange={this.handleChange}
-                />
+                <label>First Name:</label>
+                <label> {firstName}</label>
               </div>
               <div>
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={lastName}
-                  onChange={this.handleChange}
-                />
+                <label>Last Name:</label>
+                <label> {lastName}</label>
               </div>
               <div>
-                <label>Email</label>
-                <input
-                  type="text"
-                  name="email"
-                  value={email}
-                  onChange={this.handleChange}
-                />
+                <label>Email:</label>
+                <label> {email}</label>
               </div>
               <div>
-                <label>UserName</label>
-                <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={this.handleChange}
-                />
+                <label>UserName:</label>
+                <label> {username}</label>
               </div>
               <div>
-                <label>Address Unit</label>
-                <input
-                  type="text"
-                  name="addressUnit"
-                  value={addressUnit}
-                  onChange={this.handleChange}
-                />
+                <label>Address Unit:</label>
+                <label> {addressUnit}</label>
               </div>
 
               <div>
-                <label>Address Street</label>
-                <input
-                  type="text"
-                  name="addressStreet"
-                  value={addressStreet}
-                  onChange={this.handleChange}
-                />
+                <label>Address Street:</label>
+                <label> {addressStreet}</label>
               </div>
 
               <div>
-                <label>Address City</label>
-                <input
-                  type="text"
-                  name="addressCity"
-                  value={addressCity}
-                  onChange={this.handleChange}
-                />
+                <label>Address City:</label>
+                <label> {addressCity}</label>
               </div>
 
               <div>
-                <label>Address State</label>
-                <input
-                  type="text"
-                  name="addressState"
-                  value={addressState}
-                  onChange={this.handleChange}
-                />
+                <label>Address State:</label>
+                <label> {addressState}</label>
               </div>
 
               <div>
-                <label>Address Zip</label>
-                <input
-                  type="text"
-                  name="addressZip"
-                  value={addressZip}
-                  onChange={this.handleChange}
-                />
+                <label>Address Zip:</label>
+                <label> {addressZip}</label>
               </div>
-              <button type="button" onClick={this.updateUser}>
-                Save
+
+              <button type="button" onClick={this.toggleEdit}>
+                edit
               </button>
-            </div>
-          ) : (
-            <div>
-              <form>
-                <div>
-                  <label>First Name:</label>
-                  <label> {firstName}</label>
-                </div>
-                <div>
-                  <label>Last Name:</label>
-                  <label> {lastName}</label>
-                </div>
-                <div>
-                  <label>Email:</label>
-                  <label> {email}</label>
-                </div>
-                <div>
-                  <label>UserName:</label>
-                  <label> {username}</label>
-                </div>
-                <div>
-                  <label>Address Unit:</label>
-                  <label> {addressUnit}</label>
-                </div>
-
-                <div>
-                  <label>Address Street:</label>
-                  <label> {addressStreet}</label>
-                </div>
-
-                <div>
-                  <label>Address City:</label>
-                  <label> {addressCity}</label>
-                </div>
-
-                <div>
-                  <label>Address State:</label>
-                  <label> {addressState}</label>
-                </div>
-
-                <div>
-                  <label>Address Zip:</label>
-                  <label> {addressZip}</label>
-                </div>
-
-                <button type="button" onClick={this.toggleEdit}>
-                  edit
-                </button>
-              </form>
-            </div>
-          )}
-        </div>
+            </form>
+          </div>
+        )}
       </div>
     );
   }

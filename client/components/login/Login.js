@@ -21,7 +21,7 @@ class Login extends Component {
     const { username, password } = this.state;
     const user = { username, password };
     loginUser(user);
-    // history.push(`/home`);
+    history.push(`/home`);
   };
 
   render() {

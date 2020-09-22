@@ -19,49 +19,47 @@ class Home extends Component {
   render() {
     const { eventsList, favoriteRecipesList } = this.props;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          {eventsList.length !== 0 ? (
+      <div>
+        {eventsList.length !== 0 ? (
+          <div>
             <div>
-              <div>
-                <h2>{eventsList.length} coming events</h2>
-              </div>
-              <div className="eventbox">
-                {eventsList.map((event) => {
-                  return (
-                    <Link to={`/event/${event.id}`} key={event.id}>
-                      {event.id}
-                    </Link>
-                  );
-                })}
-              </div>
+              <h2>{eventsList.length} coming events</h2>
             </div>
-          ) : (
-            <div>No events</div>
-          )}
-          {favoriteRecipesList ? (
-            <div className="recipes-results">
-              {favoriteRecipesList.map((recipe) => {
+            <div className="eventbox">
+              {eventsList.map((event) => {
                 return (
-                  <Link
-                    to={`/recipe/${recipe.id}`}
-                    key={recipe.id}
-                    className="card"
-                  >
-                    <img
-                      className="card-img-top"
-                      src={recipe.image}
-                      alt={recipe.name}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">{recipe.name}</h4>
-                    </div>
+                  <Link to={`/event/${event.id}`} key={event.id}>
+                    {event.id}
                   </Link>
                 );
               })}
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : (
+          <div>No events</div>
+        )}
+        {favoriteRecipesList ? (
+          <div className="recipes-results">
+            {favoriteRecipesList.map((recipe) => {
+              return (
+                <Link
+                  to={`/recipe/${recipe.id}`}
+                  key={recipe.id}
+                  className="card"
+                >
+                  <img
+                    className="card-img-top"
+                    src={recipe.image}
+                    alt={recipe.name}
+                  />
+                  <div className="card-body">
+                    <h4 className="card-title">{recipe.name}</h4>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     );
   }
