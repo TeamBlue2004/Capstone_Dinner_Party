@@ -40,21 +40,17 @@ class App extends Component {
           {loggedIn ? (
             <>
               <Sidebar />
-              <div className="routesContainer">
-                <div className="routes">
-                  <Switch>
-                    <PrivateRoute exact path="/home" component={Home} />
-                    <PrivateRoute exact path="/events" component={Events} />
-                    <PrivateRoute exact path="/friends" component={Friends} />
-                    <PrivateRoute exact path="/recipes" component={Recipes} />
-                    <PrivateRoute
-                      exact
-                      path="/useraccount"
-                      component={UserAccount}
-                    />
-                  </Switch>
-                </div>
-              </div>
+              <Switch>
+                <PrivateRoute exact path="/home" component={Home} />
+                <PrivateRoute exact path="/events" component={Events} />
+                <PrivateRoute exact path="/friends" component={Friends} />
+                <PrivateRoute exact path="/recipes" component={Recipes} />
+                <PrivateRoute
+                  exact
+                  path="/useraccount"
+                  component={UserAccount}
+                />
+              </Switch>
             </>
           ) : (
             <Switch>
