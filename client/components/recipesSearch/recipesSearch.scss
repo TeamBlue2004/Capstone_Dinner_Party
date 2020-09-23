@@ -24,11 +24,7 @@ form {
 }
 
 .ingredients {
-    // display: flex;
-    // justify-content: space-between;
-    // flex-flow: row;
-    // flex-wrap: wrap;
-    position: relative; //
+    position: relative;
 }
 
 .ingredients .image-preview { 
@@ -73,4 +69,70 @@ form {
 
 .list-group-item button:hover {
     color: gray;
+}
+
+.filters-dropdown {
+    margin: 1% 0;
+}
+
+#filters-checkbox-label {
+    color: blue;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#filters-checkbox~.filters-list {
+    max-height: 0;
+    transition: max-height .1s ease-out;
+}
+
+#filters-checkbox, #filters-checkbox-label {
+    cursor: pointer;
+    margin: 0;
+    overflow: hidden;
+}
+
+#filters-checkbox:checked~.filters-list {
+    border: 1px solid gray;
+    max-height: 400;
+    transition: max-height .1s ease-in;
+}
+
+#filters-checkbox:checked~#filters-checkbox-label::after {
+    content: '  -';
+}
+
+#filters-checkbox~#filters-checkbox-label::after {
+    content: '  +';
+}
+
+.sensitivities-list {
+    display: flex;
+}
+
+#filters-checkbox {
+    display: none;
+}
+
+.sensitivities {
+    background-color: white;
+    padding: 2%;
+}
+
+.sensitivity {
+    margin-right: 4%;
+}
+
+.sensitivity .sensitivities-input{
+    margin-right: 6px;
+}
+
+.filters-list {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.filters-title {
+    font-weight: bold;
+    margin-bottom: 2px;
 }

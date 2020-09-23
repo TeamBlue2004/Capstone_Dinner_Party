@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import RecipesSearch from '../recipesSearch/RecipeSearch';
 import './recipes.scss';
-import Popup from '../popup/Popup';
-import Recipe from '../recipe/Recipe';
-import ViewRecipeButton from '../buttons/ViewRecipeButton';
 
 class Recipes extends Component {
   componentDidMount() {
@@ -28,24 +25,18 @@ class Recipes extends Component {
             <div className="recipes-search">
               <RecipesSearch {...this.props} />
             </div>
-            <h3>{`Found ${recipes.length} result(s)...`}</h3>
+            <h4>{`Found ${recipes.length} result(s)...`}</h4>
             <div className="recipes-results">
               {recipes.map((recipe) => {
                 return (
-                  <div key={recipe.id} className="card">
-                    <Popup
-                      title={recipe.name}
-                      BodyModal={Recipe}
-                      ButtonModal={ViewRecipeButton}
-                      data={recipe.id}
-                    />
-                    <img
-                      className="card-img-top"
-                      src={recipe.image}
-                      alt={recipe.name}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">{recipe.name}</h4>
+                  <div key={recipe.id} className="recipe">
+                    <div className="recipe-body">
+                      <img
+                        className="recipe-img"
+                        src={recipe.image}
+                        alt={recipe.name}
+                      />
+                      <span className="recipe-title">{recipe.name}</span>
                     </div>
                   </div>
                 );

@@ -63,9 +63,12 @@ class RecipesSearch extends Component {
     event.preventDefault();
     const { input, ingredients } = this.state;
     const updatedQuery = [...ingredients, input];
-    this.setState({
-      ingredients: updatedQuery,
-    });
+    this.setState(
+      {
+        ingredients: updatedQuery,
+      },
+      () => this.searchRecipes()
+    );
   };
 
   deleteIngredient = (event) => {
@@ -74,16 +77,21 @@ class RecipesSearch extends Component {
     const filteredIngredients = ingredients.filter(
       (ingredient) => ingredient !== removedIngredient
     );
-    this.setState({
-      ingredients: filteredIngredients,
-      imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
-    });
+    this.setState(
+      {
+        ingredients: filteredIngredients,
+        imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+      },
+      () => this.searchRecipes()
+    );
     if (filteredIngredients.length === 0)
       document.querySelector('input[type="file"]').value = '';
   };
 
   checkboxHandler = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
+    this.setState({ [event.target.name]: event.target.checked }, () =>
+      this.searchRecipes()
+    );
   };
 
   sensitivities = (...args) => {
@@ -102,10 +110,13 @@ class RecipesSearch extends Component {
     reader.onloadend = async () => {
       const imgBase = reader.result.replace(/^data:image\/(.*);base64,/, '');
       await axios.post(`/api/camera/`, { imgBase }).then((response) =>
-        this.setState({
-          ingredients: response.data,
-          imgSrc: URL.createObjectURL(file),
-        })
+        this.setState(
+          {
+            ingredients: response.data,
+            imgSrc: URL.createObjectURL(file),
+          },
+          () => this.searchRecipes()
+        )
       );
     };
   };
@@ -144,6 +155,12 @@ class RecipesSearch extends Component {
       dairyFree,
     } = this.state;
 
+    const dietaryRestrictions = [
+      { vegan },
+      { vegetarian },
+      { glutenFree },
+      { dairyFree },
+    ];
     return (
       <div className="md-form">
         <form onSubmit={this.addIngredient}>
@@ -170,47 +187,43 @@ class RecipesSearch extends Component {
             onChange={this.searchHandler}
           />
         </form>
-        <div className="form-check form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="vegan"
-            checked={vegan}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Vegan
+        <div className="filters-dropdown">
+          <input name="filters" id="filters-checkbox" type="checkbox" />
+          <label id="filters-checkbox-label" htmlFor="filters-checkbox">
+            Filters
           </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="vegetarian"
-            checked={vegetarian}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Vegetarian
-          </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="glutenFree"
-            checked={glutenFree}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Gluten Free
-          </label>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="dairyFree"
-            checked={dairyFree}
-            onChange={this.checkboxHandler}
-          />
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            Dairy Free
-          </label>
+          <div className="filters-list">
+            <div className="sensitivities">
+              <p className="filters-title">Sensitivites:</p>
+              <div className="sensitivities-list">
+                {dietaryRestrictions.map((restriction) => {
+                  const keys = Object.entries(restriction);
+                  const sensitivity = keys[0][0]
+                    .split(/(?=[A-Z])/)
+                    .reduce((acc, curr) => {
+                      const uppCase =
+                        curr.charAt(0).toUpperCase() + curr.slice(1);
+                      return `${acc} ${uppCase}`.trim();
+                    }, '');
+                  return (
+                    <div key={sensitivity} className="sensitivity">
+                      <input
+                        className="sensitivities-input"
+                        type="checkbox"
+                        name={keys[0][0]}
+                        checked={keys[0][1]}
+                        value={keys[0][1]}
+                        onChange={this.checkboxHandler}
+                      />
+                      <label className="form-check-label" htmlFor={keys[0][0]}>
+                        {sensitivity}
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="ingredients">
           <ul className="list-group">
@@ -233,15 +246,6 @@ class RecipesSearch extends Component {
           <div className="image-preview">
             <img src={imgSrc} alt="" />
           </div>
-        </div>
-        <div className="search-recipes">
-          <button
-            type="submit"
-            onClick={this.searchRecipes}
-            value="Search Recipes"
-          >
-            Search Recipes
-          </button>
         </div>
       </div>
     );
