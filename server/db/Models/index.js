@@ -31,6 +31,10 @@ Allergen.belongsTo(User);
 User.hasMany(FoodPreference);
 FoodPreference.belongsTo(User);
 
+// Relations between Event and User
+User.hasMany(Event);
+Event.belongsTo(User);
+
 // Relations between Recipe and Allergen
 Recipe.belongsToMany(Allergen, { through: 'Recipe_Allergen' });
 Allergen.belongsToMany(Recipe, { through: 'Recipe_Allergen' });
@@ -49,9 +53,6 @@ Ingredient.belongsToMany(Recipe, { through: 'Recipe_Ingredient' });
 // Recipe.hasMany(Allergen);
 /// // Allergen.belongsTo(Recipe);
 
-// Relations between Event and User
-User.belongsToMany(Event, { through: 'Event_User' });
-Event.belongsToMany(User, { through: 'Event_User' });
 // Recipe.hasMany(Allergen);
 // Allergen.belongsTo(Recipe);
 
