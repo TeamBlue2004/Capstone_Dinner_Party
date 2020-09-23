@@ -25,7 +25,7 @@ class Recipes extends Component {
             <div className="recipes-search">
               <RecipesSearch {...this.props} />
             </div>
-            <h3>{`Found ${recipes.length} result(s)...`}</h3>
+            <h4>{`Found ${recipes.length} result(s)...`}</h4>
             <div className="recipes-results">
               {recipes.map((recipe) => {
                 return (
