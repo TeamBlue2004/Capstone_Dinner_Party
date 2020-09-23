@@ -17,11 +17,11 @@ class Login extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { loginUser, history } = this.props;
+    const { loginUser } = this.props;
     const { username, password } = this.state;
     const user = { username, password };
     loginUser(user);
-    history.push(`/home`);
+    // history.push(`/home`); //TODO: fix this
   };
 
   render() {
