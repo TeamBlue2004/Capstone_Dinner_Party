@@ -9,7 +9,7 @@ const { Event, User } = require('../../db/Models/index');
 eventsRouter.post(
   '/events',
   [
-    check('host', 'Host name is required').not().isEmpty(),
+    check('eventName', 'Event name is required').not().isEmpty(),
     check('datetime', 'Date and time is required').isISO8601().toDate(),
     check('location', 'Location is required').not().isEmpty(),
   ],
@@ -21,14 +21,23 @@ eventsRouter.post(
         errors: errors.array(),
       });
     }
+    const { hostId, eventName, datetime, location } = req.body;
+    const host = await User.findOne({
+      where: {
+        id: hostId,
+      },
+    });
+    const hostName = `${host.firstName} ${host.lastName}`;
 
-    const { host, datetime, location } = req.body;
     try {
       const event = await Event.create({
-        host,
+        host: hostName,
+        eventName,
         datetime,
         location,
       });
+
+      event.setUser(host);
 
       res.status(200).send(event);
     } catch (e) {

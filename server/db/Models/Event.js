@@ -18,6 +18,13 @@ const Event = db.define(
         notEmpty: true,
       },
     },
+    eventName: {
+      type: STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     datetime: {
       type: DATE,
       allowNull: false,
