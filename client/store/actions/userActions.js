@@ -106,7 +106,7 @@ const logout = () => {
   };
 };
 
-const login = (user) => {
+const login = (user, history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post('/api/users/login', {
@@ -114,14 +114,11 @@ const login = (user) => {
         password: user.password,
       });
       await dispatch(setLoggedIn());
-      dispatch(setUserData(data));
-      dispatch(setError(''));
-      console.log('im here good');
-      return true;
+      await dispatch(setUserData(data));
+      await dispatch(setError(''));
+      history.push('/home');
     } catch (e) {
-      console.log('im here bad');
-      dispatch(setError(e.response.data.message));
-      return false;
+      await dispatch(setError(e.response.data.message));
     }
   };
 };
@@ -182,6 +179,13 @@ const fetchApprovedFriends = (userId) => async (dispatch) => {
   return dispatch(setApprovedFriends(data));
 };
 
+const updateUserFavoriteRecipe = (user, recipe) => async () => {
+  await axios.post(`/api/users/favorite/`, {
+    user,
+    recipe,
+  });
+};
+
 export const userActions = {
   setLoggedIn,
   login,
@@ -204,4 +208,5 @@ export const userActions = {
   setApprovedFriends,
   approveAsFriend,
   setApproveRequestMessage,
+  updateUserFavoriteRecipe,
 };

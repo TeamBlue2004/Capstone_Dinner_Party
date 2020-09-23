@@ -27,17 +27,12 @@ const fetchRecipes = (query) => async (dispatch) => {
   return dispatch(setRecipes(data));
 };
 
-// Fetch user's favorite recipes based on userId
-const setFavoriteRecipes = (favRecipes) => {
+// SET RECIPE NAV
+const setRecipeNav = (nav) => {
   return {
-    type: TYPES.FETCH_FAVORITE_RECIPES,
-    favRecipes,
+    type: TYPES.SET_RECIPE_NAV,
+    nav,
   };
-};
-
-const fetchFavoriteRecipes = (userId) => async (dispatch) => {
-  const { data } = await axios.get(`/api/recipes/favorite/${userId}`);
-  return dispatch(setFavoriteRecipes(data));
 };
 
 export const recipesActions = {
@@ -47,4 +42,5 @@ export const recipesActions = {
   fetchFavoriteRecipes,
   setFavoriteRecipes,
   fetchRecipes,
+  setRecipeNav,
 };

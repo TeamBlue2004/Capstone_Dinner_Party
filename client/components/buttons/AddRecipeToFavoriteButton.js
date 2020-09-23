@@ -13,6 +13,11 @@ export default class AddRecipeToFavoriteButton extends Component {
   }
 }
 
+AddRecipeToFavoriteButton.defaultProps = {
+  favorite: false,
+};
+
 AddRecipeToFavoriteButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  favorite: PropTypes.bool,
 };

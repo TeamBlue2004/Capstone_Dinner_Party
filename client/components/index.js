@@ -12,7 +12,6 @@ import PrivateRoute from './privateRoute/PrivateRoute';
 
 // Events
 import Events from './events/Events';
-import Event from './event/Event';
 import AddEventForm from './addEventForm/AddEventForm';
 
 // Friends
@@ -31,7 +30,6 @@ export {
   Sidebar,
   Home,
   Events,
-  Event,
   AddEventForm,
   Friends,
   Recipe,

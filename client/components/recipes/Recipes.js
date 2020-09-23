@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { recipesActions } from '../../store/actions/index';
 import RecipesSearch from '../recipesSearch/RecipeSearch';
+import RecipesResults from '../recipesResults/RecipesResults';
+import Recipe from '../recipe/Recipe';
+
 import './recipes.scss';
 
 class Recipes extends Component {
@@ -17,7 +20,7 @@ class Recipes extends Component {
   }
 
   render() {
-    const { recipes } = this.props;
+    const { recipeNav } = this.props;
     return (
       <div className="routesContainer">
         <div className="routes">
@@ -44,6 +47,11 @@ class Recipes extends Component {
             </div>
           </div>
         </div>
+        {recipeNav.open && recipeNav.recipeId !== '' && (
+          <div className="infoContainer">
+            <Recipe />
+          </div>
+        )}
       </div>
     );
   }
@@ -52,6 +60,9 @@ class Recipes extends Component {
 const mapStateToProps = (state) => {
   return {
     recipes: state.recipes.recipes,
+    userId: state.user.id,
+    favoriteRecipes: state,
+    recipeNav: state.recipes.nav,
   };
 };
 
@@ -63,8 +74,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+Recipes.defaultProps = {
+  recipes: [],
+  recipe: {},
+};
+
 Recipes.propTypes = {
-  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object),
+  recipe: PropTypes.objectOf(PropTypes.object),
+  recipeNav: PropTypes.objectOf(PropTypes.object).isRequired,
+  userId: PropTypes.string.isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,

@@ -12,38 +12,50 @@ class Recipe extends Component {
     loadRecipe(data);
   }
 
+  addRecipeToFavorite = (event) => {
+    console.log(event);
+  };
+
+  filterRecipeFavorites = (recipe) => {
+    const { favoriteRecipes } = this.props;
+    return favoriteRecipes.some((favRecipe) => favRecipe.id === recipe.id);
+  };
+
   render() {
-    const { recipe } = this.props;
+    const { recipeNav, recipes } = this.props;
+    const recipe = recipes.find((rcp) => rcp.id === recipeNav.recipeId);
     return (
       <div className="card-body">
-        <div className="card-top">
-          <div className="recipe-image">
-            <img
-              className="card-img-top"
-              src={recipe.image}
-              alt={recipe.name}
-            />
-          </div>
-          <div className="ingredients">
-            <ul>
-              {recipe &&
-                recipe.Ingredients &&
-                recipe.Ingredients[0] &&
-                recipe.Ingredients[0].name
-                  .split(';')
-                  .map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
-            </ul>
-          </div>
+        <div className="recipe-image">
+          <AddRecipeToFavoriteButton
+            onClick={() => this.addRecipeToFavorite(recipe)}
+            favorite={this.filterRecipeFavorites(recipe)}
+          />
+          <img src={recipe && recipe.image} alt={recipe && recipe.name} />
+        </div>
+        <div className="ingredients">
+          <h5>Ingredients</h5>
+          <hr />
+          <ol>
+            {recipe &&
+              recipe.Ingredients &&
+              recipe.Ingredients[0] &&
+              recipe.Ingredients[0].name
+                .split(';')
+                .map((ingredient) => <li key={ingredient}>{ingredient}</li>)}
+          </ol>
         </div>
         <h5>Instructions</h5>
         <hr />
         <ol className="instructions">
           {recipe &&
             recipe.steps &&
-            recipe.steps.split(';').map((step) => <li key={step}>{step}</li>)}
+            recipe.steps
+              .split(';')
+              .map((step) => <li key={recipe.id}>{step}</li>)}
         </ol>
         <div className="buttons">
-          <AddRecipeToFavoriteButton />
+          <AddRecipeToFavoriteButton onClick={this.addRecipeToFavorite} />
           <AddRecipeToEventButton />
         </div>
       </div>
@@ -54,6 +66,11 @@ class Recipe extends Component {
 const mapStateToProps = (state) => {
   return {
     recipe: state.recipes.recipe,
+    recipeId: state.recipes.nav.recipeId,
+    userId: state.user.id,
+    favoriteRecipes: state.recipes.favRecipes,
+    recipeNav: state.recipes.nav,
+    recipes: state.recipes.recipes,
   };
 };
 
@@ -65,15 +82,19 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+Recipe.defaultProps = {
+  recipe: {},
+};
+
 Recipe.propTypes = {
-  data: PropTypes.objectOf(PropTypes.string).isRequired,
-  recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  recipeId: PropTypes.string.isRequired,
+  recipe: PropTypes.instanceOf(Object),
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipeNav: PropTypes.objectOf(PropTypes.object).isRequired,
   loadRecipe: PropTypes.func.isRequired,
+  favoriteRecipes: PropTypes.func.isRequired,
+  updateUserFavoriteRecipe: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recipe);
