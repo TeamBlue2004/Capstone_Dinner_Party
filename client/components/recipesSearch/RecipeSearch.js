@@ -187,30 +187,43 @@ class RecipesSearch extends Component {
             onChange={this.searchHandler}
           />
         </form>
-        <div className="form-check form-check">
-          {dietaryRestrictions.map((restriction) => {
-            const keys = Object.entries(restriction);
-            const sensitivity = keys[0][0]
-              .split(/(?=[A-Z])/)
-              .reduce((acc, curr) => {
-                const uppCase = curr.charAt(0).toUpperCase() + curr.slice(1);
-                return `${acc} ${uppCase}`.trim();
-              }, '');
-            return (
-              <>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name={keys[0][0]}
-                  checked={keys[0][1]}
-                  onChange={this.checkboxHandler}
-                />
-                <label className="form-check-label" htmlFor="inlineCheckbox1">
-                  {sensitivity}
-                </label>
-              </>
-            );
-          })}
+        <div className="filters-dropdown">
+          <input name="filters" id="filters-checkbox" type="checkbox" />
+          <label id="filters-checkbox-label" htmlFor="filters-checkbox">
+            Filters
+          </label>
+          <div className="filters-list">
+            <div className="sensitivities">
+              <p className="filters-title">Sensitivites:</p>
+              <div className="sensitivities-list">
+                {dietaryRestrictions.map((restriction) => {
+                  const keys = Object.entries(restriction);
+                  const sensitivity = keys[0][0]
+                    .split(/(?=[A-Z])/)
+                    .reduce((acc, curr) => {
+                      const uppCase =
+                        curr.charAt(0).toUpperCase() + curr.slice(1);
+                      return `${acc} ${uppCase}`.trim();
+                    }, '');
+                  return (
+                    <div key={sensitivity} className="sensitivity">
+                      <input
+                        className="sensitivities-input"
+                        type="checkbox"
+                        name={keys[0][0]}
+                        checked={keys[0][1]}
+                        value={keys[0][1]}
+                        onChange={this.checkboxHandler}
+                      />
+                      <label className="form-check-label" htmlFor={keys[0][0]}>
+                        {sensitivity}
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="ingredients">
           <ul className="list-group">
