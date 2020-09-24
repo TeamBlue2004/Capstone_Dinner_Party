@@ -8,8 +8,8 @@ import './recipe.scss';
 
 class Recipe extends Component {
   componentDidMount() {
-    const { data, loadRecipe } = this.props;
-    loadRecipe(data);
+    const { recipeId, loadRecipe } = this.props;
+    loadRecipe(recipeId);
   }
 
   addRecipeToFavorite = (event) => {
@@ -88,9 +88,12 @@ Recipe.defaultProps = {
 
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  recipe: PropTypes.instanceOf(Object),
-  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  recipeNav: PropTypes.objectOf(PropTypes.object).isRequired,
+  recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
   loadRecipe: PropTypes.func.isRequired,
   favoriteRecipes: PropTypes.func.isRequired,
   updateUserFavoriteRecipe: PropTypes.func.isRequired,

@@ -9,6 +9,11 @@ import Recipe from '../recipe/Recipe';
 import './recipes.scss';
 
 class Recipes extends Component {
+  state = {
+    isPaneOpen: false,
+    recipeId: '',
+  };
+
   componentDidMount() {
     const {
       history: {
@@ -19,31 +24,49 @@ class Recipes extends Component {
     loadRecipes(search);
   }
 
+  togglePane = (event) => {
+    const { isPaneOpen } = this.state;
+    this.setState({ isPaneOpen: !isPaneOpen, recipeId: event.target.id });
+  };
+
   render() {
     const { recipeNav } = this.props;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          <div className="recipes-container">
-            <div className="recipes-search">
-              <RecipesSearch {...this.props} />
-            </div>
-            <h4>{`Found ${recipes.length} result(s)...`}</h4>
-            <div className="recipes-results">
-              {recipes.map((recipe) => {
-                return (
-                  <div key={recipe.id} className="recipe">
-                    <div className="recipe-body">
-                      <img
-                        className="recipe-img"
-                        src={recipe.image}
-                        alt={recipe.name}
-                      />
-                      <span className="recipe-title">{recipe.name}</span>
+      <>
+        <div className="routesContainer">
+          <div className="routes">
+            <div className="recipes-container">
+              <div className="recipes-search">
+                <RecipesSearch {...this.props} />
+              </div>
+              <h4>{`Found ${recipes.length} result(s)...`}</h4>
+              <div className="recipes-results">
+                {recipes.map((recipe, idx) => {
+                  return (
+                    <div
+                      key={recipe.id}
+                      id={recipe.id}
+                      className="recipe"
+                      role="button"
+                      tabIndex={idx}
+                      onClick={this.togglePane}
+                      onKeyPress={this.togglePane}
+                    >
+                      <div id={recipe.id} className="recipe-body">
+                        <img
+                          className="recipe-img"
+                          id={recipe.id}
+                          src={recipe.image}
+                          alt={recipe.name}
+                        />
+                        <span id={recipe.id} className="recipe-title">
+                          {recipe.name}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -52,7 +75,7 @@ class Recipes extends Component {
             <Recipe />
           </div>
         )}
-      </div>
+      </>
     );
   }
 }
