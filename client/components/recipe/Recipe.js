@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddRecipeToFavoriteButton from '../buttons/AddRecipeToFavoriteButton';
 import AddRecipeToEventButton from '../buttons/AddRecipeToEventButton';
-import { recipesActions } from '../../store/actions/index';
+import { recipesActions, userActions } from '../../store/actions/index';
 import './recipe.scss';
 
 class Recipe extends Component {
@@ -12,8 +12,9 @@ class Recipe extends Component {
     loadRecipe(recipeId);
   }
 
-  addRecipeToFavorite = (event) => {
-    console.log(event);
+  addRecipeToFavorite = () => {
+    const { recipe, userId, updateUserFavoriteRecipe } = this.props;
+    updateUserFavoriteRecipe(userId, recipe.id);
   };
 
   filterRecipeFavorites = (recipe) => {
@@ -71,6 +72,7 @@ const mapStateToProps = (state) => {
     favoriteRecipes: state.recipes.favRecipes,
     recipeNav: state.recipes.nav,
     recipes: state.recipes.recipes,
+    userId: state.user.id,
   };
 };
 
@@ -78,6 +80,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadRecipe: (id) => {
       dispatch(recipesActions.fetchRecipe(id));
+    },
+    updateUserFavoriteRecipe: (userId, recipeId) => {
+      dispatch(userActions.updateUserFavoriteRecipe(userId, recipeId));
     },
   };
 };
@@ -88,14 +93,12 @@ Recipe.defaultProps = {
 
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  recipe: PropTypes.arrayOf(PropTypes.object).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  recipe: PropTypes.instanceOf(Object).isRequired,
   loadRecipe: PropTypes.func.isRequired,
+<<<<<<< HEAD
   favoriteRecipes: PropTypes.func.isRequired,
+=======
+>>>>>>> added favorites functionality on backend
   updateUserFavoriteRecipe: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };
