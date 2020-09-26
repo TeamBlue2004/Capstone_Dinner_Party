@@ -60,7 +60,7 @@ class EventCard extends Component {
         onClick={() => {
           this.handleEventDisplay();
         }}
-        onKeyPress={() => { }}
+        onKeyPress={null}
         tabIndex={0}
         role="button"
       >

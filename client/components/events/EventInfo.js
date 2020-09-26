@@ -55,13 +55,13 @@ EventInfo.propTypes = {
   // eventName: PropTypes.string.isRequired,
   // datetime: PropTypes.string.isRequired,
   // location: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  // userId: PropTypes.string.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventNav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
   }).isRequired,
-  fetchEvents: PropTypes.func.isRequired,
+  // fetchEvents: PropTypes.func.isRequired,
   // setEventNav: PropTypes.func.isRequired,
   // deleteEvent: PropTypes.func.isRequired,
 };
