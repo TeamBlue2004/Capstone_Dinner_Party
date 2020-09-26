@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import AddEventForm from '../addEventForm/AddEventForm';
 import { eventsActions } from '../../store/actions/index';
 import EventCard from './EventCard';
@@ -15,12 +14,14 @@ class Events extends Component {
   }
 
   handleAdd = () => {
-    const {
-      setEventNav,
-      eventNav: { open },
-    } = this.props;
-    const nav = { open: !open, id: '' };
-    setEventNav(nav);
+    const { setEventNav, eventNav } = this.props;
+    if (eventNav.eventId !== '') {
+      const nav = { open: true, id: '' };
+      setEventNav(nav);
+    } else {
+      const nav = { open: !eventNav.open, id: '' };
+      setEventNav(nav);
+    }
   };
 
   render() {
@@ -63,7 +64,6 @@ class Events extends Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
@@ -71,7 +71,6 @@ const mapStateToProps = (state) => {
     eventNav: state.events.nav,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchEvents: (userId) => {
@@ -82,7 +81,6 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-
 Events.propTypes = {
   userId: PropTypes.string.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -93,5 +91,4 @@ Events.propTypes = {
   fetchEvents: PropTypes.func.isRequired,
   setEventNav: PropTypes.func.isRequired,
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

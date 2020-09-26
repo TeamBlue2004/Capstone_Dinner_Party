@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-
 import { eventsActions } from '../../store/actions/index';
 
 class AddEventForm extends Component {
@@ -28,11 +27,12 @@ class AddEventForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { userId, postEvent, handlePane } = this.props;
+    const { userId, postEvent, setEventNav } = this.props;
     const { eventName, datetime, location } = this.state;
     const event = { hostId: userId, eventName, datetime, location };
     postEvent(event);
-    handlePane();
+    const nav = { open: false, id: '' };
+    setEventNav(nav);
   };
 
   render() {
@@ -96,7 +96,6 @@ class AddEventForm extends Component {
                               ? '#41b6e6'
                               : '#fff',
                           };
-
                           return (
                             <div
                               {...getSuggestionItemProps(suggestion, { style })}
@@ -124,25 +123,25 @@ class AddEventForm extends Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     postEvent: (event) => {
       dispatch(eventsActions.postEvent(event));
     },
+    setEventNav: (nav) => {
+      dispatch(eventsActions.setEventNav(nav));
+    },
   };
 };
-
 AddEventForm.propTypes = {
   userId: PropTypes.string.isRequired,
   postEvent: PropTypes.func.isRequired,
-  handlePane: PropTypes.func.isRequired,
+  setEventNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);

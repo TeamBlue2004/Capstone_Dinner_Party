@@ -9,6 +9,7 @@ import './recipe.scss';
 class Recipe extends Component {
   componentDidMount() {
     const { recipeId, loadRecipe } = this.props;
+    console.log(this.props);
     loadRecipe(recipeId);
   }
 
@@ -56,7 +57,10 @@ class Recipe extends Component {
               .map((step) => <li key={recipe.id}>{step}</li>)}
         </ol>
         <div className="buttons">
-          <AddRecipeToEventButton />
+          <AddRecipeToEventButton
+            onClick={this.addRecipeToFavorite}
+            favorite={this.filterRecipeFavorites(recipe.id)}
+          />
         </div>
       </div>
     );
@@ -87,13 +91,22 @@ const mapDispatchToProps = (dispatch) => {
 
 Recipe.defaultProps = {
   recipe: {},
+  recipeNav: {
+    open: false,
+    id: '',
+  },
 };
 
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
   recipe: PropTypes.instanceOf(Object),
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipeNav: PropTypes.shape({
+    open: PropTypes.bool,
+    recipeId: PropTypes.string,
+  }),
   loadRecipe: PropTypes.func.isRequired,
-  favoriteRecipes: PropTypes.func.isRequired,
+  favoriteRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateUserFavoriteRecipe: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };

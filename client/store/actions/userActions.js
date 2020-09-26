@@ -196,7 +196,7 @@ const fetchApprovedFriends = (userId) => async (dispatch) => {
 };
 
 const updateUserFavoriteRecipe = (userId, recipeId) => async (dispatch) => {
-  await axios.post(`/api/users/favorite/`, {
+  await axios.post(`/api/users/favorites/`, {
     userId,
     recipeId,
   });
@@ -233,4 +233,5 @@ export const userActions = {
   setApproveRequestMessage,
   updateUserFavoriteRecipe,
   fetchUserFavoriteRecipes,
+  fetchFriends,
 };

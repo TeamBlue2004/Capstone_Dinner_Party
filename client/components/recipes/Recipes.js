@@ -59,12 +59,19 @@ const mapDispatchToProps = (dispatch) => {
 Recipes.defaultProps = {
   recipes: [],
   recipe: {},
+  recipeNav: {
+    open: false,
+    id: '',
+  },
 };
 
 Recipes.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
   recipe: PropTypes.objectOf(PropTypes.object),
-  recipeNav: PropTypes.objectOf(PropTypes.object).isRequired,
+  recipeNav: PropTypes.shape({
+    open: PropTypes.bool,
+    recipeId: PropTypes.string,
+  }),
   userId: PropTypes.string.isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({

@@ -32,20 +32,13 @@ eventsRouter.post(
     try {
       const event = await Event.create({
         host: hostName,
-<<<<<<< Updated upstream
-=======
         hostid: hostId,
->>>>>>> Stashed changes
         eventName,
         datetime,
         location,
       });
 
-<<<<<<< Updated upstream
-      event.setUser(host);
-=======
       event.addUser(host);
->>>>>>> Stashed changes
 
       res.status(200).send(event);
     } catch (e) {
@@ -89,7 +82,6 @@ eventsRouter.get('/events/userevents/:userId', async (req, res) => {
       order: [['datetime', 'ASC']],
     });
     // eventsArr.push(event);
-
     res.status(200).send(userEventList);
   } catch (e) {
     console.error(e);
