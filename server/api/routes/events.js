@@ -32,12 +32,13 @@ eventsRouter.post(
     try {
       const event = await Event.create({
         host: hostName,
+        hostid: hostId,
         eventName,
         datetime,
         location,
       });
 
-      event.setUser(host);
+      event.addUser(host);
 
       res.status(200).send(event);
     } catch (e) {
@@ -49,7 +50,21 @@ eventsRouter.post(
 
 // eventsRouter.put();
 
-// eventsRouter.delete();
+eventsRouter.delete('/events/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Event.destroy({
+      where: {
+        id,
+      },
+    });
+
+    res.sendStatus(200);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error while deleting event' });
+  }
+});
 
 eventsRouter.get('/events/userevents/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -64,9 +79,9 @@ eventsRouter.get('/events/userevents/:userId', async (req, res) => {
           },
         },
       ],
+      order: [['datetime', 'ASC']],
     });
     // eventsArr.push(event);
-
     res.status(200).send(userEventList);
   } catch (e) {
     console.error(e);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { userActions } from '../../store/actions/index';
@@ -15,13 +16,12 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { loginUser } = this.props;
     const { username, password } = this.state;
     const user = { username, password };
     loginUser(user);
-    // history.push(`/home`); //TODO: fix this
   };
 
   render() {
@@ -109,4 +109,4 @@ Login.defaultProps = {
   error: '',
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

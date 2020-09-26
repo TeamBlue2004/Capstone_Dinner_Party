@@ -9,40 +9,23 @@
     margin-top: 3%;
 }
 
-.card-body .ingredients {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
-    margin: 0;
+.card-body .ingredients ol {
     padding: 0;
 }
 
-.card-top .recipe-image {
-    max-width: 350px !important;
-
+.card-body .recipe-image {
+    position: relative;
 }
 
-.card-top .recipe-image img {
+.card-body .recipe-image img {
     border: 1px solid gray;
-}
-
-.card-body .ingredients ul {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.card-body .ingredients ul li {
-    flex: 1,
+    width: 100%;
 }
 
 .card-body .instructions {
     margin: 1% 0;
     padding-left: 1%;
 }
-
 
 .modal-header {
     padding: 1rem 2rem !important;

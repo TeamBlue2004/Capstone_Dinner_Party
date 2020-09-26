@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TYPES } from '../types';
 
+// LOGIN & REGISTER
 const setLoggedIn = () => ({
   type: TYPES.SET_LOGGEDIN,
 });
@@ -14,27 +15,6 @@ const setUserData = (username, id) => ({
   username,
   id,
 });
-
-const getFriends = (friends) => {
-  return {
-    type: TYPES.FETCH_FRIENDS,
-    friends,
-  };
-};
-
-const getUser = (user) => {
-  return {
-    type: TYPES.FETCH_USER_DETAILS,
-    user,
-  };
-};
-
-const setUser = (user) => {
-  return {
-    type: TYPES.EDIT_USER_DETAILS,
-    user,
-  };
-};
 
 const setPendingFriends = (pendingFriends) => {
   return {
@@ -106,7 +86,7 @@ const logout = () => {
   };
 };
 
-const login = (user) => {
+const login = (user, history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post('/api/users/login', {
@@ -114,14 +94,11 @@ const login = (user) => {
         password: user.password,
       });
       await dispatch(setLoggedIn());
-      dispatch(setUserData(data));
-      dispatch(setError(''));
-      console.log('im here good');
-      return true;
+      await dispatch(setUserData(data));
+      await dispatch(setError(''));
+      history.push('/home');
     } catch (e) {
-      console.log('im here bad');
-      dispatch(setError(e.response.data.message));
-      return false;
+      await dispatch(setError(e.response.data.message));
     }
   };
 };
@@ -135,6 +112,34 @@ const logInWithSession = () => {
     } else {
       dispatch(setLoggedIn(false));
     }
+  };
+};
+
+// USER FRIENDS
+const getFriends = (friends) => {
+  return {
+    type: TYPES.FETCH_FRIENDS,
+    friends,
+  };
+};
+
+const fetchFriends = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/userfriends/${userId}`);
+  return dispatch(getFriends(data));
+};
+
+// USER DETAILS
+const getUser = (user) => {
+  return {
+    type: TYPES.FETCH_USER_DETAILS,
+    user,
+  };
+};
+
+const setUser = (user) => {
+  return {
+    type: TYPES.EDIT_USER_DETAILS,
+    user,
   };
 };
 
@@ -172,6 +177,14 @@ const approveAsFriend = (friendId, userId) => async (dispatch) => {
   return dispatch(setApproveRequestMessage(approveRequestMessage.data));
 };
 
+// USER FAVORITE RECIPES
+const setFavoriteRecipes = (favRecipes) => {
+  return {
+    type: TYPES.FETCH_FAVORITE_RECIPES,
+    favRecipes,
+  };
+};
+
 const fetchPendingFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/pendinguserfriends/${userId}`);
   return dispatch(setPendingFriends(data));
@@ -180,6 +193,20 @@ const fetchPendingFriends = (userId) => async (dispatch) => {
 const fetchApprovedFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/approveduserfriends/${userId}`);
   return dispatch(setApprovedFriends(data));
+};
+
+const updateUserFavoriteRecipe = (userId, recipeId) => async (dispatch) => {
+  await axios.post(`/api/users/favorites/`, {
+    userId,
+    recipeId,
+  });
+  const { data } = await axios.get(`/api/users/favorites/${userId}`);
+  return dispatch(setFavoriteRecipes(data));
+};
+
+const fetchUserFavoriteRecipes = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/favorites/${userId}`);
+  return dispatch(setFavoriteRecipes(data));
 };
 
 export const userActions = {
@@ -204,4 +231,7 @@ export const userActions = {
   setApprovedFriends,
   approveAsFriend,
   setApproveRequestMessage,
+  updateUserFavoriteRecipe,
+  fetchUserFavoriteRecipes,
+  fetchFriends,
 };

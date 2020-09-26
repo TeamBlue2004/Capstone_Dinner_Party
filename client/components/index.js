@@ -12,7 +12,6 @@ import PrivateRoute from './privateRoute/PrivateRoute';
 
 // Events
 import Events from './events/Events';
-import Event from './event/Event';
 import AddEventForm from './addEventForm/AddEventForm';
 
 // Friends
@@ -22,6 +21,8 @@ import Friends from './friends/Friends';
 import Recipe from './recipe/Recipe';
 import Recipes from './recipes/Recipes';
 import RecipesSearch from './recipesSearch/RecipeSearch';
+import FavoriteRecipes from './favoriteRecipes/FavoriteRecipes';
+import RecipeResults from './recipesResults/RecipesResults';
 
 // UserAccount
 import UserAccount from './userAccount/UserAccount';
@@ -31,12 +32,13 @@ export {
   Sidebar,
   Home,
   Events,
-  Event,
   AddEventForm,
   Friends,
   Recipe,
   Recipes,
   RecipesSearch,
+  RecipeResults,
+  FavoriteRecipes,
   Login,
   Register,
   PrivateRoute,

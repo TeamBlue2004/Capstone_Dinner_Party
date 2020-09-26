@@ -1,3 +1,4 @@
+const { INTEGER } = require('sequelize');
 const Sequelize = require('sequelize');
 
 const { UUID, UUIDV4, STRING, BOOLEAN, TEXT } = Sequelize;
@@ -54,10 +55,30 @@ const Recipe = db.define(
         notEmpty: true,
       },
     },
+    favoriteCount: {
+      type: INTEGER,
+      defaultValue: 0,
+    },
   },
   {
     tableName: 'Recipe',
   }
 );
+
+Recipe.prototype.addToUserFavorite = async function addToUserFavorite(
+  user,
+  recipeId
+) {
+  user.addRecipe(recipeId);
+  this.increment('favoriteCount', { by: 1 });
+};
+
+Recipe.prototype.removeFromUserFavorite = async function removeFromUserFavorite(
+  user,
+  recipeId
+) {
+  user.removeRecipe(recipeId);
+  this.decrement('favoriteCount', { by: 1 });
+};
 
 module.exports = { Recipe };

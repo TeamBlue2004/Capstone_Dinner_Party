@@ -1,22 +1,147 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import PropTypes from 'prop-types';
+import { eventsActions } from '../../store/actions/index';
 
-export default class AddEventForm extends Component {
+class AddEventForm extends Component {
+  state = {
+    eventName: '',
+    datetime: moment(),
+    location: '',
+    // invitees: [],
+  };
+
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleLocationChange = (e) => {
+    this.setState({ location: e });
+  };
+
+  handleSelect = (value) => {
+    this.setState({ location: value });
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { userId, postEvent, setEventNav } = this.props;
+    const { eventName, datetime, location } = this.state;
+    const event = { hostId: userId, eventName, datetime, location };
+    postEvent(event);
+    const nav = { open: false, id: '' };
+    setEventNav(nav);
+  };
+
   render() {
+    const { eventName, datetime, location } = this.state;
     return (
-      <form className="add-event-form">
-        <div className="form-group">
-          <label htmlFor="name" className="label-full">
-            Date
-            <input
-              type="text"
-              className="form-control"
-              name="date"
-              placeholder="date"
-              required
-            />
-          </label>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 mt-5 mx-auto">
+            <form onSubmit={this.handleSubmit} className="auth-form">
+              <h1 className="h3 mb-3 font-weight-normal">Lets Party</h1>
+              <div className="form-group">
+                <label htmlFor="eventName">Event Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="eventName"
+                  placeholder="Enter event name"
+                  value={eventName}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="datetime">Date and Time</label>
+                <input
+                  type="datetime-local"
+                  className="form-control"
+                  name="datetime"
+                  placeholder="Pick Date and Time"
+                  value={datetime}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="location">Event Location</label>
+                <PlacesAutocomplete
+                  value={location}
+                  onChange={this.handleLocationChange}
+                  onSelect={this.handleSelect}
+                >
+                  {({
+                    getInputProps,
+                    suggestions,
+                    getSuggestionItemProps,
+                    loading,
+                  }) => (
+                    <>
+                      <input
+                        {...getInputProps({
+                          placeholder: 'Type address',
+                          className: 'form-control',
+                          required: 'required',
+                        })}
+                      />
+                      <div>
+                        {loading ? <div>...loading</div> : null}
+                        {suggestions.map((suggestion) => {
+                          const style = {
+                            backgroundColor: suggestion.active
+                              ? '#41b6e6'
+                              : '#fff',
+                          };
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, { style })}
+                            >
+                              {suggestion.description}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                </PlacesAutocomplete>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-lg btn-primary btn-block"
+                href="/#/events"
+              >
+                Add Event
+              </button>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    userId: state.user.id,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postEvent: (event) => {
+      dispatch(eventsActions.postEvent(event));
+    },
+    setEventNav: (nav) => {
+      dispatch(eventsActions.setEventNav(nav));
+    },
+  };
+};
+AddEventForm.propTypes = {
+  userId: PropTypes.string.isRequired,
+  postEvent: PropTypes.func.isRequired,
+  setEventNav: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);

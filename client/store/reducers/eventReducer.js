@@ -2,6 +2,10 @@ import { TYPES } from '../types';
 
 const initialEventsState = {
   events: [],
+  nav: {
+    open: false,
+    eventId: '',
+  },
 };
 
 export const eventsReducer = (state = initialEventsState, action) => {
@@ -10,6 +14,14 @@ export const eventsReducer = (state = initialEventsState, action) => {
       return {
         ...state,
         events: action.events,
+      };
+    case TYPES.SET_EVENT_NAV:
+      return {
+        ...state,
+        nav: {
+          open: action.nav.open,
+          eventId: action.nav.id,
+        },
       };
     default:
       return state;
