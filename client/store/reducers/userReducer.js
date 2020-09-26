@@ -8,6 +8,10 @@ const initialLoginState = {
   friends: [],
   user: {},
   error: '',
+  usersList: [],
+  pendingFriendsList: [],
+  approvedFriendsLisr: [],
+  requestSentMessage: '',
 };
 
 export const userReducer = (state = initialLoginState, action) => {
@@ -52,6 +56,31 @@ export const userReducer = (state = initialLoginState, action) => {
       return {
         ...state,
         error: action.error,
+      };
+    case TYPES.FETCH_SEARCHED_USERS:
+      return {
+        ...state,
+        usersList: action.usersList,
+      };
+    case TYPES.FETCH_PENDING_FRIENDS:
+      return {
+        ...state,
+        pendingFriendsList: action.pendingFriends,
+      };
+    case TYPES.FETCH_APPROVED_FRIENDS:
+      return {
+        ...state,
+        approvedFriendsList: action.approvedFriends,
+      };
+    case TYPES.ADD_AS_FRIEND:
+      return {
+        ...state,
+        requestSentMessage: action.requestSentMsg,
+      };
+    case TYPES.APPROVE_FRIEND_REQUEST:
+      return {
+        ...state,
+        requestSentMessage: action.requestSentMsg,
       };
     default:
       return state;

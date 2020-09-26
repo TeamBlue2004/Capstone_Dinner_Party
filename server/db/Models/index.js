@@ -8,15 +8,29 @@ const { User_Recipe } = require('./User_Recipe');
 const { Session } = require('./Session');
 
 // User can have many friends
+// User.belongsToMany(User, {
+//   as: 'friends',
+//   foreignKey: 'user_id',
+//   through: Users_Friends,
+// });
+// User.belongsToMany(User, {
+//   as: 'userFriends',
+//   foreignKey: 'friend_id',
+//   through: Users_Friends,
+// });
+
+User.belongsToMany(User, { as: 'Friends', through: 'friends' });
 User.belongsToMany(User, {
-  as: 'friends',
-  foreignKey: 'user_id',
-  through: 'Users_Friends',
+  as: 'Requestees',
+  through: 'friendRequests',
+  foreignKey: 'requesterId',
+  onDelete: 'CASCADE',
 });
 User.belongsToMany(User, {
-  as: 'userFriends',
-  foreignKey: 'friend_id',
-  through: 'Users_Friends',
+  as: 'Requesters',
+  through: 'friendRequests',
+  foreignKey: 'requesteeId',
+  onDelete: 'CASCADE',
 });
 
 // User and Session
