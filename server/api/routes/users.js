@@ -149,6 +149,7 @@ userRouter.post('/users/addasfriend', async (req, res) => {
   const { friendId, userId } = req.body;
   const user = await User.findByPk(userId);
   user.addRequestees(friendId).then((result) => {
+    console.log('result === ', result);
     res.status(201).send({ message: 'Friend request sent!' });
   });
 });
@@ -185,6 +186,7 @@ userRouter.post('/users/approveasfriend', async (req, res) => {
   const user = await User.findByPk(userId);
   const friend = await User.findByPk(friendId);
   user.addFriend(friendId).then((result) => {
+    console.log('result ~~', result);
     res.status(201).send({ message: 'Friend request accepted!' });
   });
   user.removeRequesters(friend);
@@ -208,7 +210,7 @@ userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
       ],
     });
     res.status(200).send(approvedFriendsList);
-    } catch (e) {
+  } catch (e) {
     console.error(e);
     res.status(500).send({
       message: 'Server error while fetching Users approvedFriendsList',

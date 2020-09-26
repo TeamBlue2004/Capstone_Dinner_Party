@@ -6,7 +6,6 @@ const { Ingredient } = require('./Ingredient');
 const { Event } = require('./Event');
 const { User_Recipe } = require('./User_Recipe');
 const { Session } = require('./Session');
-const { Users_Friends } = require('./Users_Friends');
 
 // User can have many friends
 // User.belongsToMany(User, {
@@ -83,5 +82,4 @@ module.exports = {
   Ingredient,
   Event,
   Session,
-  Users_Friends,
 };
