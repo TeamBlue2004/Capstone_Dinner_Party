@@ -36,10 +36,45 @@ const setUser = (user) => {
   };
 };
 
+const setPendingFriends = (pendingFriends) => {
+  return {
+    type: TYPES.FETCH_PENDING_FRIENDS,
+    pendingFriends,
+  };
+};
+
+const setApprovedFriends = (approvedFriends) => {
+  return {
+    type: TYPES.FETCH_APPROVED_FRIENDS,
+    approvedFriends,
+  };
+};
+
+const setRequestSentMessage = (requestSentMsg) => {
+  return {
+    type: TYPES.ADD_AS_FRIEND,
+    requestSentMsg,
+  };
+};
+
+const setApproveRequestMessage = (approveRequestMsg) => {
+  return {
+    type: TYPES.APPROVE_FRIEND_REQUEST,
+    approveRequestMsg,
+  };
+};
+
 const setError = (error) => {
   return {
     type: TYPES.SET_USER_ERROR,
     error,
+  };
+};
+
+const getAllMatchedUsers = (usersList) => {
+  return {
+    type: TYPES.FETCH_SEARCHED_USERS,
+    usersList,
   };
 };
 
@@ -103,11 +138,6 @@ const logInWithSession = () => {
   };
 };
 
-const fetchFriends = (userId) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/userfriends/${userId}`);
-  return dispatch(getFriends(data));
-};
-
 const fetchUserDetails = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${userId}`);
   return dispatch(getUser(data));
@@ -121,6 +151,37 @@ const updateUserDetails = (user) => async (dispatch) => {
   return dispatch(setUser(data));
 };
 
+const searchUsers = (searchTerm) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/searchusers/${searchTerm}`);
+  return dispatch(getAllMatchedUsers(data));
+};
+
+const addAsFriend = (friendId, userId) => async (dispatch) => {
+  const requestSentMessage = await axios.post('/api/users/addasfriend', {
+    friendId,
+    userId,
+  });
+  return dispatch(setRequestSentMessage(requestSentMessage.data));
+};
+
+const approveAsFriend = (friendId, userId) => async (dispatch) => {
+  const approveRequestMessage = await axios.post('/api/users/approveasfriend', {
+    friendId,
+    userId,
+  });
+  return dispatch(setApproveRequestMessage(approveRequestMessage.data));
+};
+
+const fetchPendingFriends = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/pendinguserfriends/${userId}`);
+  return dispatch(setPendingFriends(data));
+};
+
+const fetchApprovedFriends = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/approveduserfriends/${userId}`);
+  return dispatch(setApprovedFriends(data));
+};
+
 export const userActions = {
   setLoggedIn,
   login,
@@ -129,10 +190,18 @@ export const userActions = {
   setUserData,
   logInWithSession,
   logout,
-  fetchFriends,
+  fetchPendingFriends,
+  fetchApprovedFriends,
   getFriends,
   fetchUserDetails,
   getUser,
   updateUserDetails,
   setUser,
+  searchUsers,
+  getAllMatchedUsers,
+  addAsFriend,
+  setPendingFriends,
+  setApprovedFriends,
+  approveAsFriend,
+  setApproveRequestMessage,
 };

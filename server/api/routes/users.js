@@ -2,8 +2,8 @@ const userRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { User } = require('../../db/Models/User');
-const { Session } = require('../../db/Models/Session');
+const { Op } = require('sequelize');
+const { User, Session } = require('../../db/Models/index');
 
 userRouter.use(cors());
 userRouter.use(bodyParser.json());
@@ -97,31 +97,6 @@ userRouter.post('/users/login', async (req, res) => {
   }
 });
 
-userRouter.get('/users/userfriends/:userId', async (req, res) => {
-  const { userId } = req.params;
-  try {
-    // find out friends associated with a user from through table
-    // const userFriendsList = await User.findAll({
-    // //  where: { id: userId },
-    //   include: [{ model: User, as: 'userFriends' }],
-    // //  raw: false,
-    // });
-
-    const userRecord = await User.findOne({
-      where: { id: userId },
-    });
-
-    const userFriendsList = await userRecord.getFriends();
-
-    res.status(200).send(userFriendsList);
-  } catch (e) {
-    console.error(e);
-    res
-      .status(500)
-      .send({ message: 'Server error while fetching Users friendsList' });
-  }
-});
-
 userRouter.get('/users/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
@@ -153,6 +128,92 @@ userRouter.put('/users/updateuser/:userid', async (req, res) => {
     );
   });
   res.sendStatus(200);
+});
+
+userRouter.get('/users/searchusers/:searchTerm', async (req, res) => {
+  const searchValue = req.params.searchTerm;
+  const usersList = await User.findAll({
+    where: {
+      [Op.or]: [
+        { username: { [Op.like]: `%${searchValue}%` } },
+        { firstName: { [Op.like]: `%${searchValue}%` } },
+        { lastName: { [Op.like]: `%${searchValue}%` } },
+      ],
+    },
+  });
+  res.status(200).send(usersList);
+});
+
+// Adding one row in friendRequests Table - userId is loggedin and friendId is to whom request is sent
+userRouter.post('/users/addasfriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  user.addRequestees(friendId).then((result) => {
+    res.status(201).send({ message: 'Friend request sent!' });
+  });
+});
+
+// Pending friends from below method
+userRouter.get('/users/pendinguserfriends/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const pendingFriendsList = await User.findAll({
+      include: [
+        {
+          model: User,
+          as: 'Requestees',
+          // through: 'friendRequests',
+          required: true,
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+    res.status(200).send(pendingFriendsList);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching Users pendingFriendsList',
+    });
+  }
+});
+
+// Adding one row in friends Table - userId is loggedin and friendId is the user whose request is getting approved
+userRouter.post('/users/approveasfriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  const friend = await User.findByPk(friendId);
+  user.addFriend(friendId).then((result) => {
+    res.status(201).send({ message: 'Friend request accepted!' });
+  });
+  user.removeRequesters(friend);
+});
+
+// Below method will give approved friends
+userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const approvedFriendsList = await User.findAll({
+      include: [
+        {
+          model: User,
+          as: 'Friends',
+          // through: 'friendRequests',
+          required: true,
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+    res.status(200).send(approvedFriendsList);
+    } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching Users approvedFriendsList',
+    });
+  }
 });
 
 module.exports = {
