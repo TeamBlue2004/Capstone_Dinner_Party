@@ -154,6 +154,23 @@ userRouter.put('/users/updateuser/:userid', async (req, res) => {
   res.sendStatus(200);
 });
 
+userRouter.get('/users/favorites/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findByPk(userId);
+    if (user) {
+      user.getRecipes().then((response) => {
+        res.status(200).send(response);
+      });
+    } else {
+      res.status(404).send({ message: 'not found' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 userRouter.post('/users/favorites', async (req, res) => {
   const { userId, recipeId } = req.body;
   try {

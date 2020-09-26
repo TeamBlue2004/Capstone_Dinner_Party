@@ -56,7 +56,6 @@ class Recipe extends Component {
               .map((step) => <li key={recipe.id}>{step}</li>)}
         </ol>
         <div className="buttons">
-          <AddRecipeToFavoriteButton onClick={this.addRecipeToFavorite} />
           <AddRecipeToEventButton />
         </div>
       </div>
@@ -72,7 +71,6 @@ const mapStateToProps = (state) => {
     favoriteRecipes: state.recipes.favRecipes,
     recipeNav: state.recipes.nav,
     recipes: state.recipes.recipes,
-    userId: state.user.id,
   };
 };
 
@@ -93,12 +91,9 @@ Recipe.defaultProps = {
 
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  recipe: PropTypes.instanceOf(Object).isRequired,
+  recipe: PropTypes.instanceOf(Object),
   loadRecipe: PropTypes.func.isRequired,
-<<<<<<< HEAD
   favoriteRecipes: PropTypes.func.isRequired,
-=======
->>>>>>> added favorites functionality on backend
   updateUserFavoriteRecipe: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };

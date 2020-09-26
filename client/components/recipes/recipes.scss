@@ -25,18 +25,32 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
-.recipe {
+.recipe-result-container {
     background-color: white;
     border: 1px solid gray;
     color: black;
     cursor: pointer;
-    padding: 1% 2%;
     width: 100%;
     border-radius: 4px;
+    position: relative;
 }
 
-.recipe .recipe-body .recipe-img {
+.recipe-result-container .btn-favorite {
+    bottom: initial;
+    top: 4px;
+    font-size: 15px;
+    z-index: 9999
+}
+
+.recipe-result-container .btn-favorite:hover {
+    font-size: 18px;
+}
+
+.recipe {
+    padding: 1% 2%;
+}
+
+.recipe-result-container .recipe .recipe-body .recipe-img {
     border-radius: 50%;
     height: 50px;
     object-fit: cover;

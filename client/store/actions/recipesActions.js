@@ -39,8 +39,6 @@ export const recipesActions = {
   setRecipe,
   fetchRecipe,
   setRecipes,
-  fetchFavoriteRecipes,
-  setFavoriteRecipes,
   fetchRecipes,
   setRecipeNav,
 };

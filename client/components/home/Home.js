@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { eventsActions, recipesActions } from '../../store/actions/index';
+import { eventsActions, userActions } from '../../store/actions/index';
 
 class Home extends Component {
   constructor() {
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(eventsActions.fetchEvents(userId));
     },
     loadFavoriteRecipes: (userId) => {
-      dispatch(recipesActions.fetchFavoriteRecipes(userId));
+      dispatch(userActions.fetchUserFavoriteRecipes(userId));
     },
   };
 };

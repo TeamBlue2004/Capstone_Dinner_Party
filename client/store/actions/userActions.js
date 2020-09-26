@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TYPES } from '../types';
 
+// LOGIN & REGISTER
 const setLoggedIn = () => ({
   type: TYPES.SET_LOGGEDIN,
 });
@@ -14,27 +15,6 @@ const setUserData = (username, id) => ({
   username,
   id,
 });
-
-const getFriends = (friends) => {
-  return {
-    type: TYPES.FETCH_FRIENDS,
-    friends,
-  };
-};
-
-const getUser = (user) => {
-  return {
-    type: TYPES.FETCH_USER_DETAILS,
-    user,
-  };
-};
-
-const setUser = (user) => {
-  return {
-    type: TYPES.EDIT_USER_DETAILS,
-    user,
-  };
-};
 
 const setPendingFriends = (pendingFriends) => {
   return {
@@ -135,6 +115,34 @@ const logInWithSession = () => {
   };
 };
 
+// USER FRIENDS
+const getFriends = (friends) => {
+  return {
+    type: TYPES.FETCH_FRIENDS,
+    friends,
+  };
+};
+
+const fetchFriends = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/userfriends/${userId}`);
+  return dispatch(getFriends(data));
+};
+
+// USER DETAILS
+const getUser = (user) => {
+  return {
+    type: TYPES.FETCH_USER_DETAILS,
+    user,
+  };
+};
+
+const setUser = (user) => {
+  return {
+    type: TYPES.EDIT_USER_DETAILS,
+    user,
+  };
+};
+
 const fetchUserDetails = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${userId}`);
   return dispatch(getUser(data));
@@ -169,6 +177,14 @@ const approveAsFriend = (friendId, userId) => async (dispatch) => {
   return dispatch(setApproveRequestMessage(approveRequestMessage.data));
 };
 
+// USER FAVORITE RECIPES
+const setFavoriteRecipes = (favRecipes) => {
+  return {
+    type: TYPES.FETCH_FAVORITE_RECIPES,
+    favRecipes,
+  };
+};
+
 const fetchPendingFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/pendinguserfriends/${userId}`);
   return dispatch(setPendingFriends(data));
@@ -179,11 +195,18 @@ const fetchApprovedFriends = (userId) => async (dispatch) => {
   return dispatch(setApprovedFriends(data));
 };
 
-const updateUserFavoriteRecipe = (user, recipe) => async () => {
+const updateUserFavoriteRecipe = (userId, recipeId) => async (dispatch) => {
   await axios.post(`/api/users/favorite/`, {
-    user,
-    recipe,
+    userId,
+    recipeId,
   });
+  const { data } = await axios.get(`/api/users/favorites/${userId}`);
+  return dispatch(setFavoriteRecipes(data));
+};
+
+const fetchUserFavoriteRecipes = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/favorites/${userId}`);
+  return dispatch(setFavoriteRecipes(data));
 };
 
 export const userActions = {
@@ -209,4 +232,5 @@ export const userActions = {
   approveAsFriend,
   setApproveRequestMessage,
   updateUserFavoriteRecipe,
+  fetchUserFavoriteRecipes,
 };
