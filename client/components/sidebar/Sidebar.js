@@ -37,7 +37,7 @@ class Sidebar extends Component {
           </div>
           <div className="sidebarItem">
             <a href="#useraccount">
-              <i className="fa fa-cogs" aria-hidden="true"></i> User Account
+              <i className="fa fa-cogs" aria-hidden="true"></i> Profile
             </a>
           </div>
         </div>

@@ -5,6 +5,13 @@
   border-radius: 10px;
   font-size: 18px;
   padding: 2rem;
+  height: 100%;
+  width: 15%;
+  margin-left: 20px;
+  background-color: #DBF5DA;
+  opacity: 85%;
+  text-transform: uppercase;
+  box-shadow: 5px 10px #265925;
 }
 
 .sidebar {
@@ -25,4 +32,13 @@
 .sidebarItem a:hover {
   color: blue;
   text-decoration: none;
+  margin: 10px;
+}
+
+a {
+  color: #A83264;
+}
+
+a:hover {
+  color: hotpink;
 }

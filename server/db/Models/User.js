@@ -60,6 +60,11 @@ const User = db.define(
       validate: {
         notEmpty: true,
       },
+      profilePic: {
+        type: STRING,
+        defaultValue:
+          'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
+      },
     },
   },
   {

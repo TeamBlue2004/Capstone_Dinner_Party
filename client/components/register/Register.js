@@ -46,11 +46,11 @@ class Register extends Component {
       password,
     } = this.state;
     return (
-      <div className="container">
+      <div className="loginContainer">
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">Register</h1>
+              <h1 className="h3 mb-3 font-weight-normal">REGISTER</h1>
               <div className="form-group">
                 <label htmlFor="name">First Name</label>
                 <input
@@ -174,7 +174,7 @@ class Register extends Component {
               </div>
               <button
                 type="submit"
-                className="btn btn-lg btn-primary btn-block"
+                className="btn btn-lg btn-success btn-block"
               >
                 Register!
               </button>

@@ -1,7 +1,11 @@
 @import 'bootstrap/scss/bootstrap.scss';
+.navbar-brand {
+  text-transform: uppercase
+}
 
 body {
-  font-family: 'Roboto';
+  font-family: 'Montserrat', sans-serif;
+  color: #A83264
 }
 .mainBackground {
   background-image: url("./assets/vegtables.jpg");
@@ -45,7 +49,7 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: green;
+  background-color: #3EA843;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -71,9 +75,10 @@ button {
   margin: 0 40px;
   padding: 2rem 3rem;
   width: 40%;
-  border: solid black 1px;
   overflow-y: scroll;
-  background-color: lightyellow;
+  opacity: 90%;
+  background-color: #DBF5DA;
+  box-shadow: 5px 10px #265925;
 }
 
 .infoContainer {
@@ -84,4 +89,12 @@ button {
   border: solid black 1px;
   overflow-y: scroll;
   background-color: lightyellow;
+}
+
+a {
+  color: #A83264;
+}
+a:hover {
+  color: hotpink;
+  background-color: #3EA843;
 }
