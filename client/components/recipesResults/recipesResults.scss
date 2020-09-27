@@ -1,3 +1,27 @@
-.recipe-result-container button {
-    z-index: 999999 !important;
+.recipe-result-container {
+    background-color: white;
+    border: 1px solid gray;
+    color: black;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+    position: relative;
+}
+
+.recipe-result-container .btn-favorite:hover {
+    font-size: 18px;
+}
+
+.recipe-result-container .recipe .recipe-body .recipe-img {
+    border-radius: 50%;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 25px;
+    width: 50px;
+}
+
+.recipe-result-container button.btn-favorite {
+    bottom: initial;
+    top: 4px;
+    font-size: 15px;
 }

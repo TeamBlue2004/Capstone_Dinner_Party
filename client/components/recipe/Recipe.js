@@ -9,7 +9,6 @@ import './recipe.scss';
 class Recipe extends Component {
   componentDidMount() {
     const { recipeId, loadRecipe } = this.props;
-    console.log(this.props);
     loadRecipe(recipeId);
   }
 

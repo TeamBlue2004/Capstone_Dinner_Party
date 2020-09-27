@@ -51,7 +51,6 @@ class RecipesResults extends Component {
             <div
               key={recipe.id}
               className="recipe-result-container"
-              onClick={() => this.handleRecipeDisplay(recipe)}
               onKeyPress={null}
               tabIndex={0}
               role="button"
@@ -62,7 +61,7 @@ class RecipesResults extends Component {
                 className="recipe"
                 role="button"
                 tabIndex={idx}
-                onClick={this.togglePane}
+                onClick={() => this.handleRecipeDisplay(recipe)}
                 onKeyPress={this.togglePane}
               >
                 <div id={recipe.id} className="recipe-body">
