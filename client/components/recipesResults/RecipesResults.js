@@ -27,7 +27,10 @@ class RecipesResults extends Component {
 
   filterRecipeFavorites = (recipe) => {
     const { favoriteRecipes } = this.props;
-    return favoriteRecipes.some((favRecipe) => favRecipe.id === recipe.id);
+    const some = favoriteRecipes.some(
+      (favRecipe) => favRecipe.id === recipe.id
+    );
+    return some;
   };
 
   handleRecipeDisplay = (recipe) => {

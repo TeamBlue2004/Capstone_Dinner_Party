@@ -12,30 +12,34 @@ class Recipe extends Component {
     loadRecipe(recipeId);
   }
 
-  addRecipeToFavorite = () => {
-    const { recipe, userId, updateUserFavoriteRecipe } = this.props;
-    updateUserFavoriteRecipe(userId, recipe.id);
+  addRecipeToFavorite = async (recipe) => {
+    const { userId, updateUserFavoriteRecipe } = this.props;
+    await updateUserFavoriteRecipe(userId, recipe.id);
   };
 
   filterRecipeFavorites = (recipe) => {
     const { favoriteRecipes } = this.props;
-    return favoriteRecipes.some((favRecipe) => favRecipe.id === recipe.id);
+    const some = favoriteRecipes.some(
+      (favRecipe) => favRecipe.id === recipe.id
+    );
+    return some;
   };
 
   render() {
     const { recipeNav, recipes } = this.props;
     const recipe = recipes.find((rcp) => rcp.id === recipeNav.recipeId);
     return (
-      <div className="card-body">
+      <div className="recipe-card">
+        <h4>{recipe.name}</h4>
         <div className="recipe-image">
-          <AddRecipeToFavoriteButton
-            onClick={() => this.addRecipeToFavorite(recipe)}
-            favorite={this.filterRecipeFavorites(recipe)}
-          />
           <img src={recipe && recipe.image} alt={recipe && recipe.name} />
         </div>
         <div className="ingredients">
           <h5>Ingredients</h5>
+          <AddRecipeToFavoriteButton
+            onClick={() => this.addRecipeToFavorite(recipe)}
+            favorite={this.filterRecipeFavorites(recipe)}
+          />
           <hr />
           <ol>
             {recipe &&
@@ -57,7 +61,7 @@ class Recipe extends Component {
         </ol>
         <div className="buttons">
           <AddRecipeToEventButton
-            onClick={this.addRecipeToFavorite}
+            onClick={() => this.addRecipeToFavorite(recipe)}
             favorite={this.filterRecipeFavorites(recipe.id)}
           />
         </div>
@@ -89,7 +93,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Recipe.defaultProps = {
-  recipe: {},
   recipeNav: {
     open: false,
     id: '',
@@ -98,7 +101,6 @@ Recipe.defaultProps = {
 
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  recipe: PropTypes.instanceOf(Object),
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   recipeNav: PropTypes.shape({
     open: PropTypes.bool,

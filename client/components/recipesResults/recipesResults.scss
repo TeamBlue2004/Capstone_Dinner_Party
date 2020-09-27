@@ -21,7 +21,8 @@
 }
 
 .recipe-result-container button.btn-favorite {
-    bottom: initial;
+    position: absolute;
+    right: 4px;
     top: 4px;
     font-size: 15px;
 }
