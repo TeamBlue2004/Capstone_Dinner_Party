@@ -22,10 +22,10 @@ class Header extends Component {
           </Link>
           <h1>Dinner Party</h1>
         </div>
-        <div>
+        <div className="logout">
           {loggedIn && (
             <Link to="/login" onClick={this.logOut}>
-              <i className="fas fa-sign-out-alt"></i>
+              <i className="fas fa-sign-out-alt"></i> Sign Out
             </Link>
           )}
         </div>

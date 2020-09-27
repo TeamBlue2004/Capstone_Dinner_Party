@@ -27,7 +27,10 @@ class RecipesResults extends Component {
 
   filterRecipeFavorites = (recipe) => {
     const { favoriteRecipes } = this.props;
-    return favoriteRecipes.some((favRecipe) => favRecipe.id === recipe.id);
+    const some = favoriteRecipes.some(
+      (favRecipe) => favRecipe.id === recipe.id
+    );
+    return some;
   };
 
   handleRecipeDisplay = (recipe) => {
@@ -51,7 +54,6 @@ class RecipesResults extends Component {
             <div
               key={recipe.id}
               className="recipe-result-container"
-              onClick={() => this.handleRecipeDisplay(recipe)}
               onKeyPress={null}
               tabIndex={0}
               role="button"
@@ -62,7 +64,7 @@ class RecipesResults extends Component {
                 className="recipe"
                 role="button"
                 tabIndex={idx}
-                onClick={this.togglePane}
+                onClick={() => this.handleRecipeDisplay(recipe)}
                 onKeyPress={this.togglePane}
               >
                 <div id={recipe.id} className="recipe-body">
