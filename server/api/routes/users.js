@@ -2,6 +2,7 @@ const userRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 const { User, Session, Recipe } = require('../../db/Models/index');
 
 userRouter.use(cors());
@@ -152,6 +153,94 @@ userRouter.put('/users/updateuser/:userid', async (req, res) => {
     );
   });
   res.sendStatus(200);
+});
+
+userRouter.get('/users/searchusers/:searchTerm', async (req, res) => {
+  const searchValue = req.params.searchTerm;
+  const usersList = await User.findAll({
+    where: {
+      [Op.or]: [
+        { username: { [Op.like]: `%${searchValue}%` } },
+        { firstName: { [Op.like]: `%${searchValue}%` } },
+        { lastName: { [Op.like]: `%${searchValue}%` } },
+      ],
+    },
+  });
+  res.status(200).send(usersList);
+});
+
+// Adding one row in friendRequests Table - userId is loggedin and friendId is to whom request is sent
+userRouter.post('/users/addasfriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  user.addRequestees(friendId).then((result) => {
+    console.log('result === ', result);
+    res.status(201).send({ message: 'Friend request sent!' });
+  });
+});
+
+// Pending friends from below method
+userRouter.get('/users/pendinguserfriends/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const pendingFriendsList = await User.findAll({
+      include: [
+        {
+          model: User,
+          as: 'Requestees',
+          // through: 'friendRequests',
+          required: true,
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+    res.status(200).send(pendingFriendsList);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching Users pendingFriendsList',
+    });
+  }
+});
+
+// Adding one row in friends Table - userId is loggedin and friendId is the user whose request is getting approved
+userRouter.post('/users/approveasfriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  const friend = await User.findByPk(friendId);
+  user.addFriend(friendId).then((result) => {
+    console.log('result ~~', result);
+    res.status(201).send({ message: 'Friend request accepted!' });
+  });
+  user.removeRequesters(friend);
+});
+
+// Below method will give approved friends
+userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const approvedFriendsList = await User.findAll({
+      include: [
+        {
+          model: User,
+          as: 'Friends',
+          // through: 'friendRequests',
+          required: true,
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+    res.status(200).send(approvedFriendsList);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching Users approvedFriendsList',
+    });
+  }
 });
 
 userRouter.get('/users/favorites/:userId', async (req, res) => {
