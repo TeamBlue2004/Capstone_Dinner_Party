@@ -110,140 +110,158 @@ class UserAccount extends Component {
         <div className="routes">
           {isEditing ? (
             <div>
-              <div>
+              <div className="form-group">
                 <label>First Name</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="firstName"
                   value={firstName}
                   onChange={this.handleChange}
                 />
               </div>
-              <div>
+              <div className="form-group">
                 <label>Last Name</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="lastName"
                   value={lastName}
                   onChange={this.handleChange}
                 />
               </div>
-              <div>
+              <div className="form-group">
                 <label>Email</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="email"
                   value={email}
                   onChange={this.handleChange}
                 />
               </div>
-              <div>
+              <div className="form-group">
                 <label>UserName</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="username"
                   value={username}
                   onChange={this.handleChange}
                 />
               </div>
-              <div>
+              <div className="form-group">
                 <label>Address Unit</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="addressUnit"
                   value={addressUnit}
                   onChange={this.handleChange}
                 />
               </div>
 
-              <div>
+              <div className="form-group">
                 <label>Address Street</label>
                 <input
                   type="text"
                   name="addressStreet"
+                  className="form-control"
                   value={addressStreet}
                   onChange={this.handleChange}
                 />
               </div>
 
-              <div>
+              <div className="form-group">
                 <label>Address City</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="addressCity"
                   value={addressCity}
                   onChange={this.handleChange}
                 />
               </div>
 
-              <div>
+              <div className="form-group">
                 <label>Address State</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="addressState"
                   value={addressState}
                   onChange={this.handleChange}
                 />
               </div>
 
-              <div>
+              <div className="form-group">
                 <label>Address Zip</label>
                 <input
                   type="text"
+                  className="form-control"
                   name="addressZip"
                   value={addressZip}
                   onChange={this.handleChange}
                 />
               </div>
-              <button type="button" onClick={this.updateUser}>
+              <button
+                className="btn btn-primary btn-lg"
+                type="button"
+                onClick={this.updateUser}
+              >
                 Save
               </button>
             </div>
           ) : (
             <div>
               <form>
-                <div>
+                <div className="form-group">
                   <label>First Name:</label>
                   <label> {firstName}</label>
                 </div>
-                <div>
+
+                <div className="form-group">
                   <label>Last Name:</label>
                   <label> {lastName}</label>
                 </div>
-                <div>
+                <div className="form-group">
                   <label>Email:</label>
                   <label> {email}</label>
                 </div>
-                <div>
+                <div className="form-group">
                   <label>UserName:</label>
                   <label> {username}</label>
                 </div>
-                <div>
+                <div className="form-group">
                   <label>Address Unit:</label>
                   <label> {addressUnit}</label>
                 </div>
 
-                <div>
+                <div className="form-group">
                   <label>Address Street:</label>
                   <label> {addressStreet}</label>
                 </div>
 
-                <div>
+                <div className="form-group">
                   <label>Address City:</label>
                   <label> {addressCity}</label>
                 </div>
 
-                <div>
+                <div className="form-group">
                   <label>Address State:</label>
                   <label> {addressState}</label>
                 </div>
 
-                <div>
+                <div className="form-group">
                   <label>Address Zip:</label>
                   <label> {addressZip}</label>
                 </div>
 
-                <button type="button" onClick={this.toggleEdit}>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg"
+                  onClick={this.toggleEdit}
+                >
                   edit
                 </button>
               </form>

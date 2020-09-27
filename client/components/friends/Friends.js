@@ -46,134 +46,149 @@ class Friends extends Component {
     // loggedIn user should not appear in result if searchTerm matches with loggedIn User FN,LN or Username
     const filteredUsersList = usersList.filter((user) => user.id !== id);
     return (
-      <div>
-        <div>
-          <input
-            id="searchTerm"
-            placeholder="Search"
-            value={searchTerm}
-            name="searchTerm"
-            onChange={(e) => this.setState({ searchTerm: e.target.value })}
-          />
-        </div>
-        <div>
-          <button type="submit" onClick={this.searchUsers} value="Search Users">
-            Search Users
-          </button>
-        </div>
-
-        <div>
-          {filteredUsersList.length !== 0 ? (
+      <div className="routesContainer">
+        <div className="routes">
+          <div>
             <div>
-              <div>
-                <h2>{filteredUsersList.length} User Found</h2>
-              </div>
-              <div>
-                {filteredUsersList.map((user) => {
-                  return (
-                    <p key={user.id}>
-                      {' '}
-                      <Link to={`/user/${user.id}`} key={user.id}>
-                        <div>
+              <input
+                id="searchTerm"
+                placeholder="Search"
+                value={searchTerm}
+                name="searchTerm"
+                onChange={(e) => this.setState({ searchTerm: e.target.value })}
+              />
+            </div>
+            <div>
+              <button
+                className="btn btn-primary btn-lg"
+                type="submit"
+                onClick={this.searchUsers}
+                value="Search Users"
+              >
+                Search Users
+              </button>
+            </div>
+
+            <div>
+              {filteredUsersList.length !== 0 ? (
+                <div>
+                  <div>
+                    <h2>{filteredUsersList.length} User Found</h2>
+                  </div>
+                  <div>
+                    {filteredUsersList.map((user) => {
+                      return (
+                        <p key={user.id}>
                           {' '}
-                          <p>
-                            {user.firstName} {user.lastName}
-                          </p>
-                        </div>
-                        <div>
-                          {' '}
-                          <button
-                            type="submit"
-                            onClick={() => this.addAsFriend(user.id, id)}
-                            value="add Friend"
-                          >
-                            Add as a Friend
-                          </button>
-                        </div>
-                        {/* <div>
+                          <Link to={`/user/${user.id}`} key={user.id}>
+                            <div>
+                              {' '}
+                              <p>
+                                {user.firstName} {user.lastName}
+                              </p>
+                            </div>
+                            <div>
+                              {' '}
+                              <button
+                                className="btn btn-primary btn-lg"
+                                type="submit"
+                                onClick={() => this.addAsFriend(user.id, id)}
+                                value="add Friend"
+                              >
+                                Add as a Friend
+                              </button>
+                            </div>
+                            {/* <div>
                           {' '}
                           <p>{user.username}</p>
                         </div> */}
-                      </Link>
-                    </p>
-                  );
-                })}
-              </div>
+                          </Link>
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div>No users</div>
+              )}
             </div>
-          ) : (
-            <div>No users</div>
-          )}
-        </div>
 
-        <div>
-          {pendingFriendsList && pendingFriendsList.length !== 0 ? (
             <div>
-              <div>
-                <h2>{pendingFriendsList.length} pending friends request </h2>
-              </div>
-              <div>
-                {pendingFriendsList.map((pendingfriend) => {
-                  return (
-                    <p key={pendingfriend.id}>
-                      {' '}
-                      <Link
-                        to={`/user/${pendingfriend.id}`}
-                        key={pendingfriend.id}
-                      >
-                        <div>
+              {pendingFriendsList && pendingFriendsList.length !== 0 ? (
+                <div>
+                  <div>
+                    <h2>
+                      {pendingFriendsList.length} pending friends request{' '}
+                    </h2>
+                  </div>
+                  <div>
+                    {pendingFriendsList.map((pendingfriend) => {
+                      return (
+                        <p key={pendingfriend.id}>
                           {' '}
-                          <p>
-                            {pendingfriend.firstName} {pendingfriend.lastName}
-                          </p>
-                        </div>
-                        <div>
-                          {' '}
-                          <button
-                            type="submit"
-                            onClick={() =>
-                              this.approveAsFriend(pendingfriend.id, id)
-                            }
-                            value="approve friend request"
+                          <Link
+                            to={`/user/${pendingfriend.id}`}
+                            key={pendingfriend.id}
                           >
-                            Approve Friend Request
-                          </button>
-                        </div>
-                        {/* <div>
+                            <div>
+                              {' '}
+                              <p>
+                                {pendingfriend.firstName}{' '}
+                                {pendingfriend.lastName}
+                              </p>
+                            </div>
+                            <div>
+                              {' '}
+                              <button
+                                className="btn btn-primary btn-lg"
+                                type="submit"
+                                onClick={() =>
+                                  this.approveAsFriend(pendingfriend.id, id)
+                                }
+                                value="approve friend request"
+                              >
+                                Approve Friend Request
+                              </button>
+                            </div>
+                            {/* <div>
                           {' '}
                           <p>{user.username}</p>
                         </div> */}
-                      </Link>
-                    </p>
-                  );
-                })}
-              </div>
+                          </Link>
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div>You have no pending request</div>
+              )}
             </div>
-          ) : (
-            <div>You have no pending request</div>
-          )}
-        </div>
-        <div>
-          {approvedFriendsList && approvedFriendsList.length !== 0 ? (
             <div>
-              <div>
-                <h2>{approvedFriendsList.length} Friends</h2>
-              </div>
-              <div>
-                {approvedFriendsList.map((friend) => {
-                  return (
-                    <p key={friend.id}>
-                      {' '}
-                      <Link to={`/friend/${friend.id}`} key={friend.id}>
-                        {friend.firstName} {friend.lastName}
-                      </Link>
-                    </p>
-                  );
-                })}
-              </div>
+              {approvedFriendsList && approvedFriendsList.length !== 0 ? (
+                <div>
+                  <div>
+                    <h2>{approvedFriendsList.length} Friends</h2>
+                  </div>
+                  <div>
+                    {approvedFriendsList.map((friend) => {
+                      return (
+                        /* */
+                        <p key={friend.id}>
+                          {' '}
+                          <Link to={`/friend/${friend.id}`} key={friend.id}>
+                            {friend.firstName} {friend.lastName}
+                          </Link>
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div>No friends</div>
+              )}
             </div>
-          ) : (
-            <div>No friends</div>
-          )}
+          </div>
         </div>
       </div>
     );

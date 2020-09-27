@@ -12,6 +12,10 @@ const initialLoginState = {
   pendingFriendsList: [],
   approvedFriendsLisr: [],
   requestSentMessage: '',
+  nav: {
+    open: false,
+    userId: '',
+  },
 };
 
 export const userReducer = (state = initialLoginState, action) => {
