@@ -22,8 +22,9 @@ import FriendProfile from './friends/FriendProfile';
 import Recipe from './recipe/Recipe';
 import Recipes from './recipes/Recipes';
 import RecipesSearch from './recipesSearch/RecipeSearch';
-import FavoriteRecipes from './favoriteRecipes/FavoriteRecipes';
 import RecipeResults from './recipesResults/RecipesResults';
+import RecipeEvents from './recipeEvents/RecipeEvents';
+import FavoriteRecipes from './favoriteRecipes/FavoriteRecipes';
 
 // UserAccount
 import UserAccount from './userAccount/UserAccount';
@@ -39,6 +40,7 @@ export {
   Recipes,
   RecipesSearch,
   RecipeResults,
+  RecipeEvents,
   FavoriteRecipes,
   Login,
   Register,
