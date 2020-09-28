@@ -67,12 +67,13 @@ const seedData = async () => {
       users.push(user);
     }
 
-    const createdUsers = await Promise.all(
+    await Promise.all(
       users.map((user) => {
         bcrypt.hash(user.password, 10, (err, hash) => {
           user.password = hash;
           User.create(user);
         });
+        return true;
       })
     );
   });
