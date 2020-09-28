@@ -28,23 +28,21 @@ class FriendProfile extends Component {
     return (
       <div className="routesContainer">
         <div className="routes">
-          <div>
-            <form>
-              <div className="form-group">
-                <label>First Name:</label>
-                <label> {friendData.firstName}</label>
-              </div>
+          <form>
+            <div className="form-group">
+              <label>First Name:</label>
+              <label> {friendData.firstName}</label>
+            </div>
 
-              <div className="form-group">
-                <label>Last Name:</label>
-                <label> {friendData.lastName}</label>
-              </div>
-              <div className="form-group">
-                <label>Email:</label>
-                <label> {friendData.email}</label>
-              </div>
-            </form>
-          </div>
+            <div className="form-group">
+              <label>Last Name:</label>
+              <label> {friendData.lastName}</label>
+            </div>
+            <div className="form-group">
+              <label>Email:</label>
+              <label> {friendData.email}</label>
+            </div>
+          </form>
         </div>
       </div>
     );

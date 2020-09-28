@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { userActions } from '../../store/actions/index';
 import FriendProfile from './FriendProfile';
+import './friends.scss';
 
 class Friends extends Component {
   constructor() {
@@ -75,50 +75,47 @@ class Friends extends Component {
               onChange={(e) => this.setState({ searchTerm: e.target.value })}
             />
             <button
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary button"
               type="submit"
               onClick={this.searchUsers}
-              value="Search Users"
+              value="Search User"
             >
-              Search Users
+              Search User
             </button>
-            {filteredUsersList.length !== 0 ? (
-              <div>
-                <div>
+            {/* {filteredUsersList.length !== 0 ? ( */}
+            <div>
+              {/* <div>
                   <h2>{filteredUsersList.length} User Found</h2>
-                </div>
-                <div>
-                  {filteredUsersList.map((user) => {
-                    return (
-                      <div key={user.id}>
-                        <div
-                          onClick={() => this.handleFriendDisplay(user.id)}
-                          onKeyPress={null}
-                          tabIndex={0}
-                          role="button"
+                </div> */}
+              <div>
+                {filteredUsersList.map((user) => {
+                  return (
+                    <div key={user.id}>
+                      <div
+                        className="friend-result-container"
+                        onClick={() => this.handleFriendDisplay(user.id)}
+                        onKeyPress={null}
+                        tabIndex={0}
+                        role="button"
+                      >
+                        {user.firstName} {user.lastName}
+                        <button
+                          className="btn btn-primary button"
+                          type="submit"
+                          onClick={() => this.addAsFriend(user.id, id)}
+                          value="add Friend"
                         >
-                          {user.id}
-                        </div>
-
-                        <div>
-                          {user.firstName} {user.lastName}
-                          <button
-                            className="btn btn-primary btn-lg"
-                            type="submit"
-                            onClick={() => this.addAsFriend(user.id, id)}
-                            value="add Friend"
-                          >
-                            Add as a Friend
-                          </button>
-                        </div>
+                          Add as a Friend
+                        </button>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
-            ) : (
+            </div>
+            {/* ) : (
               <div>No users</div>
-            )}
+            )} */}
 
             {pendingFriendsList && pendingFriendsList.length !== 0 ? (
               <div>
@@ -129,31 +126,27 @@ class Friends extends Component {
                   {pendingFriendsList.map((pendingfriend) => {
                     return (
                       <div key={pendingfriend.id}>
-                        {' '}
-                        <Link
-                          to={`/user/${pendingfriend.id}`}
-                          key={pendingfriend.id}
+                        <div
+                          className="friend-result-container"
+                          onClick={() =>
+                            this.handleFriendDisplay(pendingfriend.id)
+                          }
+                          onKeyPress={null}
+                          tabIndex={0}
+                          role="button"
                         >
-                          <div>
-                            {' '}
-                            <div>
-                              {pendingfriend.firstName} {pendingfriend.lastName}
-                            </div>
-                          </div>
-                          <div>
-                            {' '}
-                            <button
-                              className="btn btn-primary btn-lg"
-                              type="submit"
-                              onClick={() =>
-                                this.approveAsFriend(pendingfriend.id, id)
-                              }
-                              value="approve friend request"
-                            >
-                              Approve Friend Request
-                            </button>
-                          </div>
-                        </Link>
+                          {pendingfriend.firstName} {pendingfriend.lastName}
+                          <button
+                            className="btn btn-primary btn-lg"
+                            type="submit"
+                            onClick={() =>
+                              this.approveAsFriend(pendingfriend.id, id)
+                            }
+                            value="approve friend request"
+                          >
+                            Approve Friend Request
+                          </button>
+                        </div>
                       </div>
                     );
                   })}
@@ -171,19 +164,23 @@ class Friends extends Component {
                 <div>
                   {approvedFriendsList.map((friend) => {
                     return (
-                      /* */
                       <div key={friend.id}>
-                        {' '}
-                        <Link to={`/friend/${friend.id}`} key={friend.id}>
+                        <div
+                          onClick={() => this.handleFriendDisplay(friend.id)}
+                          onKeyPress={null}
+                          tabIndex={0}
+                          role="button"
+                          className="friend-result-container"
+                        >
                           {friend.firstName} {friend.lastName}
-                        </Link>
+                        </div>
                       </div>
                     );
                   })}
                 </div>
               </div>
             ) : (
-              <div>No friends</div>
+              <div>You have no friends</div>
             )}
           </div>
         </div>
