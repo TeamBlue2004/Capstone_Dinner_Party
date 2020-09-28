@@ -50,6 +50,10 @@ Ingredient.belongsToMany(Recipe, { through: 'Recipe_Ingredient' });
 User.belongsToMany(Event, { through: 'Event_User' });
 Event.belongsToMany(User, { through: 'Event_User' });
 
+// Relations between Event and Recipe
+Event.belongsToMany(Recipe, { through: 'Event_Recipe' });
+Recipe.belongsToMany(Event, { through: 'Event_Recipe' });
+
 // Relations between Recipe and User
 User.belongsToMany(Recipe, { through: User_Recipe });
 Recipe.belongsToMany(User, { through: User_Recipe });
