@@ -10,7 +10,7 @@ const initialLoginState = {
   error: '',
   usersList: [],
   pendingFriendsList: [],
-  approvedFriendsLisr: [],
+  approvedFriendsList: [],
   requestSentMessage: '',
   nav: {
     open: false,
