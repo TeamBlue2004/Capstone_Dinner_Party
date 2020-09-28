@@ -101,7 +101,6 @@ const setFriendNav = (nav) => {
   };
 };
 
-
 const register = (newUser) => {
   return axios.post('/api/users/register', {
     firstName: newUser.firstName,
@@ -225,9 +224,6 @@ const fetchFriendDetails = (friendId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/friends/${friendId}`);
   return dispatch(getFriendData(data));
 };
-
-
-setFriendNav
 
 export const userActions = {
   setLoggedIn,
