@@ -285,6 +285,19 @@ userRouter.post('/users/favorites', async (req, res) => {
   }
 });
 
+userRouter.get('/users/friends/:friendId', async (req, res) => {
+  const { friendId } = req.params;
+  try {
+    const friend = await User.findOne({ where: { id: friendId } });
+    res.status(200).send(friend);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching details for friend',
+    });
+  }
+});
+
 module.exports = {
   userRouter,
 };
