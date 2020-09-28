@@ -26,10 +26,13 @@ const postEvent = (event) => async (dispatch) => {
   return dispatch(getEvents(data));
 };
 
-const deleteEvent = (id, userId) => async (dispatch) => {
-  await axios.delete(`/api/events/${id}`);
-  const { data } = await axios.get(`/api/events/userevents/${userId}`);
-  return dispatch(getEvents(data));
+const deleteEvent = (id, userId) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/events/${id}`);
+    const { data } = await axios.get(`/api/events/userevents/${userId}`);
+    dispatch(getEvents(data));
+    dispatch(setEventNav({ open: false, eventId: '' }));
+  };
 };
 
 export const eventsActions = {

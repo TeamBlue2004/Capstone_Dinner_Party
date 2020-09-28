@@ -10,7 +10,6 @@ class EventCard extends Component {
   state = {
     days: 0,
     hours: 0,
-    seconds: 0,
   };
 
   componentDidMount() {
@@ -19,9 +18,8 @@ class EventCard extends Component {
       const total = Date.parse(datetime) - Date.parse(new Date());
       const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
       const days = Math.floor(total / (1000 * 60 * 60 * 24));
-      const seconds = Math.floor((total / 1000) % 60);
 
-      this.setState({ days, hours, seconds });
+      this.setState({ days, hours });
     }, 1000);
   }
 
@@ -51,7 +49,7 @@ class EventCard extends Component {
       userId,
       deleteEvent,
     } = this.props;
-    const { days, hours, seconds } = this.state;
+    const { days, hours } = this.state;
 
     return (
       <div
@@ -67,7 +65,7 @@ class EventCard extends Component {
         <div>
           <h5 className="mb-1">{`${eventName} @ ${host}`}</h5>
           <p className="mb-1">{moment(datetime).format('LLLL')}</p>
-          <p className="mb-1">{location}</p>
+          <p className="mb-1">{location.split(';')[0]}</p>
           {userId === hostid ? (
             <button
               type="button"
@@ -86,10 +84,6 @@ class EventCard extends Component {
           <div>
             <span className="hours">{hours}</span>
             <div className="smalltext">Hours</div>
-          </div>
-          <div>
-            <span className="seconds">{seconds}</span>
-            <div className="smalltext">Seconds</div>
           </div>
         </div>
       </div>

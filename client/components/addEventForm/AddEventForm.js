@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { eventsActions } from '../../store/actions/index';
 
@@ -21,8 +24,10 @@ class AddEventForm extends Component {
     this.setState({ location: e });
   };
 
-  handleSelect = (value) => {
-    this.setState({ location: value });
+  handleSelect = async (value) => {
+    const res = await geocodeByAddress(value);
+    const LatLng = await getLatLng(res[0]);
+    this.setState({ location: `${value};${LatLng.lat};${LatLng.lng}` });
   };
 
   handleSubmit = async (e) => {
