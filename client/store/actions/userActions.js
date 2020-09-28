@@ -58,6 +58,49 @@ const getAllMatchedUsers = (usersList) => {
   };
 };
 
+// USER FRIENDS
+const getFriends = (friends) => {
+  return {
+    type: TYPES.FETCH_FRIENDS,
+    friends,
+  };
+};
+
+// USER DETAILS
+const getUser = (user) => {
+  return {
+    type: TYPES.FETCH_USER_DETAILS,
+    user,
+  };
+};
+
+const getFriendData = (friend) => ({
+  type: TYPES.SET_FRIEND_DATA,
+  friend,
+});
+
+const setUser = (user) => {
+  return {
+    type: TYPES.EDIT_USER_DETAILS,
+    user,
+  };
+};
+
+// USER FAVORITE RECIPES
+const setFavoriteRecipes = (favRecipes) => {
+  return {
+    type: TYPES.FETCH_FAVORITE_RECIPES,
+    favRecipes,
+  };
+};
+
+const setFriendNav = (nav) => {
+  return {
+    type: TYPES.SET_FRIEND_NAV,
+    nav,
+  };
+};
+
 const register = (newUser) => {
   return axios.post('/api/users/register', {
     firstName: newUser.firstName,
@@ -114,33 +157,9 @@ const logInWithSession = () => {
     }
   };
 };
-
-// USER FRIENDS
-const getFriends = (friends) => {
-  return {
-    type: TYPES.FETCH_FRIENDS,
-    friends,
-  };
-};
-
 const fetchFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/userfriends/${userId}`);
   return dispatch(getFriends(data));
-};
-
-// USER DETAILS
-const getUser = (user) => {
-  return {
-    type: TYPES.FETCH_USER_DETAILS,
-    user,
-  };
-};
-
-const setUser = (user) => {
-  return {
-    type: TYPES.EDIT_USER_DETAILS,
-    user,
-  };
 };
 
 const fetchUserDetails = (userId) => async (dispatch) => {
@@ -177,14 +196,6 @@ const approveAsFriend = (friendId, userId) => async (dispatch) => {
   return dispatch(setApproveRequestMessage(approveRequestMessage.data));
 };
 
-// USER FAVORITE RECIPES
-const setFavoriteRecipes = (favRecipes) => {
-  return {
-    type: TYPES.FETCH_FAVORITE_RECIPES,
-    favRecipes,
-  };
-};
-
 const fetchPendingFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/pendinguserfriends/${userId}`);
   return dispatch(setPendingFriends(data));
@@ -207,6 +218,11 @@ const updateUserFavoriteRecipe = (userId, recipeId) => async (dispatch) => {
 const fetchUserFavoriteRecipes = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/favorites/${userId}`);
   return dispatch(setFavoriteRecipes(data));
+};
+
+const fetchFriendDetails = (friendId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/friends/${friendId}`);
+  return dispatch(getFriendData(data));
 };
 
 export const userActions = {
@@ -234,4 +250,7 @@ export const userActions = {
   updateUserFavoriteRecipe,
   fetchUserFavoriteRecipes,
   fetchFriends,
+  fetchFriendDetails,
+  getFriendData,
+  setFriendNav,
 };

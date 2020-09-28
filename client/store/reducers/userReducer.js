@@ -14,8 +14,9 @@ const initialLoginState = {
   requestSentMessage: '',
   nav: {
     open: false,
-    userId: '',
+    friendId: '',
   },
+  friendData: {},
 };
 
 export const userReducer = (state = initialLoginState, action) => {
@@ -86,6 +87,20 @@ export const userReducer = (state = initialLoginState, action) => {
         ...state,
         requestSentMessage: action.requestSentMsg,
       };
+    case TYPES.SET_FRIEND_DATA:
+      return {
+        ...state,
+        friendData: action.friend,
+      };
+    case TYPES.SET_FRIEND_NAV:
+      return {
+        ...state,
+        nav: {
+          open: action.nav.open,
+          friendId: action.nav.id,
+        },
+      };
+
     default:
       return state;
   }

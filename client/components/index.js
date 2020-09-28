@@ -16,6 +16,7 @@ import AddEventForm from './addEventForm/AddEventForm';
 
 // Friends
 import Friends from './friends/Friends';
+import FriendProfile from './friends/FriendProfile';
 
 // Recipes
 import Recipe from './recipe/Recipe';
@@ -43,4 +44,5 @@ export {
   Register,
   PrivateRoute,
   UserAccount,
+  FriendProfile,
 };

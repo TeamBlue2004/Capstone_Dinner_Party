@@ -14,6 +14,7 @@ import {
   Register,
   PrivateRoute,
   UserAccount,
+  FriendProfile,
 } from './components/index';
 
 import '../public/styles.scss';
@@ -49,6 +50,12 @@ class App extends Component {
                   exact
                   path="/useraccount"
                   component={UserAccount}
+                />
+                <PrivateRoute
+                  exact
+                  path="/friendprofile"
+                  // path="/friendprofile/:friendid"
+                  component={FriendProfile}
                 />
               </Switch>
             </>

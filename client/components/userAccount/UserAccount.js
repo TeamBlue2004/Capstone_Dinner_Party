@@ -41,7 +41,7 @@ class UserAccount extends Component {
       addressStreet,
       addressCity,
       addressState,
-      addressZip,
+      addressZIP,
     } = userData;
     if (prevProps !== this.props) {
       this.setState({ id });
@@ -53,7 +53,7 @@ class UserAccount extends Component {
       this.setState({ addressStreet });
       this.setState({ addressCity });
       this.setState({ addressState });
-      this.setState({ addressZip });
+      this.setState({ addressZIP });
     }
   }
 
@@ -301,7 +301,7 @@ UserAccount.propTypes = {
     addressStreet: PropTypes.string,
     addressCity: PropTypes.string,
     addressState: PropTypes.string,
-    addressZip: PropTypes.string,
+    addressZIP: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
   id: PropTypes.string.isRequired,
