@@ -23,6 +23,9 @@ class EventInfo extends Component {
         <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
           <h5 className="mb-1">{`${event.eventName} @ ${event.host}`}</h5>
         </div>
+        <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
+          <h5 className="mb-1">Invited:</h5>
+        </div>
         <div className="p-2 shadow-lg bg-white rounded text-center detailes">
           <h5 className="mb-1">Dinner Party Details</h5>
           <div className="d-flex justify-content-between mb-3">

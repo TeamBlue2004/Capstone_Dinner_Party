@@ -6,6 +6,10 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+import './addEventForm.scss';
 import { eventsActions } from '../../store/actions/index';
 
 class AddEventForm extends Component {
@@ -13,7 +17,7 @@ class AddEventForm extends Component {
     eventName: '',
     datetime: moment(),
     location: '',
-    // invitees: [],
+    invitees: [],
   };
 
   handleChange = (e) => {
@@ -41,89 +45,102 @@ class AddEventForm extends Component {
   };
 
   render() {
-    const { eventName, datetime, location } = this.state;
+    const { eventName, datetime, location, invitees } = this.state;
+    const animatedComponents = makeAnimated();
+    console.log(invitees);
+
+    const localFriends = [
+      { label: 'bima', value: 1 },
+      { label: 'judith', value: 2 },
+      { label: 'shruti', value: 3 },
+      { label: 'caroline', value: 4 },
+    ];
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-md-6 mt-5 mx-auto">
-            <form onSubmit={this.handleSubmit} className="auth-form">
-              <h1 className="h3 mb-3 font-weight-normal">Lets Party</h1>
-              <div className="form-group">
-                <label htmlFor="eventName">Event Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="eventName"
-                  placeholder="Enter event name"
-                  value={eventName}
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="datetime">Date and Time</label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  name="datetime"
-                  placeholder="Pick Date and Time"
-                  value={datetime}
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="location">Event Location</label>
-                <PlacesAutocomplete
-                  value={location}
-                  onChange={this.handleLocationChange}
-                  onSelect={this.handleSelect}
-                >
-                  {({
-                    getInputProps,
-                    suggestions,
-                    getSuggestionItemProps,
-                    loading,
-                  }) => (
-                    <>
-                      <input
-                        {...getInputProps({
-                          placeholder: 'Type address',
-                          className: 'form-control',
-                          required: 'required',
-                        })}
-                      />
-                      <div>
-                        {loading ? <div>...loading</div> : null}
-                        {suggestions.map((suggestion) => {
-                          const style = {
-                            backgroundColor: suggestion.active
-                              ? '#41b6e6'
-                              : '#fff',
-                          };
-                          return (
-                            <div
-                              {...getSuggestionItemProps(suggestion, { style })}
-                            >
-                              {suggestion.description}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
-                </PlacesAutocomplete>
-              </div>
-              <button
-                type="submit"
-                className="btn btn-lg btn-primary btn-block"
-                href="/#/events"
-              >
-                Add Event
-              </button>
-            </form>
+        <form onSubmit={this.handleSubmit} className="auth-form">
+          <h1 style={{ color: 'black' }}>{`Let's Party`}</h1>
+          <div className="form-group">
+            <label htmlFor="eventName">Event Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="eventName"
+              placeholder="Enter event name"
+              value={eventName}
+              onChange={this.handleChange}
+              required
+            />
           </div>
-        </div>
+          <div className="form-group">
+            <label htmlFor="datetime">Date and Time</label>
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="datetime"
+              placeholder="Pick Date and Time"
+              value={datetime}
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="location">Event Location</label>
+            <PlacesAutocomplete
+              value={location}
+              onChange={this.handleLocationChange}
+              onSelect={this.handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <>
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Type address',
+                      className: 'form-control',
+                      required: 'required',
+                    })}
+                  />
+                  <div>
+                    {loading ? <div>...loading</div> : null}
+                    {suggestions.map((suggestion) => {
+                      const style = {
+                        backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
+                      };
+                      return (
+                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </PlacesAutocomplete>
+          </div>
+          <div className="form-group">
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              name="friends"
+              options={localFriends}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(opt) => this.setState({ invitees: opt })}
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn btn-lg btn-primary btn-block"
+            href="/#/events"
+          >
+            Add Event
+          </button>
+        </form>
       </div>
     );
   }
