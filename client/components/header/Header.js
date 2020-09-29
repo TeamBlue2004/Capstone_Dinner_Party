@@ -18,7 +18,7 @@ class Header extends Component {
       <>
         <div className="logoNameContainer">
           <Link to="/home">
-            <img alt="Not Found" src="./assets/dinnerpartylogo.png" />
+            <img alt="Not Found" src="./assets/dinnerpartylogo_revised.png" />
           </Link>
           <h1>Dinner Party</h1>
         </div>

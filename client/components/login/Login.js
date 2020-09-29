@@ -28,11 +28,11 @@ class Login extends Component {
     const { username, password } = this.state;
     const { error } = this.props;
     return (
-      <div className="container">
+      <div className="loginContainer">
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.handleSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <h1 className="h3 mb-3 font-weight-normal">PLEASE SIGN IN</h1>
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
@@ -57,14 +57,14 @@ class Login extends Component {
               </div>
               <button
                 type="submit"
-                className="btn btn-lg btn-primary btn-block"
+                className="btn btn-lg btn-success btn-block"
                 href="/#/home"
               >
                 Sign in
               </button>
               <a
                 role="button"
-                className="btn btn-lg btn-primary btn-block"
+                className="btn btn-lg btn-success btn-block"
                 href="/#/register"
               >
                 Register

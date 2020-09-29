@@ -61,6 +61,17 @@ const User = db.define(
         notEmpty: true,
       },
     },
+    profilePic: {
+      type: STRING,
+      defaultValue:
+        'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
+    },
+    favoriteFoods: {
+      type: STRING,
+    },
+    dislikedFoods: {
+      type: STRING,
+    },
   },
   {
     tableName: 'User',
