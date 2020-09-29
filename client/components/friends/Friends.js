@@ -56,7 +56,8 @@ class Friends extends Component {
       pendingFriendsList,
       usersList,
       id,
-      /* requestSentMessage, */
+      requestSentMessage,
+      approveRequestMessage,
       approvedFriendsList,
       friendNav,
     } = this.props;
@@ -82,6 +83,7 @@ class Friends extends Component {
             >
               Search User
             </button>
+
             {/* {filteredUsersList.length !== 0 ? ( */}
             <div>
               {/* <div>
@@ -90,15 +92,19 @@ class Friends extends Component {
               <div>
                 {filteredUsersList.map((user) => {
                   return (
-                    <div key={user.id}>
-                      <div
-                        className="friend-result-container"
-                        onClick={() => this.handleFriendDisplay(user.id)}
-                        onKeyPress={null}
-                        tabIndex={0}
-                        role="button"
-                      >
-                        {user.firstName} {user.lastName}
+                    <div>
+                      <div key={user.id}>
+                        <div
+                          className="friend-result-container"
+                          onClick={() => this.handleFriendDisplay(user.id)}
+                          onKeyPress={null}
+                          tabIndex={0}
+                          role="button"
+                        >
+                          {user.firstName} {user.lastName}
+                        </div>
+                      </div>
+                      <div>
                         <button
                           className="btn btn-primary button"
                           type="submit"
@@ -108,6 +114,7 @@ class Friends extends Component {
                           Add as a Friend
                         </button>
                       </div>
+                      <div>{requestSentMessage}</div>
                     </div>
                   );
                 })}
@@ -116,7 +123,7 @@ class Friends extends Component {
             {/* ) : (
               <div>No users</div>
             )} */}
-
+            <hr />
             {pendingFriendsList && pendingFriendsList.length !== 0 ? (
               <div>
                 <div>
@@ -136,16 +143,19 @@ class Friends extends Component {
                           role="button"
                         >
                           {pendingfriend.firstName} {pendingfriend.lastName}
-                          <button
-                            className="btn btn-primary btn-lg"
-                            type="submit"
-                            onClick={() =>
-                              this.approveAsFriend(pendingfriend.id, id)
-                            }
-                            value="approve friend request"
-                          >
-                            Approve Friend Request
-                          </button>
+                          <div>
+                            <button
+                              className="btn btn-primary btn-lg"
+                              type="submit"
+                              onClick={() =>
+                                this.approveAsFriend(pendingfriend.id, id)
+                              }
+                              value="approve friend request"
+                            >
+                              Approve Friend Request
+                            </button>
+                          </div>
+                          <div>{approveRequestMessage}</div>
                         </div>
                       </div>
                     );
@@ -155,7 +165,7 @@ class Friends extends Component {
             ) : (
               <div>You have no pending request</div>
             )}
-
+            <hr />
             {approvedFriendsList && approvedFriendsList.length !== 0 ? (
               <div>
                 <div>
@@ -203,6 +213,7 @@ const mapStateToProps = (state) => {
     pendingFriendsList: state.user.pendingFriendsList,
     approvedFriendsList: state.user.approvedFriendsList,
     requestSentMessage: state.user.requestSentMessage,
+    approveRequestMessage: state.user.approveRequestMessage,
     friendNav: state.user.nav,
   };
 };
@@ -255,6 +266,8 @@ Friends.propTypes = {
   loadApprovedFriends: PropTypes.func.isRequired,
   approveFriend: PropTypes.func.isRequired,
   setFriendNav: PropTypes.func.isRequired,
+  approveRequestMessage: PropTypes.string.isRequired,
+  requestSentMessage: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

@@ -181,19 +181,20 @@ const searchUsers = (searchTerm) => async (dispatch) => {
 };
 
 const addAsFriend = (friendId, userId) => async (dispatch) => {
-  const requestSentMessage = await axios.post('/api/users/addasfriend', {
+  const { data } = await axios.post('/api/users/addasfriend', {
     friendId,
     userId,
   });
-  return dispatch(setRequestSentMessage(requestSentMessage.data));
+  console.log('requestSentMessage ==== ', data);
+  return dispatch(setRequestSentMessage(data.message));
 };
 
 const approveAsFriend = (friendId, userId) => async (dispatch) => {
-  const approveRequestMessage = await axios.post('/api/users/approveasfriend', {
+  const { data } = await axios.post('/api/users/approveasfriend', {
     friendId,
     userId,
   });
-  return dispatch(setApproveRequestMessage(approveRequestMessage.data));
+  return dispatch(setApproveRequestMessage(data.message));
 };
 
 const fetchPendingFriends = (userId) => async (dispatch) => {

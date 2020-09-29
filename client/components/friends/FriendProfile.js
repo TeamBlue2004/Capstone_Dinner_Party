@@ -26,24 +26,27 @@ class FriendProfile extends Component {
   render() {
     const { friendData } = this.props;
     return (
-      <div className="routesContainer">
-        <div className="routes">
-          <form>
-            <div className="form-group">
-              <label>First Name:</label>
-              <label> {friendData.firstName}</label>
-            </div>
+      <div className="recipe-card">
+        <h4>{friendData.userName}</h4>
+        {/* <div className="recipe-image">
+          <img src={ friendData.image} alt={friendData.image} />
+        </div> */}
 
-            <div className="form-group">
-              <label>Last Name:</label>
-              <label> {friendData.lastName}</label>
-            </div>
-            <div className="form-group">
-              <label>Email:</label>
-              <label> {friendData.email}</label>
-            </div>
-          </form>
-        </div>
+        <form>
+          <div className="form-group">
+            <label>First Name:</label>
+            <label> {friendData.firstName}</label>
+          </div>
+
+          <div className="form-group">
+            <label>Last Name:</label>
+            <label> {friendData.lastName}</label>
+          </div>
+          <div className="form-group">
+            <label>Email:</label>
+            <label> {friendData.email}</label>
+          </div>
+        </form>
       </div>
     );
   }
@@ -77,6 +80,7 @@ FriendProfile.propTypes = {
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     email: PropTypes.string,
+    userName: PropTypes.string,
   }).isRequired,
   friendNav: PropTypes.shape({
     open: PropTypes.bool,
