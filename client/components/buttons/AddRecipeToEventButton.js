@@ -7,7 +7,7 @@ export default class AddRecipeToEventButton extends Component {
 
     return (
       <button className="btn btn-info" type="button" onClick={onClick}>
-        Add To Event
+        Add
       </button>
     );
   }

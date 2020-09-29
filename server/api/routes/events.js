@@ -2,7 +2,7 @@ const eventsRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
 const chalk = require('chalk');
 
-const { Event, User } = require('../../db/Models/index');
+const { Event, User, Event_Recipe } = require('../../db/Models/index');
 
 eventsRouter.get('/events/userevents/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -158,5 +158,37 @@ eventsRouter.delete('/events/:id', async (req, res) => {
     res.status(500).send({ message: 'Server error while deleting event' });
   }
 });
+
+eventsRouter.post(
+  '/events/recipes',
+  [
+    check('eventId', 'Event ID is required').not().isEmpty(),
+    check('recipeId', 'Recipe ID is required').not().isEmpty(),
+    check('userId', 'User ID is required').not().isEmpty(),
+    check('dishType', 'Dish type is required').not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { eventId, recipeId, userId, dishType } = req.body;
+    try {
+      const create = await Event_Recipe.create({
+        userId,
+        EventId: eventId,
+        RecipeId: recipeId,
+        dish: dishType,
+      });
+      res.status(200).send(create);
+    } catch (e) {
+      console.error(chalk.red(e));
+      res.status(500).send({ message: 'Server Error' });
+    }
+  }
+);
 
 module.exports = eventsRouter;

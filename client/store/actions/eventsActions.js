@@ -70,6 +70,16 @@ const acceptEvent = (userId, eventId) => {
     dispatch(getEvents(pendingEvents.data));
   };
 };
+const addRecipeToEvent = (eventId, recipeId, userId, dishType) => {
+  return async () => {
+    await axios.post(`/api/events/recipes`, {
+      eventId,
+      recipeId,
+      userId,
+      dishType,
+    });
+  };
+};
 
 export const eventsActions = {
   fetchEvents,
@@ -79,4 +89,5 @@ export const eventsActions = {
   postEvent,
   deleteEvent,
   acceptEvent,
+  addRecipeToEvent,
 };
