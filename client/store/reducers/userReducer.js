@@ -17,6 +17,7 @@ const initialLoginState = {
     friendId: '',
   },
   friendData: {},
+  approveRequestMsg: '',
 };
 
 export const userReducer = (state = initialLoginState, action) => {

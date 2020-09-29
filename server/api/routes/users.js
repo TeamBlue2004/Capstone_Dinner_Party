@@ -210,6 +210,7 @@ userRouter.post('/users/approveasfriend', async (req, res) => {
   const { friendId, userId } = req.body;
   const user = await User.findByPk(userId);
   const friend = await User.findByPk(friendId);
+  friend.addFriend(userId);
   user.addFriend(friendId).then((result) => {
     console.log('result ~~', result);
     res.status(201).send({ message: 'Friend request accepted!' });
@@ -234,6 +235,7 @@ userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
         },
       ],
     });
+    console.log('approvedFriendsList === ', approvedFriendsList);
     res.status(200).send(approvedFriendsList);
   } catch (e) {
     console.error(e);
