@@ -12,6 +12,8 @@ const initialLoginState = {
   pendingFriendsList: [],
   approvedFriendsList: [],
   requestSentMessage: '',
+  favoriteFoods: '',
+  dislikedFoods: '',
   nav: {
     open: false,
     friendId: '',

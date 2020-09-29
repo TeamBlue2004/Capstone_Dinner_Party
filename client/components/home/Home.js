@@ -18,49 +18,77 @@ class Home extends Component {
 
   render() {
     const { eventsList, favoriteRecipesList } = this.props;
+    const cardStyle = {
+      backgroundColor: '#DBF5DA',
+      padding: '20px',
+      margin: '20px',
+    };
     return (
       <div className="routesContainer">
         <div className="routes">
-          {eventsList.length !== 0 ? (
-            <div>
+          <div className="card" style={cardStyle}>
+            <h2>UPCOMING EVENTS</h2>
+            {eventsList.length !== 0 ? (
               <div>
-                <h2>{eventsList.length} coming events</h2>
+                <div>
+                  <h4>You have {eventsList.length} upcoming events:</h4>
+                </div>
+                <div className="eventbox">
+                  {eventsList.map((event) => {
+                    return (
+                      <Link
+                        to={`/event/${event.id}`}
+                        key={event.id}
+                        style={{ fontWeight: 'bold', color: '#4977F2' }}
+                      >
+                        {event.eventName}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="eventbox">
-                {eventsList.map((event) => {
-                  return (
-                    <Link to={`/event/${event.id}`} key={event.id}>
-                      {event.id}
-                    </Link>
-                  );
-                })}
+            ) : (
+              <div>You have no upcoming events</div>
+            )}
+          </div>
+          <div className="card" style={cardStyle}>
+            <h2>MY FAVORITE RECIPES</h2>
+            {favoriteRecipesList ? (
+              <div className="recipes-results">
+                <div
+                  id="recipeCarousel"
+                  className="carousel slide"
+                  data-ride="carousel"
+                >
+                  {favoriteRecipesList.map((recipe) => {
+                    return (
+                      <li
+                        data-target="#recipeCarousel"
+                        className="carouselItem"
+                      >
+                        <Link
+                          to={`/recipe/${recipe.id}`}
+                          key={recipe.id}
+                          className="card"
+                        >
+                          <img
+                            className="card-img-top"
+                            src={recipe.image}
+                            alt={recipe.name}
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title">{recipe.name}</h4>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ) : (
-            <div>No events</div>
-          )}
-          {favoriteRecipesList ? (
-            <div className="recipes-results">
-              {favoriteRecipesList.map((recipe) => {
-                return (
-                  <Link
-                    to={`/recipe/${recipe.id}`}
-                    key={recipe.id}
-                    className="card"
-                  >
-                    <img
-                      className="card-img-top"
-                      src={recipe.image}
-                      alt={recipe.name}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">{recipe.name}</h4>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : null}
+            ) : (
+              <h2>You haven't favorited any recipes!</h2>
+            )}
+          </div>
         </div>
       </div>
     );

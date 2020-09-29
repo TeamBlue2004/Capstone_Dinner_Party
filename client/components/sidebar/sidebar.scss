@@ -1,14 +1,11 @@
 .sidebarContainer {
   width: 20%;
-  border: solid black 1px;
-  background-color: lightyellow;
   border-radius: 10px;
   font-size: 18px;
   padding: 2rem;
   height: 100%;
-  width: 15%;
   margin-left: 20px;
-  background-color: #DBF5DA;
+  background-color: white;
   opacity: 85%;
   text-transform: uppercase;
   box-shadow: 5px 10px #265925;
@@ -25,12 +22,12 @@
 }
 
 .sidebarItem a {
-  color: gray;
+  color: #A83264;
   text-decoration: none;
 }
 
 .sidebarItem a:hover {
-  color: blue;
+  color: hotpink;
   text-decoration: none;
   margin: 10px;
 }

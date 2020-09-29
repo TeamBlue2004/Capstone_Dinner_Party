@@ -8,6 +8,9 @@ img {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  color: #A83264;
+  text-transform: uppercase;
 }
 
 .logoNameContainer img {
@@ -21,7 +24,6 @@ img {
 }
 
 .logout a {
-  color: white;
   text-decoration: none;
   text-transform: uppercase;
 }

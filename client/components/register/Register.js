@@ -6,13 +6,7 @@ class Register extends Component {
   state = {
     firstName: '',
     lastName: '',
-    profilePic: '',
     email: '',
-    addressUnit: null,
-    addressStreet: null,
-    addressCity: null,
-    addressZIP: null,
-    addressState: null,
     username: '',
     password: '',
   };
@@ -32,19 +26,7 @@ class Register extends Component {
   };
 
   render() {
-    const {
-      firstName,
-      lastName,
-      profilePic,
-      email,
-      addressUnit,
-      addressCity,
-      addressState,
-      addressStreet,
-      addressZIP,
-      username,
-      password,
-    } = this.state;
+    const { firstName, lastName, email, username, password } = this.state;
     return (
       <div className="loginContainer">
         <div className="row">
@@ -85,61 +67,6 @@ class Register extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="addressUnit">Address Number</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="addressUnit"
-                  placeholder="Enter address number"
-                  value={addressUnit}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="addressStreet">Address Street</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="addressStreet"
-                  placeholder="Enter address street"
-                  value={addressStreet}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="addressCity">Address City</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="addressCity"
-                  placeholder="Enter address city"
-                  value={addressCity}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="addressState">Address State</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="addressState"
-                  placeholder="Enter address state"
-                  value={addressState}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="addressZIP">Address ZIP</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="addressZIP"
-                  placeholder="Enter address ZIP"
-                  value={addressZIP}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
                   type="text"
@@ -158,17 +85,6 @@ class Register extends Component {
                   name="password"
                   placeholder="Password"
                   value={password}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="profilePic">Profile Pic URL</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="profilePic"
-                  placeholder="Profile Pic URL"
-                  value={profilePic}
                   onChange={this.onChange}
                 />
               </div>
