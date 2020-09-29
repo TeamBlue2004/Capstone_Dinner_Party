@@ -163,7 +163,7 @@ class UserAccount extends Component {
               </div>
             ) : (
               <div>
-                <p style={pStyle}>{console.log(this.state)}, my favorite!</p>
+                <p style={pStyle}>{favoriteFoods}, my favorite!</p>
                 <button
                   type="button"
                   className="btn btn-success btn-sm"

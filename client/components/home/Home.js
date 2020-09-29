@@ -86,7 +86,7 @@ class Home extends Component {
                 </div>
               </div>
             ) : (
-              <h2>You haven't favorited any recipes!</h2>
+              <h2>You have not favorited any recipes!</h2>
             )}
           </div>
         </div>
