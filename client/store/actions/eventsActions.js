@@ -35,10 +35,25 @@ const deleteEvent = (id, userId) => {
   };
 };
 
+const addRecipeToEvent = (eventId, recipeId, userId, dishType) => {
+  return async (dispatch) => {
+    await axios.post(`/api/events/recipes`, {
+      eventId,
+      recipeId,
+      userId,
+      dishType,
+    });
+    // const { data } = await axios.get(`/api/events/userevents/${userId}`);
+    // dispatch(getEvents(data));
+    // dispatch(setEventNav({ open: false, eventId: '' }));
+  };
+};
+
 export const eventsActions = {
   fetchEvents,
   getEvents,
   postEvent,
   deleteEvent,
   setEventNav,
+  addRecipeToEvent,
 };

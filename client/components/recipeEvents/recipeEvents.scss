@@ -8,6 +8,7 @@
 }
 
 .event-item {
+    align-items: center;
     display: flex;
 }
 
@@ -16,8 +17,20 @@
 }
 
 .event-details {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    margin-left: 10px;
     width:100%;
+}
+
+.event-name, .event-date {
+    margin: 0;
+}
+
+.event-item button {
+    background-color: orange;
+    border: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    padding: 4px;
 }
