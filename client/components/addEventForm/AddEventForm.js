@@ -10,7 +10,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import './addEventForm.scss';
-import { eventsActions } from '../../store/actions/index';
+import { userActions, eventsActions } from '../../store/actions/index';
 
 class AddEventForm extends Component {
   state = {
@@ -19,6 +19,11 @@ class AddEventForm extends Component {
     location: '',
     invitees: [],
   };
+
+  componentDidMount() {
+    const { userId, loadFriends } = this.props;
+    loadFriends(userId);
+  }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -37,24 +42,26 @@ class AddEventForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const { userId, postEvent, setEventNav } = this.props;
-    const { eventName, datetime, location } = this.state;
-    const event = { hostId: userId, eventName, datetime, location };
+    const { eventName, datetime, location, invitees } = this.state;
+    const event = { hostId: userId, eventName, datetime, location, invitees };
     postEvent(event);
     const nav = { open: false, id: '' };
     setEventNav(nav);
   };
 
   render() {
-    const { eventName, datetime, location, invitees } = this.state;
+    const { eventName, datetime, location } = this.state;
+    const { friends } = this.props;
     const animatedComponents = makeAnimated();
-    console.log(invitees);
 
-    const localFriends = [
-      { label: 'bima', value: 1 },
-      { label: 'judith', value: 2 },
-      { label: 'shruti', value: 3 },
-      { label: 'caroline', value: 4 },
-    ];
+    const selectFriends = [];
+    friends.forEach((friend) =>
+      selectFriends.push({
+        label: `${friend.firstName}`,
+        value: `${friend.id}`,
+      })
+    );
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="auth-form">
@@ -127,7 +134,7 @@ class AddEventForm extends Component {
               components={animatedComponents}
               isMulti
               name="friends"
-              options={localFriends}
+              options={selectFriends}
               className="basic-multi-select"
               classNamePrefix="select"
               onChange={(opt) => this.setState({ invitees: opt })}
@@ -148,6 +155,7 @@ class AddEventForm extends Component {
 const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
+    friends: state.user.approvedFriendsList,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -158,12 +166,17 @@ const mapDispatchToProps = (dispatch) => {
     setEventNav: (nav) => {
       dispatch(eventsActions.setEventNav(nav));
     },
+    loadFriends: (userId) => {
+      dispatch(userActions.fetchApprovedFriends(userId));
+    },
   };
 };
 AddEventForm.propTypes = {
   userId: PropTypes.string.isRequired,
+  friends: PropTypes.arrayOf(PropTypes.object).isRequired,
   postEvent: PropTypes.func.isRequired,
   setEventNav: PropTypes.func.isRequired,
+  loadFriends: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);

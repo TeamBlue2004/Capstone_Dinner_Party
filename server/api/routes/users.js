@@ -100,13 +100,6 @@ userRouter.put('/users/logout', async (req, res) => {
 userRouter.get('/users/userfriends/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    // find out friends associated with a user from through table
-    // const userFriendsList = await User.findAll({
-    // //  where: { id: userId },
-    //   include: [{ model: User, as: 'userFriends' }],
-    // //  raw: false,
-    // });
-
     const userRecord = await User.findOne({
       where: { id: userId },
     });
@@ -173,8 +166,7 @@ userRouter.get('/users/searchusers/:searchTerm', async (req, res) => {
 userRouter.post('/users/addasfriend', async (req, res) => {
   const { friendId, userId } = req.body;
   const user = await User.findByPk(userId);
-  user.addRequestees(friendId).then((result) => {
-    console.log('result === ', result);
+  user.addRequestees(friendId).then(() => {
     res.status(201).send({ message: 'Friend request sent!' });
   });
 });
@@ -188,7 +180,6 @@ userRouter.get('/users/pendinguserfriends/:userId', async (req, res) => {
         {
           model: User,
           as: 'Requestees',
-          // through: 'friendRequests',
           required: true,
           where: {
             id: userId,
@@ -211,8 +202,7 @@ userRouter.post('/users/approveasfriend', async (req, res) => {
   const user = await User.findByPk(userId);
   const friend = await User.findByPk(friendId);
   friend.addFriend(userId);
-  user.addFriend(friendId).then((result) => {
-    console.log('result ~~', result);
+  user.addFriend(friendId).then(() => {
     res.status(201).send({ message: 'Friend request accepted!' });
   });
   user.removeRequesters(friend);
@@ -227,7 +217,6 @@ userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
         {
           model: User,
           as: 'Friends',
-          // through: 'friendRequests',
           required: true,
           where: {
             id: userId,
@@ -235,7 +224,6 @@ userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
         },
       ],
     });
-    console.log('approvedFriendsList === ', approvedFriendsList);
     res.status(200).send(approvedFriendsList);
   } catch (e) {
     console.error(e);

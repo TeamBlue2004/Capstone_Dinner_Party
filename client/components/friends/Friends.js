@@ -83,94 +83,70 @@ class Friends extends Component {
             >
               Search User
             </button>
-
-            {/* {filteredUsersList.length !== 0 ? ( */}
-            <div>
-              {/* <div>
-                  <h2>{filteredUsersList.length} User Found</h2>
-                </div> */}
-              <div>
-                {filteredUsersList.map((user) => {
+            {filteredUsersList.map((user) => {
+              return (
+                <div key={user.id}>
+                  <div
+                    className="friend-result-container"
+                    onClick={() => this.handleFriendDisplay(user.id)}
+                    onKeyPress={null}
+                    tabIndex={0}
+                    role="button"
+                  >
+                    {user.firstName} {user.lastName}
+                  </div>
+                  <button
+                    className="btn btn-primary button"
+                    type="submit"
+                    onClick={() => this.addAsFriend(user.id, id)}
+                    value="add Friend"
+                  >
+                    Add as a Friend
+                  </button>
+                  <div>{requestSentMessage}</div>
+                </div>
+              );
+            })}
+            <hr />
+            {pendingFriendsList && pendingFriendsList.length !== 0 ? (
+              <>
+                <h2>{pendingFriendsList.length} pending friends request </h2>
+                {pendingFriendsList.map((pendingfriend) => {
                   return (
-                    <div>
-                      <div key={user.id}>
-                        <div
-                          className="friend-result-container"
-                          onClick={() => this.handleFriendDisplay(user.id)}
-                          onKeyPress={null}
-                          tabIndex={0}
-                          role="button"
-                        >
-                          {user.firstName} {user.lastName}
-                        </div>
-                      </div>
-                      <div>
+                    <div key={pendingfriend.id}>
+                      <div
+                        className="friend-result-container"
+                        onClick={() =>
+                          this.handleFriendDisplay(pendingfriend.id)
+                        }
+                        onKeyPress={null}
+                        tabIndex={0}
+                        role="button"
+                      >
+                        {pendingfriend.firstName} {pendingfriend.lastName}
                         <button
-                          className="btn btn-primary button"
+                          className="btn btn-primary btn-lg"
                           type="submit"
-                          onClick={() => this.addAsFriend(user.id, id)}
-                          value="add Friend"
+                          onClick={() =>
+                            this.approveAsFriend(pendingfriend.id, id)
+                          }
+                          value="approve friend request"
                         >
-                          Add as a Friend
+                          Approve Friend Request
                         </button>
+                        <div>{approveRequestMessage}</div>
                       </div>
-                      <div>{requestSentMessage}</div>
                     </div>
                   );
                 })}
-              </div>
-            </div>
-            {/* ) : (
-              <div>No users</div>
-            )} */}
-            <hr />
-            {pendingFriendsList && pendingFriendsList.length !== 0 ? (
-              <div>
-                <div>
-                  <h2>{pendingFriendsList.length} pending friends request </h2>
-                </div>
-                <div>
-                  {pendingFriendsList.map((pendingfriend) => {
-                    return (
-                      <div key={pendingfriend.id}>
-                        <div
-                          className="friend-result-container"
-                          onClick={() =>
-                            this.handleFriendDisplay(pendingfriend.id)
-                          }
-                          onKeyPress={null}
-                          tabIndex={0}
-                          role="button"
-                        >
-                          {pendingfriend.firstName} {pendingfriend.lastName}
-                          <div>
-                            <button
-                              className="btn btn-primary btn-lg"
-                              type="submit"
-                              onClick={() =>
-                                this.approveAsFriend(pendingfriend.id, id)
-                              }
-                              value="approve friend request"
-                            >
-                              Approve Friend Request
-                            </button>
-                          </div>
-                          <div>{approveRequestMessage}</div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              </>
             ) : (
               <div>You have no pending request</div>
             )}
             <hr />
             {approvedFriendsList && approvedFriendsList.length !== 0 ? (
-              <div>
-                <div>
-                  <h2>{approvedFriendsList.length} Friends</h2>
-                </div>
+              <>
+                <h2>{approvedFriendsList.length} Friends</h2>
                 <div>
                   {approvedFriendsList.map((friend) => {
                     return (
@@ -188,13 +164,12 @@ class Friends extends Component {
                     );
                   })}
                 </div>
-              </div>
+              </>
             ) : (
               <div>You have no friends</div>
             )}
           </div>
         </div>
-
         {friendNav.open && friendNav.friendId !== '' && (
           <div className="infoContainer">
             <FriendProfile />
@@ -213,7 +188,7 @@ const mapStateToProps = (state) => {
     pendingFriendsList: state.user.pendingFriendsList,
     approvedFriendsList: state.user.approvedFriendsList,
     requestSentMessage: state.user.requestSentMessage,
-    approveRequestMessage: state.user.approveRequestMessage,
+    approveRequestMessage: state.user.approveRequestMsg,
     friendNav: state.user.nav,
   };
 };

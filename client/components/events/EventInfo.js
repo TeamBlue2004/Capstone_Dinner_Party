@@ -8,9 +8,22 @@ import './eventCard.scss';
 import { eventsActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
+  componentDidMount() {
+    const { eventNav, fetchEventGuests } = this.props;
+    fetchEventGuests(eventNav.eventId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { eventNav, fetchEventGuests } = this.props;
+    if (prevProps.eventNav.eventId !== eventNav.eventId) {
+      fetchEventGuests(eventNav.eventId);
+    }
+  }
+
   render() {
-    const { events, eventNav, google } = this.props;
+    const { userId, events, eventGuests, eventNav, google } = this.props;
     const event = events.find((ev) => ev.id === eventNav.eventId);
+    const guests = eventGuests.filter((user) => user.id !== userId);
 
     const containerStyle = {
       position: 'relative',
@@ -24,7 +37,12 @@ class EventInfo extends Component {
           <h5 className="mb-1">{`${event.eventName} @ ${event.host}`}</h5>
         </div>
         <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
-          <h5 className="mb-1">Invited:</h5>
+          <h5 className="mb-1">{`Who's coming:`}</h5>
+          {guests.map((guest) => {
+            return (
+              <p key={guest.id}>{`${guest.firstName} ${guest.lastName}`}</p>
+            );
+          })}
         </div>
         <div className="p-2 shadow-lg bg-white rounded text-center detailes">
           <h5 className="mb-1">Dinner Party Details</h5>
@@ -75,25 +93,29 @@ const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
     events: state.events.events,
+    eventGuests: state.events.eventGuests,
     eventNav: state.events.nav,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchEvents: (userId) => {
-      dispatch(eventsActions.fetchEvents(userId));
+    fetchEventGuests: (eventId) => {
+      dispatch(eventsActions.fetchEventGuests(eventId));
     },
   };
 };
 
 EventInfo.propTypes = {
+  userId: PropTypes.string.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
+  eventGuests: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventNav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
   }).isRequired,
   google: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  fetchEventGuests: PropTypes.func.isRequired,
 };
 
 export default GoogleApiWrapper({

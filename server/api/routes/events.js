@@ -4,7 +4,76 @@ const chalk = require('chalk');
 
 const { Event, User } = require('../../db/Models/index');
 
-// eventsRouter.get();
+eventsRouter.get('/events/userevents/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const userEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: userId,
+          },
+          through: { where: { status: 'Approved' } },
+        },
+      ],
+      order: [['datetime', 'ASC']],
+    });
+    res.status(200).send(userEventList);
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send({ message: 'Server error while fetching event list for a user' });
+  }
+});
+
+eventsRouter.get('/events/userevents/pending/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const userPendingEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: userId,
+          },
+          through: { where: { status: 'Pending' } },
+        },
+      ],
+      order: [['datetime', 'ASC']],
+    });
+    res.status(200).send(userPendingEventList);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching pending event list for a user',
+    });
+  }
+});
+
+eventsRouter.get('/events/eventGuests/:eventId', async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const eventGuestsList = await Event.findOne({
+      where: {
+        id: eventId,
+      },
+      include: [
+        {
+          model: User,
+          through: { where: { status: 'Approved' } },
+        },
+      ],
+    });
+    res.status(200).send(eventGuestsList);
+  } catch (e) {
+    console.error(e);
+    res
+      .status(500)
+      .send({ message: 'Server error while fetching guest list for an event' });
+  }
+});
 
 eventsRouter.post(
   '/events',
@@ -21,7 +90,7 @@ eventsRouter.post(
         errors: errors.array(),
       });
     }
-    const { hostId, eventName, datetime, location } = req.body;
+    const { hostId, eventName, datetime, location, invitees } = req.body;
     const host = await User.findOne({
       where: {
         id: hostId,
@@ -38,7 +107,12 @@ eventsRouter.post(
         location,
       });
 
-      event.addUser(host);
+      event.addUser(host, { through: { status: 'Approved' } });
+      invitees.forEach((invitee) => {
+        User.findOne({ where: { id: invitee.value } }).then((user) =>
+          event.addUser(user, { through: { status: 'Pending' } })
+        );
+      });
 
       res.status(200).send(event);
     } catch (e) {
@@ -48,7 +122,26 @@ eventsRouter.post(
   }
 );
 
-// eventsRouter.put();
+eventsRouter.put('/events/accept', async (req, res) => {
+  const { userId, eventId } = req.body;
+  try {
+    const event = await Event.findOne({
+      where: {
+        id: eventId,
+      },
+    });
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    event.addUser(user, { through: { status: 'Approved' } });
+    res.sendStatus(200);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error while deleting event' });
+  }
+});
 
 eventsRouter.delete('/events/:id', async (req, res) => {
   const { id } = req.params;
@@ -63,31 +156,6 @@ eventsRouter.delete('/events/:id', async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).send({ message: 'Server error while deleting event' });
-  }
-});
-
-eventsRouter.get('/events/userevents/:userId', async (req, res) => {
-  const { userId } = req.params;
-  try {
-    // find out events associated with a user from through table
-    const userEventList = await Event.findAll({
-      include: [
-        {
-          model: User,
-          where: {
-            id: userId,
-          },
-        },
-      ],
-      order: [['datetime', 'ASC']],
-    });
-    // eventsArr.push(event);
-    res.status(200).send(userEventList);
-  } catch (e) {
-    console.error(e);
-    res
-      .status(500)
-      .send({ message: 'Server error while fetching event list for a user' });
   }
 });
 
