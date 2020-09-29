@@ -7,7 +7,7 @@ const { Event } = require('./Event');
 const { User_Recipe } = require('./User_Recipe');
 const { Session } = require('./Session');
 const { Event_User } = require('./Event_User');
-const { Event_Recipe } = require('./Event_Recipe');
+const { Event_Recipe_User } = require('./Event_Recipe_User');
 
 User.belongsToMany(User, { as: 'Friends', through: 'friends' });
 User.belongsToMany(User, {
@@ -52,8 +52,11 @@ User.belongsToMany(Event, { through: 'Event_User' });
 Event.belongsToMany(User, { through: 'Event_User' });
 
 // Relations between Event and Recipe
-Event.belongsToMany(Recipe, { through: Event_Recipe });
-Recipe.belongsToMany(Event, { through: Event_Recipe });
+Event.belongsToMany(Recipe, { through: 'Event_Recipe' });
+Recipe.belongsToMany(Event, { through: 'Event_Recipe' });
+
+Recipe.belongsToMany(User, { through: Event_Recipe_User });
+User.belongsToMany(Recipe, { through: Event_Recipe_User });
 
 // Relations between Recipe and User
 User.belongsToMany(Recipe, { through: User_Recipe });
@@ -68,5 +71,5 @@ module.exports = {
   Event,
   Session,
   Event_User,
-  Event_Recipe,
+  Event_Recipe_User,
 };
