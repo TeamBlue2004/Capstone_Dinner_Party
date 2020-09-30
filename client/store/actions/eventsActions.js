@@ -44,13 +44,6 @@ const setEventNav = (nav) => {
   };
 };
 
-const setEventRecipes = (eventRecipes) => {
-  return {
-    type: TYPES.FETCH_EVENT_RECIPES,
-    eventRecipes,
-  };
-};
-
 const postEvent = (event) => async (dispatch) => {
   await axios.post('/api/events', event);
   const { data } = await axios.get(`/api/events/userevents/${event.hostId}`);
@@ -59,10 +52,10 @@ const postEvent = (event) => async (dispatch) => {
 
 const deleteEvent = (id, userId) => {
   return async (dispatch) => {
+    await dispatch(setEventNav({ open: false, eventId: '' }));
     await axios.delete(`/api/events/${id}`);
     const { data } = await axios.get(`/api/events/userevents/${userId}`);
     dispatch(getEvents(data));
-    dispatch(setEventNav({ open: false, eventId: '' }));
   };
 };
 
@@ -75,6 +68,25 @@ const acceptEvent = (userId, eventId) => {
     );
     dispatch(getEvents(events.data));
     dispatch(getEvents(pendingEvents.data));
+  };
+};
+
+const declineEvent = (userId, eventId) => {
+  return async (dispatch) => {
+    await axios.put(`/api/events/decline`, { userId, eventId });
+    const events = await axios.get(`/api/events/userevents/${userId}`);
+    const pendingEvents = await axios.get(
+      `/api/events/userevents/pending/${userId}`
+    );
+    dispatch(getEvents(events.data));
+    dispatch(getEvents(pendingEvents.data));
+  };
+};
+
+const setEventRecipes = (eventRecipes) => {
+  return {
+    type: TYPES.FETCH_EVENT_RECIPES,
+    eventRecipes,
   };
 };
 
@@ -102,6 +114,7 @@ export const eventsActions = {
   postEvent,
   deleteEvent,
   acceptEvent,
+  declineEvent,
   addRecipeToEvent,
   fetchEventRecipes,
 };

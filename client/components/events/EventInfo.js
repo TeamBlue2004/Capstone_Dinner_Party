@@ -25,7 +25,12 @@ class EventInfo extends Component {
   render() {
     const { userId, events, eventGuests, eventNav, google } = this.props;
     const event = events.find((ev) => ev.id === eventNav.eventId);
-    const guests = eventGuests.filter((user) => user.id !== userId);
+    let guests;
+    if (event && eventGuests) {
+      guests = eventGuests.filter(
+        (user) => user.id !== userId && user.id !== event.hostid
+      );
+    }
 
     const containerStyle = {
       position: 'relative',
