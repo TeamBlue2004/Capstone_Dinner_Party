@@ -30,14 +30,14 @@ const setApprovedFriends = (approvedFriends) => {
   };
 };
 
-const setRequestSentMessage = (requestSentMsg) => {
+const setRequestSentMsg = (requestSentMsg) => {
   return {
     type: TYPES.ADD_AS_FRIEND,
     requestSentMsg,
   };
 };
 
-const setApproveRequestMessage = (approveRequestMsg) => {
+const setApproveRequestMsg = (approveRequestMsg) => {
   return {
     type: TYPES.APPROVE_FRIEND_REQUEST,
     approveRequestMsg,
@@ -48,13 +48,6 @@ const setError = (error) => {
   return {
     type: TYPES.SET_USER_ERROR,
     error,
-  };
-};
-
-const getAllMatchedUsers = (usersList) => {
-  return {
-    type: TYPES.FETCH_SEARCHED_USERS,
-    usersList,
   };
 };
 
@@ -176,9 +169,18 @@ const updateUserDetails = (user) => async (dispatch) => {
   return dispatch(setUser(data));
 };
 
-const searchUsers = (searchTerm) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/searchusers/${searchTerm}`);
-  return dispatch(getAllMatchedUsers(data));
+// Fetch all users
+const getUsers = (usersList) => {
+  return {
+    type: TYPES.FETCH_USERS,
+    usersList,
+  };
+};
+
+const fetchUsers = () => async (dispatch) => {
+  const { data } = await axios.get('/api/users');
+  console.log('===', data);
+  return dispatch(getUsers(data));
 };
 
 const addAsFriend = (friendId, userId) => async (dispatch) => {
@@ -186,7 +188,7 @@ const addAsFriend = (friendId, userId) => async (dispatch) => {
     friendId,
     userId,
   });
-  return dispatch(setRequestSentMessage(data.message));
+  return dispatch(setRequestSentMsg(data.message));
 };
 
 const approveAsFriend = (friendId, userId) => async (dispatch) => {
@@ -194,7 +196,7 @@ const approveAsFriend = (friendId, userId) => async (dispatch) => {
     friendId,
     userId,
   });
-  return dispatch(setApproveRequestMessage(data.message));
+  return dispatch(setApproveRequestMsg(data.message));
 };
 
 const fetchPendingFriends = (userId) => async (dispatch) => {
@@ -241,13 +243,12 @@ export const userActions = {
   getUser,
   updateUserDetails,
   setUser,
-  searchUsers,
-  getAllMatchedUsers,
+  fetchUsers,
   addAsFriend,
   setPendingFriends,
   setApprovedFriends,
   approveAsFriend,
-  setApproveRequestMessage,
+  setApproveRequestMsg,
   updateUserFavoriteRecipe,
   fetchUserFavoriteRecipes,
   fetchFriends,
