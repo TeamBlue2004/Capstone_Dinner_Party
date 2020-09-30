@@ -44,6 +44,13 @@ const setEventNav = (nav) => {
   };
 };
 
+const setEventRecipes = (eventRecipes) => {
+  return {
+    type: TYPES.FETCH_EVENT_RECIPES,
+    eventRecipes,
+  };
+};
+
 const postEvent = (event) => async (dispatch) => {
   await axios.post('/api/events', event);
   const { data } = await axios.get(`/api/events/userevents/${event.hostId}`);
@@ -71,6 +78,11 @@ const acceptEvent = (userId, eventId) => {
   };
 };
 
+const fetchEventRecipes = (eventId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/events/recipes/${eventId}`);
+  return dispatch(setEventRecipes(data));
+};
+
 const addRecipeToEvent = (eventId, recipeId, userId, dish) => {
   return async () => {
     await axios.post(`/api/events/recipes`, {
@@ -91,4 +103,5 @@ export const eventsActions = {
   deleteEvent,
   acceptEvent,
   addRecipeToEvent,
+  fetchEventRecipes,
 };

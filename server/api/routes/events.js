@@ -165,6 +165,43 @@ eventsRouter.delete('/events/:id', async (req, res) => {
   }
 });
 
+eventsRouter.get(
+  '/events/recipes/:eventId',
+  [check('eventId', 'Event ID is required').not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { eventId } = req.params;
+    try {
+      const event = await Event.findOne({
+        where: {
+          id: eventId,
+        },
+        include: [
+          {
+            model: Recipe,
+            include: [
+              {
+                model: User,
+                as: 'User_Recipes',
+              },
+            ],
+          },
+        ],
+      });
+      res.status(200).send(event.Recipes);
+    } catch (e) {
+      console.error(chalk.red(e));
+      res.status(500).send({ message: 'Server Error' });
+    }
+  }
+);
+
 eventsRouter.post(
   '/events/recipes',
   [
