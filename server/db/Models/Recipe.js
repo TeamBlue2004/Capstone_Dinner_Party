@@ -66,18 +66,28 @@ const Recipe = db.define(
 );
 
 Recipe.prototype.addToUserFavorite = async function addToUserFavorite(
-  user,
+  model,
+  userId,
   recipeId
 ) {
-  user.addRecipe(recipeId);
+  model.create({
+    UserId: userId,
+    RecipeId: recipeId,
+  });
   this.increment('favoriteCount', { by: 1 });
 };
 
 Recipe.prototype.removeFromUserFavorite = async function removeFromUserFavorite(
-  user,
+  model,
+  userId,
   recipeId
 ) {
-  user.removeRecipe(recipeId);
+  model.destroy({
+    where: {
+      UserId: userId,
+      RecipeId: recipeId,
+    },
+  });
   this.decrement('favoriteCount', { by: 1 });
 };
 

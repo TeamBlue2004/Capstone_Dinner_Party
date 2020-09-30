@@ -2,7 +2,13 @@ const eventsRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
 const chalk = require('chalk');
 
-const { Event, User, Event_Recipe } = require('../../db/Models/index');
+const {
+  Event,
+  User,
+  Recipe,
+  Event_Recipe,
+  Event_Recipe_User,
+} = require('../../db/Models/index');
 
 eventsRouter.get('/events/userevents/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -165,7 +171,7 @@ eventsRouter.post(
     check('eventId', 'Event ID is required').not().isEmpty(),
     check('recipeId', 'Recipe ID is required').not().isEmpty(),
     check('userId', 'User ID is required').not().isEmpty(),
-    check('dishType', 'Dish type is required').not().isEmpty(),
+    check('dish', 'Dish type is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -175,15 +181,34 @@ eventsRouter.post(
         errors: errors.array(),
       });
     }
-    const { eventId, recipeId, userId, dishType } = req.body;
+    const { eventId, recipeId, userId, dish } = req.body;
     try {
-      const create = await Event_Recipe.create({
-        userId,
+      await Event_Recipe.create({
         EventId: eventId,
         RecipeId: recipeId,
-        dish: dishType,
+        dish,
       });
-      res.status(200).send(create);
+      await Event_Recipe_User.create({
+        RecipeId: recipeId,
+        UserId: userId,
+      });
+      const event = await Event.findOne({
+        where: {
+          id: eventId,
+        },
+        include: [
+          {
+            model: Recipe,
+            include: [
+              {
+                model: User,
+                as: 'User_Recipes',
+              },
+            ],
+          },
+        ],
+      });
+      res.status(200).send(event);
     } catch (e) {
       console.error(chalk.red(e));
       res.status(500).send({ message: 'Server Error' });

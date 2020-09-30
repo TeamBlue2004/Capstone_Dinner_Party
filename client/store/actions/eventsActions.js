@@ -71,13 +71,13 @@ const acceptEvent = (userId, eventId) => {
   };
 };
 
-const addRecipeToEvent = (eventId, recipeId, userId, dishType) => {
+const addRecipeToEvent = (eventId, recipeId, userId, dish) => {
   return async () => {
     await axios.post(`/api/events/recipes`, {
       eventId,
       recipeId,
       userId,
-      dishType,
+      dish,
     });
   };
 };

@@ -19,7 +19,7 @@ class RecipeEvents extends Component {
         <hr />
         <div className="events-dropdown">
           {events.map((event) => {
-            return <RecipeEvent event={event} />;
+            return <RecipeEvent key={event.id} event={event} />;
           })}
         </div>
       </div>

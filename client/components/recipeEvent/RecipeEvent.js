@@ -20,19 +20,20 @@ class RecipeEvent extends Component {
     const { event, recipeId, userId, addRecipeToEvent } = this.props;
     if (dish !== '') {
       addRecipeToEvent(event.id, recipeId, userId, dish);
+    } else {
+      alert('Please select a dish');
     }
-    alert('please select a dish type');
   };
 
   render() {
     const { event } = this.props;
     return (
       <>
-        <div key={event.eventName} className="event-item">
+        <div className="event-item">
           <div className="event-details">
             <p className="event-name">{event.eventName}</p>
-            <select name="dish" onChange={this.updateDish}>
-              <option value="" disabled selected>
+            <select name="dish" onChange={this.updateDish} defaultValue="">
+              <option value="" disabled>
                 Select dish
               </option>
               <option value="appetizer">Appetizer</option>
@@ -68,7 +69,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 RecipeEvent.propTypes = {
-  event: PropTypes.arrayOf(PropTypes.object).isRequired,
+  event: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    eventName: PropTypes.string.isRequired,
+    datetime: PropTypes.string.isRequired,
+  }).isRequired,
   recipeId: PropTypes.string.isRequired,
   addRecipeToEvent: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,

@@ -5,17 +5,18 @@ const { db } = require('../db');
 
 const values = ['appetizer', 'entree', 'dessert'];
 
-const Event_Recipe_User = db.define(
-  'Event_Recipe_User',
+const Event_Recipe = db.define(
+  'Event_Recipe',
   {
     dish: {
       type: ENUM,
       values,
+      allowNull: false,
     },
   },
   {
-    tableName: 'Event_Recipe_User',
+    tableName: 'Event_Recipe',
   }
 );
 
-module.exports = { Event_Recipe_User };
+module.exports = { Event_Recipe };

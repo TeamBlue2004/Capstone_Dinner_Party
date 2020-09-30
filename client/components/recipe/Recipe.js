@@ -55,9 +55,7 @@ class Recipe extends Component {
         <ol className="instructions">
           {recipe &&
             recipe.steps &&
-            recipe.steps
-              .split(';')
-              .map((step) => <li key={recipe.id}>{step}</li>)}
+            recipe.steps.split(';').map((step) => <li key={step}>{step}</li>)}
         </ol>
         <RecipeEvents />
       </div>
