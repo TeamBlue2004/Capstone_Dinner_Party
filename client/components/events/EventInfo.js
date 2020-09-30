@@ -9,8 +9,9 @@ import { eventsActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
   componentDidMount() {
-    const { eventNav, fetchEventGuests } = this.props;
+    const { eventNav, fetchEventGuests, loadEventRecipes } = this.props;
     fetchEventGuests(eventNav.eventId);
+    loadEventRecipes(eventNav.eventId);
   }
 
   componentDidUpdate(prevProps) {

@@ -2,12 +2,9 @@ import { TYPES } from '../types';
 
 const initialEventsState = {
   events: [],
-<<<<<<< HEAD
   pendingEvents: [],
   eventGuests: [],
-=======
   eventRecipes: [],
->>>>>>> added route to fetch recipes for each event
   nav: {
     open: false,
     eventId: '',
