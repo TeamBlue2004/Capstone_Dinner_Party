@@ -5,21 +5,19 @@ const initialLoginState = {
   password: '',
   id: '',
   loggedIn: false,
-  friends: [],
   user: {},
   error: '',
   usersList: [],
   pendingFriendsList: [],
   approvedFriendsList: [],
-  requestSentMessage: '',
+  requestSentMsg: '',
+  approveRequestMsg: '',
   favoriteFoods: '',
   dislikedFoods: '',
   nav: {
     open: false,
     friendId: '',
   },
-  friendData: {},
-  approveRequestMsg: '',
 };
 
 export const userReducer = (state = initialLoginState, action) => {
@@ -65,7 +63,7 @@ export const userReducer = (state = initialLoginState, action) => {
         ...state,
         error: action.error,
       };
-    case TYPES.FETCH_SEARCHED_USERS:
+    case TYPES.FETCH_USERS:
       return {
         ...state,
         usersList: action.usersList,
@@ -83,12 +81,12 @@ export const userReducer = (state = initialLoginState, action) => {
     case TYPES.ADD_AS_FRIEND:
       return {
         ...state,
-        requestSentMessage: action.requestSentMsg,
+        requestSentMsg: action.requestSentMsg,
       };
     case TYPES.APPROVE_FRIEND_REQUEST:
       return {
         ...state,
-        requestSentMessage: action.requestSentMsg,
+        requestSentMsg: action.requestSentMsg,
       };
     case TYPES.SET_FRIEND_DATA:
       return {

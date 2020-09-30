@@ -2,7 +2,6 @@ const userRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { Op } = require('sequelize');
 const { User, Session, Recipe, User_Recipe } = require('../../db/Models/index');
 
 userRouter.use(cors());
@@ -148,17 +147,8 @@ userRouter.put('/users/updateuser/:userid', async (req, res) => {
   res.sendStatus(200);
 });
 
-userRouter.get('/users/searchusers/:searchTerm', async (req, res) => {
-  const searchValue = req.params.searchTerm;
-  const usersList = await User.findAll({
-    where: {
-      [Op.or]: [
-        { username: { [Op.like]: `%${searchValue}%` } },
-        { firstName: { [Op.like]: `%${searchValue}%` } },
-        { lastName: { [Op.like]: `%${searchValue}%` } },
-      ],
-    },
-  });
+userRouter.get('/users', async (req, res) => {
+  const usersList = await User.findAll();
   res.status(200).send(usersList);
 });
 
