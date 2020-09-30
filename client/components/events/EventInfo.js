@@ -9,14 +9,16 @@ import { eventsActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
   componentDidMount() {
-    const { eventNav, fetchEventGuests } = this.props;
+    const { eventNav, fetchEventGuests, loadEventRecipes } = this.props;
     fetchEventGuests(eventNav.eventId);
+    loadEventRecipes(eventNav.eventId);
   }
 
   componentDidUpdate(prevProps) {
-    const { eventNav, fetchEventGuests } = this.props;
+    const { eventNav, fetchEventGuests, loadEventRecipes } = this.props;
     if (prevProps.eventNav.eventId !== eventNav.eventId) {
       fetchEventGuests(eventNav.eventId);
+      loadEventRecipes(eventNav.eventId);
     }
   }
 
@@ -94,6 +96,7 @@ const mapStateToProps = (state) => {
     userId: state.user.id,
     events: state.events.events,
     eventGuests: state.events.eventGuests,
+    eventRecipes: state.events.eventRecipes,
     eventNav: state.events.nav,
   };
 };
@@ -102,6 +105,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchEventGuests: (eventId) => {
       dispatch(eventsActions.fetchEventGuests(eventId));
+    },
+    loadEventRecipes: (eventId) => {
+      dispatch(eventsActions.fetchEventRecipes(eventId));
     },
   };
 };
@@ -114,6 +120,7 @@ EventInfo.propTypes = {
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
   }).isRequired,
+  loadEventRecipes: PropTypes.func.isRequired,
   google: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchEventGuests: PropTypes.func.isRequired,
 };

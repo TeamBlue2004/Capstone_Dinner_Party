@@ -4,6 +4,7 @@ const initialEventsState = {
   events: [],
   pendingEvents: [],
   eventGuests: [],
+  eventRecipes: [],
   nav: {
     open: false,
     eventId: '',
@@ -34,6 +35,11 @@ export const eventsReducer = (state = initialEventsState, action) => {
           open: action.nav.open,
           eventId: action.nav.id,
         },
+      };
+    case TYPES.FETCH_EVENT_RECIPES:
+      return {
+        ...state,
+        eventRecipes: action.eventRecipes,
       };
     default:
       return state;

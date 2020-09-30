@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddRecipeToFavoriteButton from '../buttons/AddRecipeToFavoriteButton';
-import AddRecipeToEventButton from '../buttons/AddRecipeToEventButton';
+import RecipeEvents from '../recipeEvents/RecipeEvents';
 import { recipesActions, userActions } from '../../store/actions/index';
 import './recipe.scss';
 
@@ -55,16 +55,9 @@ class Recipe extends Component {
         <ol className="instructions">
           {recipe &&
             recipe.steps &&
-            recipe.steps
-              .split(';')
-              .map((step) => <li key={recipe.id}>{step}</li>)}
+            recipe.steps.split(';').map((step) => <li key={step}>{step}</li>)}
         </ol>
-        <div className="buttons">
-          <AddRecipeToEventButton
-            onClick={() => this.addRecipeToFavorite(recipe)}
-            favorite={this.filterRecipeFavorites(recipe.id)}
-          />
-        </div>
+        <RecipeEvents />
       </div>
     );
   }

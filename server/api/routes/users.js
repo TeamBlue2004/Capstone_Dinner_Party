@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const { Op } = require('sequelize');
-const { User, Session, Recipe } = require('../../db/Models/index');
+const { User, Session, Recipe, User_Recipe } = require('../../db/Models/index');
 
 userRouter.use(cors());
 userRouter.use(bodyParser.json());
@@ -236,11 +236,14 @@ userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
 userRouter.get('/users/favorites/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+      include: [Recipe],
+    });
     if (user) {
-      user.getRecipes().then((response) => {
-        res.status(200).send(response);
-      });
+      res.status(200).send(user.Recipes);
     } else {
       res.status(404).send({ message: 'not found' });
     }
@@ -253,19 +256,20 @@ userRouter.get('/users/favorites/:userId', async (req, res) => {
 userRouter.post('/users/favorites', async (req, res) => {
   const { userId, recipeId } = req.body;
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+      include: [Recipe],
+    });
     const recipe = await Recipe.findByPk(recipeId);
     if (user) {
-      user
-        .getRecipes()
-        .then((response) => {
-          if (response.some((rcp) => rcp.id === recipeId)) {
-            recipe.removeFromUserFavorite(user, recipeId);
-          } else {
-            recipe.addToUserFavorite(user, recipeId);
-          }
-        })
-        .then((updatedResponse) => res.status(200).send({ updatedResponse }));
+      if (user.Recipes.some((rcp) => rcp.id === recipeId)) {
+        recipe.removeFromUserFavorite(User_Recipe, userId, recipeId);
+      } else {
+        recipe.addToUserFavorite(User_Recipe, userId, recipeId);
+      }
+      res.status(200).send({ user });
     } else {
       res.status(404).send({ message: 'not found' });
     }
