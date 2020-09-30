@@ -52,16 +52,28 @@ const postEvent = (event) => async (dispatch) => {
 
 const deleteEvent = (id, userId) => {
   return async (dispatch) => {
+    await dispatch(setEventNav({ open: false, eventId: '' }));
     await axios.delete(`/api/events/${id}`);
     const { data } = await axios.get(`/api/events/userevents/${userId}`);
     dispatch(getEvents(data));
-    dispatch(setEventNav({ open: false, eventId: '' }));
   };
 };
 
 const acceptEvent = (userId, eventId) => {
   return async (dispatch) => {
     await axios.put(`/api/events/accept`, { userId, eventId });
+    const events = await axios.get(`/api/events/userevents/${userId}`);
+    const pendingEvents = await axios.get(
+      `/api/events/userevents/pending/${userId}`
+    );
+    dispatch(getEvents(events.data));
+    dispatch(getEvents(pendingEvents.data));
+  };
+};
+
+const declineEvent = (userId, eventId) => {
+  return async (dispatch) => {
+    await axios.put(`/api/events/decline`, { userId, eventId });
     const events = await axios.get(`/api/events/userevents/${userId}`);
     const pendingEvents = await axios.get(
       `/api/events/userevents/pending/${userId}`
@@ -79,4 +91,5 @@ export const eventsActions = {
   postEvent,
   deleteEvent,
   acceptEvent,
+  declineEvent,
 };

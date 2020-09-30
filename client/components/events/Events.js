@@ -16,6 +16,23 @@ class Events extends Component {
     fetchPendingEvents(userId);
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      userId,
+      events,
+      pendingEvents,
+      fetchEvents,
+      fetchPendingEvents,
+    } = this.props;
+    if (
+      prevProps.events.length !== events.length ||
+      prevProps.pendingEvents.length !== pendingEvents.length
+    ) {
+      fetchEvents(userId);
+      fetchPendingEvents(userId);
+    }
+  }
+
   handleAdd = () => {
     const { setEventNav, eventNav } = this.props;
     if (eventNav.eventId !== '') {
@@ -28,7 +45,14 @@ class Events extends Component {
   };
 
   render() {
-    const { userId, events, pendingEvents, eventNav, acceptEvent } = this.props;
+    const {
+      userId,
+      events,
+      pendingEvents,
+      eventNav,
+      acceptEvent,
+      declineEvent,
+    } = this.props;
     return (
       <>
         <div className="routesContainer">
@@ -58,6 +82,13 @@ class Events extends Component {
                         >
                           Accept
                         </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => declineEvent(userId, event.id)}
+                        >
+                          Decline
+                        </button>
                       </div>
                     );
                   })}
@@ -65,20 +96,26 @@ class Events extends Component {
               )}
             </div>
             <div className="list-group">
-              <h3>My Events:</h3>
-              {events.map((event) => {
-                return (
-                  <EventCard
-                    key={event.id}
-                    id={event.id}
-                    host={event.host}
-                    hostid={event.hostid}
-                    eventName={event.eventName}
-                    datetime={event.datetime}
-                    location={event.location}
-                  />
-                );
-              })}
+              {events.length > 0 ? (
+                <>
+                  <h3>My Events:</h3>
+                  {events.map((event) => {
+                    return (
+                      <EventCard
+                        key={event.id}
+                        id={event.id}
+                        host={event.host}
+                        hostid={event.hostid}
+                        eventName={event.eventName}
+                        datetime={event.datetime}
+                        location={event.location}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <h3>No upcoming events</h3>
+              )}
             </div>
           </div>
         </div>
@@ -118,6 +155,9 @@ const mapDispatchToProps = (dispatch) => {
     acceptEvent: (userId, eventId) => {
       dispatch(eventsActions.acceptEvent(userId, eventId));
     },
+    declineEvent: (userId, eventId) => {
+      dispatch(eventsActions.declineEvent(userId, eventId));
+    },
   };
 };
 Events.propTypes = {
@@ -132,5 +172,6 @@ Events.propTypes = {
   fetchPendingEvents: PropTypes.func.isRequired,
   setEventNav: PropTypes.func.isRequired,
   acceptEvent: PropTypes.func.isRequired,
+  declineEvent: PropTypes.func.isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

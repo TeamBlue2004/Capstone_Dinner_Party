@@ -143,6 +143,27 @@ eventsRouter.put('/events/accept', async (req, res) => {
   }
 });
 
+eventsRouter.put('/events/decline', async (req, res) => {
+  const { userId, eventId } = req.body;
+  try {
+    const event = await Event.findOne({
+      where: {
+        id: eventId,
+      },
+    });
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    event.addUser(user, { through: { status: 'Declined' } });
+    res.sendStatus(200);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error while deleting event' });
+  }
+});
+
 eventsRouter.delete('/events/:id', async (req, res) => {
   const { id } = req.params;
   try {
