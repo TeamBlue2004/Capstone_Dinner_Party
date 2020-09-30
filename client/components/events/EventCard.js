@@ -53,7 +53,6 @@ class EventCard extends Component {
 
     return (
       <div
-        key={id}
         className="item list-group-item list-group-item-action d-flex flex-row justify-content-between"
         onClick={() => {
           this.handleEventDisplay();

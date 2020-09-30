@@ -18,10 +18,10 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { loginUser } = this.props;
+    const { loginUser, history } = this.props;
     const { username, password } = this.state;
     const user = { username, password };
-    loginUser(user);
+    loginUser(user, history);
   };
 
   render() {
@@ -92,8 +92,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginUser: (user) => {
-      dispatch(userActions.login(user));
+    loginUser: (user, history) => {
+      dispatch(userActions.login(user, history));
     },
   };
 };

@@ -103,7 +103,6 @@ export const userReducer = (state = initialLoginState, action) => {
           friendId: action.nav.id,
         },
       };
-
     default:
       return state;
   }

@@ -150,13 +150,14 @@ const logInWithSession = () => {
   return async (dispatch) => {
     const { data } = await axios.get('/api/users/session');
     if (data) {
-      dispatch(setUserData(data));
-      dispatch(setLoggedIn(true));
+      await dispatch(setUserData(data));
+      await dispatch(setLoggedIn(true));
     } else {
-      dispatch(setLoggedIn(false));
+      await dispatch(setLoggedIn(false));
     }
   };
 };
+
 const fetchFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/userfriends/${userId}`);
   return dispatch(getFriends(data));
@@ -185,7 +186,6 @@ const addAsFriend = (friendId, userId) => async (dispatch) => {
     friendId,
     userId,
   });
-  console.log('requestSentMessage ==== ', data);
   return dispatch(setRequestSentMessage(data.message));
 };
 

@@ -8,16 +8,40 @@ const getEvents = (events) => {
   };
 };
 
+const fetchEvents = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/events/userevents/${userId}`);
+  return dispatch(getEvents(data));
+};
+
+const getPendingEvents = (pendingEvents) => {
+  return {
+    type: TYPES.FETCH_PENDING_EVENTS,
+    pendingEvents,
+  };
+};
+
+const fetchPendingEvents = (userId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/events/userevents/pending/${userId}`);
+  return dispatch(getPendingEvents(data));
+};
+
+const getEventsGuests = (eventGuests) => {
+  return {
+    type: TYPES.FETCH_EVENT_GUESTS,
+    eventGuests,
+  };
+};
+
+const fetchEventGuests = (eventId) => async (dispatch) => {
+  const { data } = await axios.get(`/api/events/eventGuests/${eventId}`);
+  return dispatch(getEventsGuests(data.Users));
+};
+
 const setEventNav = (nav) => {
   return {
     type: TYPES.SET_EVENT_NAV,
     nav,
   };
-};
-
-const fetchEvents = (userId) => async (dispatch) => {
-  const { data } = await axios.get(`/api/events/userevents/${userId}`);
-  return dispatch(getEvents(data));
 };
 
 const postEvent = (event) => async (dispatch) => {
@@ -35,10 +59,24 @@ const deleteEvent = (id, userId) => {
   };
 };
 
+const acceptEvent = (userId, eventId) => {
+  return async (dispatch) => {
+    await axios.put(`/api/events/accept`, { userId, eventId });
+    const events = await axios.get(`/api/events/userevents/${userId}`);
+    const pendingEvents = await axios.get(
+      `/api/events/userevents/pending/${userId}`
+    );
+    dispatch(getEvents(events.data));
+    dispatch(getEvents(pendingEvents.data));
+  };
+};
+
 export const eventsActions = {
   fetchEvents,
-  getEvents,
+  fetchPendingEvents,
+  fetchEventGuests,
+  setEventNav,
   postEvent,
   deleteEvent,
-  setEventNav,
+  acceptEvent,
 };
