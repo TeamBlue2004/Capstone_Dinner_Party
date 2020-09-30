@@ -52,37 +52,39 @@ class EventCard extends Component {
     const { days, hours } = this.state;
 
     return (
-      <div
-        className="item list-group-item list-group-item-action d-flex flex-row justify-content-between"
-        onClick={() => {
-          this.handleEventDisplay();
-        }}
-        onKeyPress={null}
-        tabIndex={0}
-        role="button"
-      >
-        <div>
-          <h5 className="mb-1">{`${eventName} @ ${host}`}</h5>
-          <p className="mb-1">{moment(datetime).format('LLLL')}</p>
-          <p className="mb-1">{location.split(';')[0]}</p>
-          {userId === hostid ? (
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => deleteEvent(id, userId)}
-            >
-              Delete Event
-            </button>
-          ) : null}
-        </div>
-        <div id="clockdiv" className="shadow-lg bg-white rounded">
+      <div className="event-card">
+        {userId === hostid ? (
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => deleteEvent(id, userId)}
+          >
+            Delete Event
+          </button>
+        ) : null}
+        <div
+          className="item list-group-item list-group-item-action d-flex flex-row justify-content-between"
+          onClick={() => {
+            this.handleEventDisplay();
+          }}
+          onKeyPress={null}
+          tabIndex={0}
+          role="button"
+        >
           <div>
-            <span className="days">{days}</span>
-            <div className="smalltext">Days</div>
+            <h5 className="mb-1">{`${eventName} @ ${host}`}</h5>
+            <p className="mb-1">{moment(datetime).format('LLLL')}</p>
+            <p className="mb-1">{location.split(';')[0]}</p>
           </div>
-          <div>
-            <span className="hours">{hours}</span>
-            <div className="smalltext">Hours</div>
+          <div id="clockdiv" className="shadow-lg bg-white rounded">
+            <div>
+              <span className="days">{days}</span>
+              <div className="smalltext">Days</div>
+            </div>
+            <div>
+              <span className="hours">{hours}</span>
+              <div className="smalltext">Hours</div>
+            </div>
           </div>
         </div>
       </div>

@@ -24,3 +24,18 @@
   padding-top: 5px;
   font-size: 16px;
 }
+
+.event-card {
+  position: relative;
+}
+
+.event-card button {
+  border: 0;
+  color: black;
+  font-size: 10px;
+  padding: 4px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  z-index: 9999;
+}
