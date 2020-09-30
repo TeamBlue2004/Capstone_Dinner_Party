@@ -1,28 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { userActions } from '../../store/actions/index';
+
 import FriendProfile from './FriendProfile';
+import UsersList from './UsersList';
+import { userActions } from '../../store/actions/index';
 import './friends.scss';
 
 class Friends extends Component {
-  constructor() {
-    super();
-    this.state = {
-      searchTerm: '',
-    };
-  }
+  state = {
+    searchTerm: '',
+  };
 
   componentDidMount() {
-    const { loadPendingFriends, id, loadApprovedFriends } = this.props;
+    const {
+      id,
+      loadPendingFriends,
+      loadApprovedFriends,
+      loadUsers,
+    } = this.props;
     loadPendingFriends(id);
     loadApprovedFriends(id);
+    loadUsers();
   }
 
-  searchUsers = () => {
-    const { loadUsers } = this.props;
+  editSearchTerm = (e) => {
+    this.setState({ searchTerm: e.target.value });
+  };
+
+  dynamicSearch = () => {
+    const { usersList, id } = this.props;
     const { searchTerm } = this.state;
-    loadUsers(searchTerm);
+    if (searchTerm) {
+      return usersList
+        .filter((user) =>
+          user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .filter((user) => user.id !== id);
+    }
+    return [];
   };
 
   addAsFriend = (friendId, userId) => {
@@ -46,67 +62,30 @@ class Friends extends Component {
     }
   };
 
-  // togglePane = (friend) => {
-  //   const { isPaneOpen } = this.state;
-  //   this.setState({ isPaneOpen: !isPaneOpen, friendId: friend.target.id });
-  // };
-
   render() {
     const {
       pendingFriendsList,
-      usersList,
       id,
-      requestSentMessage,
-      approveRequestMessage,
+      requestSentMsg,
+      approveRequestMsg,
       approvedFriendsList,
       friendNav,
     } = this.props;
     const { searchTerm } = this.state;
-    // loggedIn user should not appear in result if searchTerm matches with loggedIn User FN,LN or Username
-    const filteredUsersList = usersList.filter((user) => user.id !== id);
     return (
       <>
         <div className="routesContainer">
           <div className="routes">
             <input
-              id="searchTerm"
-              placeholder="Search"
+              type="text"
+              placeholder="Search for a user"
               value={searchTerm}
-              name="searchTerm"
-              onChange={(e) => this.setState({ searchTerm: e.target.value })}
+              onChange={this.editSearchTerm}
             />
-            <button
-              className="btn btn-primary button"
-              type="submit"
-              onClick={this.searchUsers}
-              value="Search User"
-            >
-              Search User
-            </button>
-            {filteredUsersList.map((user) => {
-              return (
-                <div key={user.id}>
-                  <div
-                    className="friend-result-container"
-                    onClick={() => this.handleFriendDisplay(user.id)}
-                    onKeyPress={null}
-                    tabIndex={0}
-                    role="button"
-                  >
-                    {user.firstName} {user.lastName}
-                  </div>
-                  <button
-                    className="btn btn-primary button"
-                    type="submit"
-                    onClick={() => this.addAsFriend(user.id, id)}
-                    value="add Friend"
-                  >
-                    Add as a Friend
-                  </button>
-                  <div>{requestSentMessage}</div>
-                </div>
-              );
-            })}
+            <ul className="searchFriendList list-group">
+              <div>{requestSentMsg}</div>
+              <UsersList users={this.dynamicSearch()} />
+            </ul>
             <hr />
             {pendingFriendsList && pendingFriendsList.length !== 0 ? (
               <>
@@ -134,7 +113,7 @@ class Friends extends Component {
                         >
                           Approve Friend Request
                         </button>
-                        <div>{approveRequestMessage}</div>
+                        <div>{approveRequestMsg}</div>
                       </div>
                     </div>
                   );
@@ -187,8 +166,8 @@ const mapStateToProps = (state) => {
     usersList: state.user.usersList,
     pendingFriendsList: state.user.pendingFriendsList,
     approvedFriendsList: state.user.approvedFriendsList,
-    requestSentMessage: state.user.requestSentMessage,
-    approveRequestMessage: state.user.approveRequestMsg,
+    requestSentMsg: state.user.requestSentMsg,
+    approveRequestMsg: state.user.approveRequestMsg,
     friendNav: state.user.nav,
   };
 };
@@ -201,8 +180,8 @@ const mapDispatchToProps = (dispatch) => {
     loadApprovedFriends: (userId) => {
       dispatch(userActions.fetchApprovedFriends(userId));
     },
-    loadUsers: (searchTerm) => {
-      dispatch(userActions.searchUsers(searchTerm));
+    loadUsers: () => {
+      dispatch(userActions.fetchUsers());
     },
     addFriend: (friendId, userId) => {
       dispatch(userActions.addAsFriend(friendId, userId));
@@ -241,8 +220,8 @@ Friends.propTypes = {
   loadApprovedFriends: PropTypes.func.isRequired,
   approveFriend: PropTypes.func.isRequired,
   setFriendNav: PropTypes.func.isRequired,
-  approveRequestMessage: PropTypes.string.isRequired,
-  requestSentMessage: PropTypes.string.isRequired,
+  approveRequestMsg: PropTypes.string.isRequired,
+  requestSentMsg: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);
