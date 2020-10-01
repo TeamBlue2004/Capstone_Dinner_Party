@@ -246,7 +246,6 @@ eventsRouter.get(
           },
         ],
       });
-      console.log(event);
       res.status(200).send(event.Recipes);
     } catch (e) {
       console.error(chalk.red(e));

@@ -12,9 +12,10 @@ const initialLoginState = {
   approvedFriendsList: [],
   requestSentMsg: '',
   approveRequestMsg: '',
+  declineRequestMsg: '',
   favoriteFoods: '',
   dislikedFoods: '',
-  nav: {
+  friendNav: {
     open: false,
     friendId: '',
   },
@@ -86,7 +87,12 @@ export const userReducer = (state = initialLoginState, action) => {
     case TYPES.APPROVE_FRIEND_REQUEST:
       return {
         ...state,
-        requestSentMsg: action.requestSentMsg,
+        approveRequestMsg: action.approveRequestMsg,
+      };
+    case TYPES.DECLINE_FRIEND_REQUEST:
+      return {
+        ...state,
+        declineRequestMsg: action.declineRequestMsg,
       };
     case TYPES.SET_FRIEND_DATA:
       return {
@@ -96,9 +102,9 @@ export const userReducer = (state = initialLoginState, action) => {
     case TYPES.SET_FRIEND_NAV:
       return {
         ...state,
-        nav: {
-          open: action.nav.open,
-          friendId: action.nav.id,
+        friendNav: {
+          open: action.friendNav.open,
+          friendId: action.friendNav.id,
         },
       };
     default:

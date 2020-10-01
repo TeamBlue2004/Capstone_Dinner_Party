@@ -187,7 +187,7 @@ userRouter.get('/users/pendinguserfriends/:userId', async (req, res) => {
 });
 
 // Adding one row in friends Table - userId is loggedin and friendId is the user whose request is getting approved
-userRouter.post('/users/approveasfriend', async (req, res) => {
+userRouter.post('/users/approveFriend', async (req, res) => {
   const { friendId, userId } = req.body;
   const user = await User.findByPk(userId);
   const friend = await User.findByPk(friendId);
@@ -196,6 +196,16 @@ userRouter.post('/users/approveasfriend', async (req, res) => {
     res.status(201).send({ message: 'Friend request accepted!' });
   });
   user.removeRequesters(friend);
+});
+
+userRouter.post('/users/declineFriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  const friend = await User.findByPk(friendId);
+
+  user.removeRequesters(friend).then(() => {
+    res.status(201).send({ message: 'Friend request declined!' });
+  });
 });
 
 // Below method will give approved friends
