@@ -5,12 +5,7 @@ import PropTypes from 'prop-types';
 import { userActions } from '../../store/actions/index';
 import './friends.scss';
 
-class UsersList extends Component {
-  addAsFriend = (friendId, userId) => {
-    const { addFriend } = this.props;
-    addFriend(friendId, userId);
-  };
-
+class ApprovedFriends extends Component {
   handleFriendDisplay = (friendId) => {
     const { setFriendNav, friendNav } = this.props;
     if (friendId === friendNav.friendId) {
@@ -23,32 +18,25 @@ class UsersList extends Component {
   };
 
   render() {
-    const { users, id } = this.props;
+    const { approvedFriendsList } = this.props;
     return (
       <>
-        {users.map((user) => {
+        {approvedFriendsList.map((friend) => {
           return (
             <li
-              key={user.id}
+              key={friend.id}
               className="list-group-item d-flex flex-row justify-content-between"
             >
               <div
                 onClick={() => {
-                  this.handleFriendDisplay(user.id);
+                  this.handleFriendDisplay(friend.id);
                 }}
                 onKeyPress={null}
                 tabIndex={0}
                 role="button"
               >
-                {user.firstName} {user.lastName}
+                {friend.firstName} {friend.lastName}
               </div>
-              <button
-                type="submit"
-                onClick={() => this.addAsFriend(user.id, id)}
-                value="add Friend"
-              >
-                <i className="fas fa-user-plus fa-2x"></i>
-              </button>
             </li>
           );
         })}
@@ -59,31 +47,26 @@ class UsersList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    id: state.user.id,
+    approvedFriendsList: state.user.approvedFriendsList,
     friendNav: state.user.friendNav,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFriend: (friendId, userId) => {
-      dispatch(userActions.addAsFriend(friendId, userId));
-    },
     setFriendNav: (nav) => {
       dispatch(userActions.setFriendNav(nav));
     },
   };
 };
 
-UsersList.propTypes = {
-  id: PropTypes.string.isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+ApprovedFriends.propTypes = {
+  approvedFriendsList: PropTypes.arrayOf(PropTypes.object).isRequired,
   friendNav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
-  addFriend: PropTypes.func.isRequired,
   setFriendNav: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+export default connect(mapStateToProps, mapDispatchToProps)(ApprovedFriends);

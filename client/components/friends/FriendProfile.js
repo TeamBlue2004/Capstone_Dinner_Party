@@ -1,61 +1,23 @@
-/* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userActions } from '../../store/actions/index';
 
 class FriendProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {
-    // const {
-    //   props: {
-    //     match: {
-    //       params: { friendid },
-    //     },
-    //   },
-    // } = this.props;
-    // console.log('id ==== ', friendid);
-    const { loadFriendDetails } = this.props;
-    loadFriendDetails('ac3287fb-268d-4c3c-8607-9e12bc9ac666');
-  }
-
   render() {
-    const { friendData } = this.props;
+    const { users, friendNav } = this.props;
+    const friend = users.find((fri) => fri.id === friendNav.friendId);
     return (
       <div className="recipe-card">
-        <h4>{friendData.userName}</h4>
-        {/* <div className="recipe-image">
-          <img src={ friendData.image} alt={friendData.image} />
-        </div> */}
-
-        <form>
-          <div className="form-group">
-            <label>First Name:</label>
-            <label> {friendData.firstName}</label>
-          </div>
-
-          <div className="form-group">
-            <label>Last Name:</label>
-            <label> {friendData.lastName}</label>
-          </div>
-          <div className="form-group">
-            <label>Email:</label>
-            <label> {friendData.email}</label>
-          </div>
-        </form>
+        <h1>{friend.firstName}</h1>
       </div>
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
-    friendData: state.user.friendData,
-    friendNav: state.user.nav,
-    friendId: state.user.nav.friendId,
+    users: state.user.usersList,
+    friendNav: state.user.friendNav,
   };
 };
 
@@ -67,34 +29,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-FriendProfile.defaultProps = {
-  friendNav: {
-    open: false,
-    id: '',
-  },
-};
-
 FriendProfile.propTypes = {
-  loadFriendDetails: PropTypes.func.isRequired,
-  friendData: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    email: PropTypes.string,
-    userName: PropTypes.string,
-  }).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
   friendNav: PropTypes.shape({
-    open: PropTypes.bool,
-    friendId: PropTypes.string,
-  }),
-  // props: PropTypes.shape({
-  //   history: PropTypes.isRequired,
-  //   match: PropTypes.shape({
-  //     params: PropTypes.shape({
-  //       friendid: PropTypes.string.isRequired,
-  //     }).isRequired,
-  //   }).isRequired,
-  //   // history: propTypes.objectOf().isRequired,
-  // }).isRequired,
+    open: PropTypes.bool.isRequired,
+    friendId: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);

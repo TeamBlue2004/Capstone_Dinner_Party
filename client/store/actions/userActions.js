@@ -44,6 +44,13 @@ const setApproveRequestMsg = (approveRequestMsg) => {
   };
 };
 
+const setDeclineRequestMsg = (declineRequestMsg) => {
+  return {
+    type: TYPES.DECLINE_FRIEND_REQUEST,
+    declineRequestMsg,
+  };
+};
+
 const setError = (error) => {
   return {
     type: TYPES.SET_USER_ERROR,
@@ -87,10 +94,10 @@ const setFavoriteRecipes = (favRecipes) => {
   };
 };
 
-const setFriendNav = (nav) => {
+const setFriendNav = (friendNav) => {
   return {
     type: TYPES.SET_FRIEND_NAV,
-    nav,
+    friendNav,
   };
 };
 
@@ -179,7 +186,6 @@ const getUsers = (usersList) => {
 
 const fetchUsers = () => async (dispatch) => {
   const { data } = await axios.get('/api/users');
-  console.log('===', data);
   return dispatch(getUsers(data));
 };
 
@@ -191,12 +197,34 @@ const addAsFriend = (friendId, userId) => async (dispatch) => {
   return dispatch(setRequestSentMsg(data.message));
 };
 
-const approveAsFriend = (friendId, userId) => async (dispatch) => {
-  const { data } = await axios.post('/api/users/approveasfriend', {
-    friendId,
-    userId,
-  });
-  return dispatch(setApproveRequestMsg(data.message));
+const approveFriend = (friendId, userId) => {
+  return async (dispatch) => {
+    const { data } = await axios.post('/api/users/approveFriend', {
+      friendId,
+      userId,
+    });
+    const friends = await axios.get(`/api/users/approveduserfriends/${userId}`);
+    const pendingFriends = await axios.get(
+      `/api/users/pendinguserfriends/${userId}`
+    );
+    dispatch(setApproveRequestMsg(data.message));
+    dispatch(setApprovedFriends(friends.data));
+    dispatch(setPendingFriends(pendingFriends.data));
+  };
+};
+
+const declineFriend = (friendId, userId) => {
+  return async (dispatch) => {
+    const { data } = await axios.post('/api/users/declineFriend', {
+      friendId,
+      userId,
+    });
+    const pendingFriends = await axios.get(
+      `/api/users/pendinguserfriends/${userId}`
+    );
+    dispatch(setDeclineRequestMsg(data.message));
+    dispatch(setPendingFriends(pendingFriends.data));
+  };
 };
 
 const fetchPendingFriends = (userId) => async (dispatch) => {
@@ -247,7 +275,8 @@ export const userActions = {
   addAsFriend,
   setPendingFriends,
   setApprovedFriends,
-  approveAsFriend,
+  approveFriend,
+  declineFriend,
   setApproveRequestMsg,
   updateUserFavoriteRecipe,
   fetchUserFavoriteRecipes,
