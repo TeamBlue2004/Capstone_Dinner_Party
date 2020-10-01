@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { userActions } from '../../store/actions/index';
+import { userActions, eventsActions } from '../../store/actions/index';
 
 class FriendProfile extends Component {
   constructor(props) {
@@ -19,8 +19,14 @@ class FriendProfile extends Component {
     //   },
     // } = this.props;
     // console.log('id ==== ', friendid);
-    const { loadFriendDetails } = this.props;
-    loadFriendDetails('ac3287fb-268d-4c3c-8607-9e12bc9ac666');
+    const {
+      loadFriendDetails,
+      loadCommonEvents,
+      friendId,
+      userId,
+    } = this.props;
+    loadFriendDetails(friendId);
+    loadCommonEvents(friendId, userId);
   }
 
   render() {
@@ -56,13 +62,17 @@ const mapStateToProps = (state) => {
     friendData: state.user.friendData,
     friendNav: state.user.nav,
     friendId: state.user.nav.friendId,
+    userId: state.user.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadFriendDetails: (userId) => {
-      dispatch(userActions.fetchFriendDetails(userId));
+    loadFriendDetails: (friendId) => {
+      dispatch(userActions.fetchFriendDetails(friendId));
+    },
+    loadCommonEvents: (friendId, userId) => {
+      dispatch(eventsActions.fetchCommonEvents(friendId, userId));
     },
   };
 };
@@ -76,6 +86,7 @@ FriendProfile.defaultProps = {
 
 FriendProfile.propTypes = {
   loadFriendDetails: PropTypes.func.isRequired,
+  loadCommonEvents: PropTypes.func.isRequired,
   friendData: PropTypes.shape({
     firstName: PropTypes.string,
     lastName: PropTypes.string,
@@ -86,6 +97,8 @@ FriendProfile.propTypes = {
     open: PropTypes.bool,
     friendId: PropTypes.string,
   }),
+  friendId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   // props: PropTypes.shape({
   //   history: PropTypes.isRequired,
   //   match: PropTypes.shape({

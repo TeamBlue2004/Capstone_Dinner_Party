@@ -44,6 +44,10 @@ const setEventNav = (nav) => {
   };
 };
 
+const getCommonEvents = (events) => ({
+  type: TYPES.SET_COMMON_EVENTS,
+  events,
+});
 const postEvent = (event) => async (dispatch) => {
   await axios.post('/api/events', event);
   const { data } = await axios.get(`/api/events/userevents/${event.hostId}`);
@@ -106,6 +110,14 @@ const addRecipeToEvent = (eventId, recipeId, userId, dish) => {
   };
 };
 
+const fetchCommonEvents = (friendId, userId) => async (dispatch) => {
+  //console.log('eventAction fetchCommonEvents is called ~~~ ');
+  const { data } = await axios.get(
+    `/api/events/commonevents/${friendId}/${userId}`
+  );
+  //console.log('commonevents ~~~ ', data);
+  return dispatch(getCommonEvents(data));
+};
 export const eventsActions = {
   fetchEvents,
   fetchPendingEvents,
@@ -117,4 +129,6 @@ export const eventsActions = {
   declineEvent,
   addRecipeToEvent,
   fetchEventRecipes,
+  fetchCommonEvents,
+  getCommonEvents,
 };

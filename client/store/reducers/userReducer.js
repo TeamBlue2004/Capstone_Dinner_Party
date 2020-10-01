@@ -18,7 +18,13 @@ const initialLoginState = {
     open: false,
     friendId: '',
   },
-};
+  homeNav: {
+    open: false,
+    eventId: '',
+    recipeId: '',
+  },
+  friendData: {},
+  };
 
 export const userReducer = (state = initialLoginState, action) => {
   switch (action.type) {
@@ -99,6 +105,15 @@ export const userReducer = (state = initialLoginState, action) => {
         nav: {
           open: action.nav.open,
           friendId: action.nav.id,
+        },
+      };
+    case TYPES.SET_HOME_NAV:
+      return {
+        ...state,
+        nav: {
+          open: action.nav.open,
+          eventId: action.nav.eventId,
+          recipeId: action.nav.recipeId,
         },
       };
     default:

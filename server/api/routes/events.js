@@ -306,4 +306,29 @@ eventsRouter.post(
   }
 );
 
+eventsRouter.get('/events/commonevents/:friendId/:userId', async (req, res) => {
+  // const { friendId, userId } = req.params;
+  const friendId = '3e4ab5fe-20d2-49c5-8ff1-91cfaa91c7a6';
+  const userId = '3ce4d027-edab-422b-8738-2a071f7e2cfb';
+  try {
+    const commonEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: [userId, friendId],
+          },
+          through: { where: { status: 'Approved' } },
+        },
+      ],
+    });
+    console.log('commonEventList ==== ', commonEventList);
+    res.status(200).send(commonEventList);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching common events of user & friend',
+    });
+  }
+});
 module.exports = eventsRouter;

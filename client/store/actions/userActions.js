@@ -94,6 +94,14 @@ const setFriendNav = (nav) => {
   };
 };
 
+const setHomeNav = (nav) => {
+  console.log('nav in userActions --- ', nav);
+  return {
+    type: TYPES.SET_HOME_NAV,
+    nav,
+  };
+};
+
 const register = (newUser) => {
   return axios.post('/api/users/register', {
     firstName: newUser.firstName,
@@ -255,4 +263,5 @@ export const userActions = {
   fetchFriendDetails,
   getFriendData,
   setFriendNav,
+  setHomeNav,
 };
