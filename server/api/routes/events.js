@@ -305,4 +305,86 @@ eventsRouter.post(
   }
 );
 
+eventsRouter.put(
+  '/events/recipes',
+  [
+    check('eventRecipeId', 'Event Recipe ID is required').not().isEmpty(),
+    check('dish', 'Dish type is required').not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { eventRecipeId, dish } = req.body;
+    const eventRecipe = await Event_Recipe.findByPk(eventRecipeId);
+    try {
+      if (eventRecipe) {
+        await eventRecipe.update({
+          dish,
+        });
+      }
+      const event = await Event.findOne({
+        where: {
+          id: eventRecipe.EventId,
+        },
+        include: [
+          {
+            model: Recipe,
+            where: {
+              id: eventRecipe.RecipeId,
+            },
+            include: [
+              {
+                model: User,
+                as: 'User_Recipes',
+              },
+            ],
+          },
+        ],
+      });
+      res.status(200).send(event.Recipes[0]);
+    } catch (e) {
+      console.error(chalk.red(e));
+      res.status(500).send({ message: 'Server Error' });
+    }
+  }
+);
+
+eventsRouter.delete(
+  '/events/recipes/:eventRecipeId/:eventRecipeUserId',
+  [
+    check('eventRecipeId', 'Event Recipe ID is required').not().isEmpty(),
+    check('eventRecipeUserId', 'Event Recipe User ID is required')
+      .not()
+      .isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+    const { eventRecipeId, eventRecipeUserId } = req.params;
+    try {
+      const eventRecipe = await Event_Recipe.findByPk(eventRecipeId);
+      const eventRecipeUser = await Event_Recipe_User.findByPk(
+        eventRecipeUserId
+      );
+      await eventRecipe.destroy();
+      await eventRecipeUser.destroy();
+
+      res.status(200).send(eventRecipe.RecipeId);
+    } catch (e) {
+      console.error(chalk.red(e));
+      res.status(500).send({ message: 'Server Error' });
+    }
+  }
+);
+
 module.exports = eventsRouter;

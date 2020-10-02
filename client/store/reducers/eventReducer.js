@@ -41,6 +41,20 @@ export const eventsReducer = (state = initialEventsState, action) => {
         ...state,
         eventRecipes: action.eventRecipes,
       };
+    case TYPES.UPDATE_EVENT_RECIPES:
+      return {
+        ...state,
+        eventRecipes: state.eventRecipes.map((recipe) =>
+          recipe.id === action.eventRecipe.id ? action.eventRecipe : recipe
+        ),
+      };
+    case TYPES.DELETE_EVENT_RECIPE:
+      return {
+        ...state,
+        eventRecipes: state.eventRecipes.filter(
+          (recipe) => recipe.id !== action.eventRecipeId
+        ),
+      };
     default:
       return state;
   }

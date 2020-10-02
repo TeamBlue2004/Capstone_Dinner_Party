@@ -1,4 +1,50 @@
 .googleMap {
   width: 100%;
-  
+}
+
+.event-menu {
+  height: 550px;
+}
+
+.event-dish {
+  display: flex;
+  list-style-type: none;
+  overflow-x: scroll;
+  padding: 0;
+  justify-content: flex-start;
+}
+
+.event-dish li {
+  height: 124px;
+  list-style-type: none;
+  margin-right: 10px;
+  width: 150px;
+}
+
+.event-dish li .event-recipe-image {
+  border: 1px solid lightgray;
+  object-fit: contain;
+  padding: 0;
+  width: 150px;
+}
+
+.event-recipe-item {
+  position: relative;
+}
+
+.event-recipe-item .event-recipe-user {
+  border-radius: 50%;
+  height: 30px;
+  padding: 0;
+  position: relative;
+  right: -59px;
+  top: -100px;
+  width: 30px;
+  z-index: 9999;
+}
+
+select.event-recipe-update   {
+  position: relative !important;
+  top: -29px !important;
+  width: 100% !important;
 }
