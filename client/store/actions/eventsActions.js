@@ -90,6 +90,20 @@ const setEventRecipes = (eventRecipes) => {
   };
 };
 
+const setEventRecipeUpdate = (eventRecipe) => {
+  return {
+    type: TYPES.UPDATE_EVENT_RECIPES,
+    eventRecipe,
+  };
+};
+
+const setEventRecipeDelete = (eventRecipeId) => {
+  return {
+    type: TYPES.DELETE_EVENT_RECIPE,
+    eventRecipeId,
+  };
+};
+
 const fetchEventRecipes = (eventId) => async (dispatch) => {
   const { data } = await axios.get(`/api/events/recipes/${eventId}`);
   return dispatch(setEventRecipes(data));
@@ -106,6 +120,23 @@ const addRecipeToEvent = (eventId, recipeId, userId, dish) => {
   };
 };
 
+const updateEventRecipe = (eventRecipeId, dish) => async (dispatch) => {
+  const { data } = await axios.put(`/api/events/recipes`, {
+    eventRecipeId,
+    dish,
+  });
+  return dispatch(setEventRecipeUpdate(data));
+};
+
+const deleteEventRecipe = (eventRecipeId, eventRecipeUserId) => async (
+  dispatch
+) => {
+  const { data } = await axios.delete(
+    `/api/events/recipes/${eventRecipeId}/${eventRecipeUserId}`
+  );
+  return dispatch(setEventRecipeDelete(data));
+};
+
 export const eventsActions = {
   fetchEvents,
   fetchPendingEvents,
@@ -117,4 +148,6 @@ export const eventsActions = {
   declineEvent,
   addRecipeToEvent,
   fetchEventRecipes,
+  updateEventRecipe,
+  deleteEventRecipe,
 };

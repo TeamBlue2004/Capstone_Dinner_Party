@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import EventRecipe from './EventRecipe';
 
-import './eventCard.scss';
+import './eventInfo.scss';
 import { eventsActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
@@ -23,7 +24,14 @@ class EventInfo extends Component {
   }
 
   render() {
-    const { userId, events, eventGuests, eventNav, google } = this.props;
+    const {
+      userId,
+      events,
+      eventGuests,
+      eventNav,
+      eventRecipes,
+      google,
+    } = this.props;
     const event = events.find((ev) => ev.id === eventNav.eventId);
     let guests;
     if (event && eventGuests) {
@@ -37,7 +45,6 @@ class EventInfo extends Component {
       width: '100%',
       height: '50%',
     };
-
     return (
       <>
         <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
@@ -50,6 +57,33 @@ class EventInfo extends Component {
               <p key={guest.id}>{`${guest.firstName} ${guest.lastName}`}</p>
             );
           })}
+        </div>
+        <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
+          <h5 className="mb-1">Menu</h5>
+          <h6>Appetizer</h6>
+          <ul className="event-dish">
+            {eventRecipes
+              .filter((recipe) => recipe.Event_Recipe.dish === 'appetizer')
+              .map((appetizer) => {
+                return <EventRecipe key={appetizer.id} recipe={appetizer} />;
+              })}
+          </ul>
+          <h6>Entree</h6>
+          <ul className="event-dish">
+            {eventRecipes
+              .filter((recipe) => recipe.Event_Recipe.dish === 'entree')
+              .map((entree) => {
+                return <EventRecipe key={entree.id} recipe={entree} />;
+              })}
+          </ul>
+          <h6>Dessert</h6>
+          <ul className="event-dish">
+            {eventRecipes
+              .filter((recipe) => recipe.Event_Recipe.dish === 'dessert')
+              .map((dessert) => {
+                return <EventRecipe key={dessert.id} recipe={dessert} />;
+              })}
+          </ul>
         </div>
         <div className="p-2 shadow-lg bg-white rounded text-center detailes">
           <h5 className="mb-1">Dinner Party Details</h5>
@@ -121,6 +155,7 @@ EventInfo.propTypes = {
   userId: PropTypes.string.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventGuests: PropTypes.arrayOf(PropTypes.object).isRequired,
+  eventRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventNav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { ENUM } = Sequelize;
+const { UUID, UUIDV4, ENUM } = Sequelize;
 const { db } = require('../db');
 
 const values = ['appetizer', 'entree', 'dessert'];
@@ -8,6 +8,11 @@ const values = ['appetizer', 'entree', 'dessert'];
 const Event_Recipe = db.define(
   'Event_Recipe',
   {
+    id: {
+      type: UUID,
+      defaultValue: UUIDV4,
+      primaryKey: true,
+    },
     dish: {
       type: ENUM,
       values,
