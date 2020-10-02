@@ -27,14 +27,24 @@ class EventCard extends Component {
     if (this.interval) clearInterval(this.interval);
   }
 
-  handleEventDisplay = () => {
-    const { setEventNav, eventNav, id } = this.props;
-    if (id === eventNav.eventId) {
-      const nav = { open: !eventNav.open, id };
-      setEventNav(nav);
+  handleNavDisplay = () => {
+    const { setNav, nav, id } = this.props;
+    if (id === nav.eventId) {
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     } else {
-      const nav = { open: true, id };
-      setEventNav(nav);
+      const navObj = {
+        open: true,
+        eventId: id,
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     }
   };
 
@@ -65,7 +75,7 @@ class EventCard extends Component {
         <div
           className="item list-group-item list-group-item-action d-flex flex-row justify-content-between"
           onClick={() => {
-            this.handleEventDisplay();
+            this.handleNavDisplay();
           }}
           onKeyPress={null}
           tabIndex={0}
@@ -95,7 +105,7 @@ class EventCard extends Component {
 const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
-    eventNav: state.events.nav,
+    nav: state.user.nav,
   };
 };
 
@@ -104,8 +114,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteEvent: (id, userId) => {
       dispatch(eventsActions.deleteEvent(id, userId));
     },
-    setEventNav: (nav) => {
-      dispatch(eventsActions.setEventNav(nav));
+    setNav: (nav) => {
+      dispatch(eventsActions.setNav(nav));
     },
   };
 };
@@ -118,11 +128,13 @@ EventCard.propTypes = {
   datetime: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  eventNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
+    friendId: PropTypes.string.isRequired,
   }).isRequired,
-  setEventNav: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
 };
 

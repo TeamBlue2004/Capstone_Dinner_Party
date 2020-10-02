@@ -15,8 +15,10 @@ const initialLoginState = {
   declineRequestMsg: '',
   favoriteFoods: '',
   dislikedFoods: '',
-  friendNav: {
+  nav: {
     open: false,
+    eventId: '',
+    recipeId: '',
     friendId: '',
   },
 };
@@ -99,12 +101,14 @@ export const userReducer = (state = initialLoginState, action) => {
         ...state,
         friendData: action.friend,
       };
-    case TYPES.SET_FRIEND_NAV:
+    case TYPES.SET_NAV:
       return {
         ...state,
-        friendNav: {
-          open: action.friendNav.open,
-          friendId: action.friendNav.id,
+        nav: {
+          open: action.nav.open,
+          eventId: action.nav.eventId,
+          recipeId: action.nav.recipeId,
+          friendId: action.nav.friendId,
         },
       };
     default:

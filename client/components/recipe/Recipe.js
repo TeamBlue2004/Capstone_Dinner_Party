@@ -26,8 +26,8 @@ class Recipe extends Component {
   };
 
   render() {
-    const { recipeNav, recipes } = this.props;
-    const recipe = recipes.find((rcp) => rcp.id === recipeNav.recipeId);
+    const { nav, recipes } = this.props;
+    const recipe = recipes.find((rcp) => rcp.id === nav.recipeId);
     return (
       <div className="recipe-card">
         <h4>{recipe.name}</h4>
@@ -66,10 +66,10 @@ class Recipe extends Component {
 const mapStateToProps = (state) => {
   return {
     recipe: state.recipes.recipe,
-    recipeId: state.recipes.nav.recipeId,
+    recipeId: state.user.nav.recipeId,
     userId: state.user.id,
     favoriteRecipes: state.recipes.favRecipes,
-    recipeNav: state.recipes.nav,
+    nav: state.user.nav,
     recipes: state.recipes.recipes,
   };
 };
@@ -85,20 +85,14 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-Recipe.defaultProps = {
-  recipeNav: {
-    open: false,
-    id: '',
-  },
-};
-
 Recipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  recipeNav: PropTypes.shape({
-    open: PropTypes.bool,
-    recipeId: PropTypes.string,
-  }),
+  nav: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
+  }).isRequired,
   loadRecipe: PropTypes.func.isRequired,
   favoriteRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateUserFavoriteRecipe: PropTypes.func.isRequired,

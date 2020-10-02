@@ -33,14 +33,24 @@ class Events extends Component {
     }
   }
 
-  handleAdd = () => {
-    const { setEventNav, eventNav } = this.props;
-    if (eventNav.eventId !== '') {
-      const nav = { open: true, id: '' };
-      setEventNav(nav);
+  handleAddNav = () => {
+    const { setEventNav, nav } = this.props;
+    if (nav.eventId !== '') {
+      const navObj = {
+        open: true,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setEventNav(navObj);
     } else {
-      const nav = { open: !eventNav.open, id: '' };
-      setEventNav(nav);
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setEventNav(navObj);
     }
   };
 
@@ -49,7 +59,7 @@ class Events extends Component {
       userId,
       events,
       pendingEvents,
-      eventNav,
+      nav,
       acceptEvent,
       declineEvent,
     } = this.props;
@@ -59,7 +69,7 @@ class Events extends Component {
           <div className="routes">
             <div className="d-flex flex-row justify-content-between">
               <h2>Events</h2>
-              <button type="button" onClick={this.handleAdd}>
+              <button type="button" onClick={this.handleAddNav}>
                 <i className="fas fa-plus"></i>
               </button>
             </div>
@@ -119,12 +129,12 @@ class Events extends Component {
             </div>
           </div>
         </div>
-        {eventNav.open && eventNav.eventId === '' && (
+        {nav.open && nav.eventId === '' && (
           <div className="infoContainer">
             <AddEventForm />
           </div>
         )}
-        {eventNav.open && eventNav.eventId !== '' && (
+        {nav.open && nav.eventId !== '' && (
           <div className="infoContainer">
             <EventInfo />
           </div>
@@ -138,7 +148,7 @@ const mapStateToProps = (state) => {
     userId: state.user.id,
     events: state.events.events,
     pendingEvents: state.events.pendingEvents,
-    eventNav: state.events.nav,
+    nav: state.user.nav,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -150,7 +160,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(eventsActions.fetchPendingEvents(userId));
     },
     setEventNav: (nav) => {
-      dispatch(eventsActions.setEventNav(nav));
+      dispatch(eventsActions.setNav(nav));
     },
     acceptEvent: (userId, eventId) => {
       dispatch(eventsActions.acceptEvent(userId, eventId));
@@ -164,7 +174,7 @@ Events.propTypes = {
   userId: PropTypes.string.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   pendingEvents: PropTypes.arrayOf(PropTypes.object).isRequired,
-  eventNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
   }).isRequired,

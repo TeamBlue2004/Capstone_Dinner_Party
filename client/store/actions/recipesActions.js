@@ -27,18 +27,9 @@ const fetchRecipes = (query) => async (dispatch) => {
   return dispatch(setRecipes(data));
 };
 
-// SET RECIPE NAV
-const setRecipeNav = (nav) => {
-  return {
-    type: TYPES.SET_RECIPE_NAV,
-    nav,
-  };
-};
-
 export const recipesActions = {
   setRecipe,
   fetchRecipe,
   setRecipes,
   fetchRecipes,
-  setRecipeNav,
 };

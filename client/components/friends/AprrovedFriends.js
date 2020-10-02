@@ -6,14 +6,24 @@ import { userActions } from '../../store/actions/index';
 import './friends.scss';
 
 class ApprovedFriends extends Component {
-  handleFriendDisplay = (friendId) => {
-    const { setFriendNav, friendNav } = this.props;
-    if (friendId === friendNav.friendId) {
-      const nav = { open: !friendNav.open, id: '' };
-      setFriendNav(nav);
+  handleNavDisplay = (friendId) => {
+    const { setNav, nav } = this.props;
+    if (friendId === nav.friendId) {
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     } else {
-      const nav = { open: true, id: friendId };
-      setFriendNav(nav);
+      const navObj = {
+        open: true,
+        eventId: '',
+        recipeId: '',
+        friendId,
+      };
+      setNav(navObj);
     }
   };
 
@@ -29,7 +39,7 @@ class ApprovedFriends extends Component {
             >
               <div
                 onClick={() => {
-                  this.handleFriendDisplay(friend.id);
+                  this.handleNavDisplay(friend.id);
                 }}
                 onKeyPress={null}
                 tabIndex={0}
@@ -48,25 +58,27 @@ class ApprovedFriends extends Component {
 const mapStateToProps = (state) => {
   return {
     approvedFriendsList: state.user.approvedFriendsList,
-    friendNav: state.user.friendNav,
+    nav: state.user.nav,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFriendNav: (nav) => {
-      dispatch(userActions.setFriendNav(nav));
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
     },
   };
 };
 
 ApprovedFriends.propTypes = {
   approvedFriendsList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  friendNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
-  setFriendNav: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApprovedFriends);

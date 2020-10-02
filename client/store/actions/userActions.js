@@ -94,10 +94,10 @@ const setFavoriteRecipes = (favRecipes) => {
   };
 };
 
-const setFriendNav = (friendNav) => {
+const setNav = (nav) => {
   return {
-    type: TYPES.SET_FRIEND_NAV,
-    friendNav,
+    type: TYPES.SET_NAV,
+    nav,
   };
 };
 
@@ -283,5 +283,5 @@ export const userActions = {
   fetchFriends,
   fetchFriendDetails,
   getFriendData,
-  setFriendNav,
+  setNav,
 };

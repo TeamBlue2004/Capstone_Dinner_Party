@@ -37,9 +37,9 @@ const fetchEventGuests = (eventId) => async (dispatch) => {
   return dispatch(getEventsGuests(data.Users));
 };
 
-const setEventNav = (nav) => {
+const setNav = (nav) => {
   return {
-    type: TYPES.SET_EVENT_NAV,
+    type: TYPES.SET_NAV,
     nav,
   };
 };
@@ -52,7 +52,9 @@ const postEvent = (event) => async (dispatch) => {
 
 const deleteEvent = (id, userId) => {
   return async (dispatch) => {
-    await dispatch(setEventNav({ open: false, eventId: '' }));
+    await dispatch(
+      setNav({ open: false, eventId: '', recipeId: '', friendId: '' })
+    );
     await axios.delete(`/api/events/${id}`);
     const { data } = await axios.get(`/api/events/userevents/${userId}`);
     dispatch(getEvents(data));
@@ -141,7 +143,6 @@ export const eventsActions = {
   fetchEvents,
   fetchPendingEvents,
   fetchEventGuests,
-  setEventNav,
   postEvent,
   deleteEvent,
   acceptEvent,
@@ -150,4 +151,5 @@ export const eventsActions = {
   fetchEventRecipes,
   updateEventRecipe,
   deleteEventRecipe,
+  setNav,
 };

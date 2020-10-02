@@ -10,16 +10,16 @@ import { eventsActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
   componentDidMount() {
-    const { eventNav, fetchEventGuests, loadEventRecipes } = this.props;
-    fetchEventGuests(eventNav.eventId);
-    loadEventRecipes(eventNav.eventId);
+    const { nav, fetchEventGuests, loadEventRecipes } = this.props;
+    fetchEventGuests(nav.eventId);
+    loadEventRecipes(nav.eventId);
   }
 
   componentDidUpdate(prevProps) {
-    const { eventNav, fetchEventGuests, loadEventRecipes } = this.props;
-    if (prevProps.eventNav.eventId !== eventNav.eventId) {
-      fetchEventGuests(eventNav.eventId);
-      loadEventRecipes(eventNav.eventId);
+    const { nav, fetchEventGuests, loadEventRecipes } = this.props;
+    if (prevProps.nav.eventId !== nav.eventId) {
+      fetchEventGuests(nav.eventId);
+      loadEventRecipes(nav.eventId);
     }
   }
 
@@ -28,11 +28,11 @@ class EventInfo extends Component {
       userId,
       events,
       eventGuests,
-      eventNav,
+      nav,
       eventRecipes,
       google,
     } = this.props;
-    const event = events.find((ev) => ev.id === eventNav.eventId);
+    const event = events.find((ev) => ev.id === nav.eventId);
     let guests;
     if (event && eventGuests) {
       guests = eventGuests.filter(
@@ -136,7 +136,7 @@ const mapStateToProps = (state) => {
     events: state.events.events,
     eventGuests: state.events.eventGuests,
     eventRecipes: state.events.eventRecipes,
-    eventNav: state.events.nav,
+    nav: state.user.nav,
   };
 };
 
@@ -156,9 +156,11 @@ EventInfo.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventGuests: PropTypes.arrayOf(PropTypes.object).isRequired,
   eventRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  eventNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
     eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
+    friendId: PropTypes.string.isRequired,
   }).isRequired,
   loadEventRecipes: PropTypes.func.isRequired,
   google: PropTypes.oneOfType([PropTypes.object]).isRequired,
