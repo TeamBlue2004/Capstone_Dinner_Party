@@ -204,11 +204,33 @@ eventsRouter.put(
 eventsRouter.delete('/events/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    await Event.destroy({
+    const eventToDelete = await Event.findOne({
       where: {
         id,
       },
+      include: [
+        {
+          model: Recipe,
+          include: [
+            {
+              model: User,
+              as: 'User_Recipes',
+            },
+          ],
+        },
+      ],
     });
+    await eventToDelete.Recipes.forEach(async (recipe) => {
+      const { RecipeId } = recipe.User_Recipes[0].Event_Recipe_User;
+      const { UserId } = recipe.User_Recipes[0].Event_Recipe_User;
+      await Event_Recipe_User.destroy({
+        where: {
+          RecipeId,
+          UserId,
+        },
+      });
+    });
+    await eventToDelete.destroy();
 
     res.sendStatus(200);
   } catch (e) {
