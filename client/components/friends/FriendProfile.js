@@ -5,11 +5,11 @@ import { userActions } from '../../store/actions/index';
 
 class FriendProfile extends Component {
   render() {
-    const { users, friendNav } = this.props;
-    const friend = users.find((fri) => fri.id === friendNav.friendId);
+    const { users, nav } = this.props;
+    const friend = users.find((fri) => fri.id === nav.friendId);
     return (
-      <div className="recipe-card">
-        <h1>{friend.firstName}</h1>
+      <div className="friendInfo">
+        <h1>{`${friend.firstName} ${friend.lastName}`}</h1>
       </div>
     );
   }
@@ -17,7 +17,7 @@ class FriendProfile extends Component {
 const mapStateToProps = (state) => {
   return {
     users: state.user.usersList,
-    friendNav: state.user.friendNav,
+    nav: state.user.nav,
   };
 };
 
@@ -31,8 +31,10 @@ const mapDispatchToProps = (dispatch) => {
 
 FriendProfile.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  friendNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
 };

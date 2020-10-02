@@ -43,17 +43,6 @@ class Friends extends Component {
     return [];
   };
 
-  handleFriendDisplay = (friendId) => {
-    const { setFriendNav, friendNav } = this.props;
-    if (friendId === friendNav.friendId) {
-      const nav = { open: !friendNav.open, id: '' };
-      setFriendNav(nav);
-    } else {
-      const nav = { open: true, id: friendId };
-      setFriendNav(nav);
-    }
-  };
-
   render() {
     const {
       pendingFriendsList,
@@ -61,7 +50,7 @@ class Friends extends Component {
       requestSentMsg,
       approveRequestMsg,
       declineRequestMsg,
-      friendNav,
+      nav,
     } = this.props;
     const { searchTerm } = this.state;
     return (
@@ -104,7 +93,7 @@ class Friends extends Component {
             )}
           </div>
         </div>
-        {friendNav.open && friendNav.friendId !== '' && (
+        {nav.open && nav.friendId !== '' && (
           <div className="infoContainer">
             <FriendProfile />
           </div>
@@ -123,7 +112,7 @@ const mapStateToProps = (state) => {
     requestSentMsg: state.user.requestSentMsg,
     approveRequestMsg: state.user.approveRequestMsg,
     declineRequestMsg: state.user.declineRequestMsg,
-    friendNav: state.user.friendNav,
+    nav: state.user.nav,
   };
 };
 
@@ -152,14 +141,15 @@ Friends.propTypes = {
   requestSentMsg: PropTypes.string.isRequired,
   approveRequestMsg: PropTypes.string.isRequired,
   declineRequestMsg: PropTypes.string.isRequired,
-  friendNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
   loadUsers: PropTypes.func.isRequired,
   loadPendingFriends: PropTypes.func.isRequired,
   loadApprovedFriends: PropTypes.func.isRequired,
-  setFriendNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

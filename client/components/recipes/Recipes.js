@@ -10,7 +10,7 @@ import './recipes.scss';
 
 class Recipes extends Component {
   render() {
-    const { recipeNav } = this.props;
+    const { nav } = this.props;
     return (
       <>
         <div className="routesContainer">
@@ -23,7 +23,7 @@ class Recipes extends Component {
             </div>
           </div>
         </div>
-        {recipeNav.open && recipeNav.recipeId !== '' && (
+        {nav.open && nav.recipeId !== '' && (
           <div className="infoContainer">
             <Recipe />
           </div>
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
     recipes: state.recipes.recipes,
     userId: state.user.id,
     favoriteRecipes: state,
-    recipeNav: state.recipes.nav,
+    nav: state.user.nav,
   };
 };
 
@@ -59,19 +59,16 @@ const mapDispatchToProps = (dispatch) => {
 Recipes.defaultProps = {
   recipes: [],
   recipe: {},
-  recipeNav: {
-    open: false,
-    id: '',
-  },
 };
 
 Recipes.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
   recipe: PropTypes.objectOf(PropTypes.object),
-  recipeNav: PropTypes.shape({
-    open: PropTypes.bool,
-    recipeId: PropTypes.string,
-  }),
+  nav: PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
+  }).isRequired,
   userId: PropTypes.string.isRequired,
   history: PropTypes.shape({
     location: PropTypes.shape({
