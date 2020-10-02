@@ -58,7 +58,7 @@ class EventInfo extends Component {
             );
           })}
         </div>
-        <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
+        <div className="p-2 mb-5 shadow-lg bg-white rounded text-center event-menu">
           <h5 className="mb-1">Menu</h5>
           <h6>Appetizer</h6>
           <ul className="event-dish">
