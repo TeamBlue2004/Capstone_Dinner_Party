@@ -73,7 +73,7 @@ class EventRecipe extends Component {
 const mapStateToProps = (state) => {
   return {
     userId: state.user.id,
-    eventId: state.events.nav.eventId,
+    eventId: state.user.nav.eventId,
   };
 };
 
