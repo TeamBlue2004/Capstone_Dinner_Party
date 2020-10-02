@@ -5,10 +5,6 @@ const initialEventsState = {
   pendingEvents: [],
   eventGuests: [],
   eventRecipes: [],
-  nav: {
-    open: false,
-    eventId: '',
-  },
 };
 
 export const eventsReducer = (state = initialEventsState, action) => {
@@ -27,14 +23,6 @@ export const eventsReducer = (state = initialEventsState, action) => {
       return {
         ...state,
         eventGuests: action.eventGuests,
-      };
-    case TYPES.SET_EVENT_NAV:
-      return {
-        ...state,
-        nav: {
-          open: action.nav.open,
-          eventId: action.nav.id,
-        },
       };
     case TYPES.FETCH_EVENT_RECIPES:
       return {

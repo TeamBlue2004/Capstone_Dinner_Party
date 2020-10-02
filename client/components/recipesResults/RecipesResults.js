@@ -33,14 +33,24 @@ class RecipesResults extends Component {
     return some;
   };
 
-  handleRecipeDisplay = (recipe) => {
-    const { setRecipeNav, recipeNav } = this.props;
-    if (recipe.id === recipeNav.recipeId) {
-      const nav = { open: !recipeNav.open, id: '' };
-      setRecipeNav(nav);
+  handleNavDisplay = (recipe) => {
+    const { setNav, nav } = this.props;
+    if (recipe.id === nav.recipeId) {
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     } else {
-      const nav = { open: true, id: recipe.id };
-      setRecipeNav(nav);
+      const navObj = {
+        open: true,
+        eventId: '',
+        recipeId: recipe.id,
+        friendId: '',
+      };
+      setNav(navObj);
     }
   };
 
@@ -64,7 +74,7 @@ class RecipesResults extends Component {
                 className="recipe"
                 role="button"
                 tabIndex={idx}
-                onClick={() => this.handleRecipeDisplay(recipe)}
+                onClick={() => this.handleNavDisplay(recipe)}
                 onKeyPress={this.togglePane}
               >
                 <div id={recipe.id} className="recipe-body">
@@ -96,7 +106,7 @@ const mapStateToProps = (state) => {
     recipes: state.recipes.recipes,
     userId: state.user.id,
     favoriteRecipes: state.recipes.favRecipes,
-    recipeNav: state.recipes.nav,
+    nav: state.user.nav,
   };
 };
 
@@ -111,17 +121,18 @@ const mapDispatchToProps = (dispatch) => {
     loadFavoriteRecipes: (userId) => {
       dispatch(userActions.fetchUserFavoriteRecipes(userId));
     },
-    setRecipeNav: (recipe) => {
-      dispatch(recipesActions.setRecipeNav(recipe));
+    setNav: (recipe) => {
+      dispatch(userActions.setNav(recipe));
     },
   };
 };
 
 RecipesResults.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setRecipeNav: PropTypes.func.isRequired,
-  recipeNav: PropTypes.shape({
+  setNav: PropTypes.func.isRequired,
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
     recipeId: PropTypes.string.isRequired,
   }).isRequired,
   favoriteRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -16,14 +16,24 @@ class PendingFriends extends Component {
     declineFriend(friendId, userId);
   };
 
-  handleFriendDisplay = (friendId) => {
-    const { setFriendNav, friendNav } = this.props;
-    if (friendId === friendNav.friendId) {
-      const nav = { open: !friendNav.open, id: '' };
-      setFriendNav(nav);
+  handleNavDisplay = (friendId) => {
+    const { setNav, nav } = this.props;
+    if (friendId === nav.friendId) {
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     } else {
-      const nav = { open: true, id: friendId };
-      setFriendNav(nav);
+      const navObj = {
+        open: true,
+        eventId: '',
+        recipeId: '',
+        friendId,
+      };
+      setNav(navObj);
     }
   };
 
@@ -40,7 +50,7 @@ class PendingFriends extends Component {
               <div className="d-flex flex-row justify-content-between">
                 <div
                   onClick={() => {
-                    this.handleFriendDisplay(pendingfriend.id);
+                    this.handleNavDisplay(pendingfriend.id);
                   }}
                   onKeyPress={null}
                   tabIndex={0}
@@ -77,7 +87,7 @@ const mapStateToProps = (state) => {
   return {
     id: state.user.id,
     pendingFriendsList: state.user.pendingFriendsList,
-    friendNav: state.user.friendNav,
+    nav: state.user.nav,
   };
 };
 
@@ -89,8 +99,8 @@ const mapDispatchToProps = (dispatch) => {
     declineFriend: (friendId, userId) => {
       dispatch(userActions.declineFriend(friendId, userId));
     },
-    setFriendNav: (nav) => {
-      dispatch(userActions.setFriendNav(nav));
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
     },
   };
 };
@@ -98,13 +108,15 @@ const mapDispatchToProps = (dispatch) => {
 PendingFriends.propTypes = {
   id: PropTypes.string.isRequired,
   pendingFriendsList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  friendNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
   approveFriend: PropTypes.func.isRequired,
   declineFriend: PropTypes.func.isRequired,
-  setFriendNav: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PendingFriends);

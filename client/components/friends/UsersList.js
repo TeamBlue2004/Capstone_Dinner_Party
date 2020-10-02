@@ -11,14 +11,24 @@ class UsersList extends Component {
     addFriend(friendId, userId);
   };
 
-  handleFriendDisplay = (friendId) => {
-    const { setFriendNav, friendNav } = this.props;
-    if (friendId === friendNav.friendId) {
-      const nav = { open: !friendNav.open, id: '' };
-      setFriendNav(nav);
+  handleNavDisplay = (friendId) => {
+    const { setNav, nav } = this.props;
+    if (friendId === nav.friendId) {
+      const navObj = {
+        open: !nav.open,
+        eventId: '',
+        recipeId: '',
+        friendId: '',
+      };
+      setNav(navObj);
     } else {
-      const nav = { open: true, id: friendId };
-      setFriendNav(nav);
+      const navObj = {
+        open: true,
+        eventId: '',
+        recipeId: '',
+        friendId,
+      };
+      setNav(navObj);
     }
   };
 
@@ -34,7 +44,7 @@ class UsersList extends Component {
             >
               <div
                 onClick={() => {
-                  this.handleFriendDisplay(user.id);
+                  this.handleNavDisplay(user.id);
                 }}
                 onKeyPress={null}
                 tabIndex={0}
@@ -60,7 +70,7 @@ class UsersList extends Component {
 const mapStateToProps = (state) => {
   return {
     id: state.user.id,
-    friendNav: state.user.friendNav,
+    nav: state.user.nav,
   };
 };
 
@@ -69,8 +79,8 @@ const mapDispatchToProps = (dispatch) => {
     addFriend: (friendId, userId) => {
       dispatch(userActions.addAsFriend(friendId, userId));
     },
-    setFriendNav: (nav) => {
-      dispatch(userActions.setFriendNav(nav));
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
     },
   };
 };
@@ -78,12 +88,14 @@ const mapDispatchToProps = (dispatch) => {
 UsersList.propTypes = {
   id: PropTypes.string.isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  friendNav: PropTypes.shape({
+  nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
+    eventId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
     friendId: PropTypes.string.isRequired,
   }).isRequired,
   addFriend: PropTypes.func.isRequired,
-  setFriendNav: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersList);

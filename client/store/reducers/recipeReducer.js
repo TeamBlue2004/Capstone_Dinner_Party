@@ -3,10 +3,6 @@ import { TYPES } from '../types';
 const initialRecipesState = {
   recipes: [],
   favRecipes: [],
-  nav: {
-    open: false,
-    recipeId: '',
-  },
 };
 
 export const recipesReducer = (state = initialRecipesState, action) => {
@@ -25,14 +21,6 @@ export const recipesReducer = (state = initialRecipesState, action) => {
       return {
         ...state,
         favRecipes: action.favRecipes,
-      };
-    case TYPES.SET_RECIPE_NAV:
-      return {
-        ...state,
-        nav: {
-          open: action.nav.open,
-          recipeId: action.nav.id,
-        },
       };
     default:
       return state;

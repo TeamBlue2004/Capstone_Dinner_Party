@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const { UUID, UUIDV4, STRING, INTEGER } = Sequelize;
+const { UUID, UUIDV4, STRING, INTEGER, TEXT } = Sequelize;
 const { db } = require('../db');
 
 const User = db.define(
@@ -62,7 +62,7 @@ const User = db.define(
       },
     },
     profilePic: {
-      type: STRING,
+      type: TEXT,
       defaultValue:
         'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
     },
