@@ -47,9 +47,14 @@ a:hover {
 @media only screen and (max-width: 550px) {
   .sidebarContainer {
     border-radius: 0;
-    height: 0;
+    box-shadow: none;
+    height: 244px;
     margin-left: 0;
+    opacity: .96;
+    position: absolute;
+    top: -100%;
     width: 100%;
+    z-index: 9999;
   }
   
   #sidebar-checkbox-label {
@@ -63,7 +68,7 @@ a:hover {
   }
   
   #sidebar-checkbox~.sidebarContainer {
-    transition: height .4s ease-out;
+    transition: top .4s ease-out;
   }
   
   #sidebar-checkbox, #sidebar-checkbox-label {
@@ -73,14 +78,14 @@ a:hover {
     overflow: hidden;
     position: absolute;
     right: 25px;
-    top: 92px;
-    z-index: 9999;
+    top: 0;
+    z-index: 9999999;
   }
   
   #sidebar-checkbox:checked~.sidebarContainer {
     border: 1px solid gray;
-    height: 244px;
-    transition: height .4s ease-in;
+    top: 0;
+    transition: top .4s ease-in;
   }
 
   #sidebar-checkbox~#sidebar-checkbox-label::after {

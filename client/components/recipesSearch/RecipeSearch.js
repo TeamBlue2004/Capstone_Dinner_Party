@@ -163,6 +163,7 @@ class RecipesSearch extends Component {
     ];
     return (
       <div className="md-form">
+        <h2>Search Recipes</h2>
         <form onSubmit={this.addIngredient}>
           <div className="camera-input">
             <input
