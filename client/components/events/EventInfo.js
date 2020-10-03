@@ -72,7 +72,7 @@ class EventInfo extends Component {
             resource: event,
           });
           request.execute((ev) => {
-            window.open(ev.htmlLink);
+            window.open(ev.htmlLink, '_blank', 'width=1200,height=1200');
           });
         });
     });
@@ -151,6 +151,7 @@ class EventInfo extends Component {
                   type="button"
                   className="addCalendar"
                   onClick={this.handleCalendar}
+                  title="Add To Calendar"
                 >
                   <span role="img" aria-label="calendar">
                     📅
