@@ -68,7 +68,7 @@ class Events extends Component {
         <div className="routesContainer">
           <div className="routes">
             <div className="d-flex flex-row justify-content-between">
-              <h2>Events</h2>
+              <h2>My Events</h2>
               <button type="button" onClick={this.handleAddNav}>
                 <i className="fas fa-plus"></i>
               </button>
@@ -108,7 +108,6 @@ class Events extends Component {
             <div className="list-group">
               {events.length > 0 ? (
                 <>
-                  <h3>My Events:</h3>
                   {events.map((event) => {
                     return (
                       <EventCard

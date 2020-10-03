@@ -15,8 +15,9 @@
 
 .recipe-card .recipe-image img {
     border: 1px solid gray;
-    width: 100%;
     border-radius: 10px;
+    max-height: fit-content;
+    width: 100%;
 }
 
 .recipe-card .instructions {
