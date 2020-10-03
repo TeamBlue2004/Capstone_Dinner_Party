@@ -220,16 +220,16 @@ eventsRouter.delete('/events/:id', async (req, res) => {
         },
       ],
     });
-    await eventToDelete.Recipes.forEach(async (recipe) => {
-      const { RecipeId } = recipe.User_Recipes[0].Event_Recipe_User;
-      const { UserId } = recipe.User_Recipes[0].Event_Recipe_User;
-      await Event_Recipe_User.destroy({
-        where: {
-          RecipeId,
-          UserId,
-        },
-      });
-    });
+    // await eventToDelete.Recipes.forEach(async (recipe) => {
+    //   const { RecipeId } = recipe.User_Recipes[0].Event_Recipe_User;
+    //   const { UserId } = recipe.User_Recipes[0].Event_Recipe_User;
+    //   await Event_Recipe_User.destroy({
+    //     where: {
+    //       RecipeId,
+    //       UserId,
+    //     },
+    //   });
+    // });
     await eventToDelete.destroy();
 
     res.sendStatus(200);
