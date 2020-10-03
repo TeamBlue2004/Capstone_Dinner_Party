@@ -11,3 +11,14 @@
   opacity: 90%;
   background-color: #DBF5DA;
 }
+
+@media only screen and (max-width: 550px) {
+  .loginContainer {
+    padding: 2rem;
+    width: 100%;
+  }
+  .loginContainer h1 {
+    margin: 0;
+    text-align: center;
+  }
+}
