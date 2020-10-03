@@ -2,7 +2,6 @@
   width: 20%;
   border-radius: 10px;
   font-size: 18px;
-  padding: 2rem;
   height: 100%;
   margin-left: 20px;
   background-color: white;
@@ -13,6 +12,7 @@
 
 .sidebar {
   display: flex;
+  padding: 2rem;
   flex-direction: column;
   align-items: center;
 }
@@ -38,4 +38,52 @@ a {
 
 a:hover {
   color: hotpink;
+}
+
+#sidebar-checkbox, #sidebar-checkbox-label {
+  display: none;
+}
+
+@media only screen and (max-width: 550px) {
+  .sidebarContainer {
+    border-radius: 0;
+    height: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  #sidebar-checkbox-label {
+    display: block;
+  }
+  
+  #sidebar-checkbox-label {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  #sidebar-checkbox~.sidebarContainer {
+    transition: height .4s ease-out;
+  }
+  
+  #sidebar-checkbox, #sidebar-checkbox-label {
+    cursor: pointer;
+    font-size: 25px;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 25px;
+    top: 92px;
+    z-index: 9999;
+  }
+  
+  #sidebar-checkbox:checked~.sidebarContainer {
+    border: 1px solid gray;
+    height: 244px;
+    transition: height .4s ease-in;
+  }
+
+  #sidebar-checkbox~#sidebar-checkbox-label::after {
+      content: '☰';
+}
 }
