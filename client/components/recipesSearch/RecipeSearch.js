@@ -141,6 +141,7 @@ class RecipesSearch extends Component {
       pathname: '/recipes',
       search: searchURL,
     });
+    this.setState({ input: '' });
     loadRecipes(history.location.search);
   };
 
