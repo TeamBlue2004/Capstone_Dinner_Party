@@ -23,6 +23,61 @@ class EventInfo extends Component {
     }
   }
 
+  handleCalendar = () => {
+    const { events } = this.props;
+    const { gapi } = window;
+    const CLIENT_ID = process.env.GOOGLE_CALENDAR_CLIENT_ID;
+    const API_KEY = process.env.GOOGLE_CALENDAR_API_KEY;
+    const DISCOVERY_DOCS = [
+      'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+    ];
+    const SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+
+    gapi.load('client:auth2', () => {
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      });
+
+      gapi.client.load('calendar', 'v3');
+
+      gapi.auth2
+        .getAuthInstance()
+        .signIn()
+        .then(() => {
+          const event = {
+            summary: `${events[0].eventName} @ ${events[0].host}`,
+            location: events[0].location,
+            start: {
+              dateTime: moment(events[0].datetime).format(),
+              timeZone: 'America/New_York',
+            },
+            end: {
+              dateTime: moment(events[0].datetime).add(2, 'hours').format(),
+              timeZone: 'America/New_York',
+            },
+            reminders: {
+              useDefault: false,
+              overrides: [
+                { method: 'email', minutes: 24 * 60 },
+                { method: 'popup', minutes: 10 },
+              ],
+            },
+            sendNotifications: true,
+          };
+          const request = gapi.client.calendar.events.insert({
+            calendarId: 'primary',
+            resource: event,
+          });
+          request.execute((ev) => {
+            window.open(ev.htmlLink);
+          });
+        });
+    });
+  };
+
   render() {
     const {
       userId,
@@ -92,6 +147,15 @@ class EventInfo extends Component {
               <p className="mb-1 text-left">Date:</p>
               <p className="mb-1">
                 {`${moment(event.datetime).format('MMMM Do YYYY')}`}
+                <button
+                  type="button"
+                  className="addCalendar"
+                  onClick={this.handleCalendar}
+                >
+                  <span role="img" aria-label="calendar">
+                    📅
+                  </span>
+                </button>
               </p>
             </div>
             <div className="d-flex flex-column">
