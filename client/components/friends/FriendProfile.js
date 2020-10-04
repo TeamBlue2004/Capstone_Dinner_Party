@@ -5,11 +5,27 @@ import { userActions } from '../../store/actions/index';
 
 class FriendProfile extends Component {
   render() {
+    const cardStyle = {
+      backgroundColor: '#DBF5DA',
+      padding: '20px',
+      margin: '20px',
+      textAlign: 'center',
+      alignItems: 'center',
+    };
+    const pStyle = {
+      backgroundColor: 'white',
+    };
     const { users, nav } = this.props;
     const friend = users.find((fri) => fri.id === nav.friendId);
     return (
-      <div className="friendInfo">
+      <div className="friendInfo" style={cardStyle}>
         <h1>{`${friend.firstName} ${friend.lastName}`}</h1>
+        <img className="rounded-circle" alt="profile" src={friend.profilePic} />
+        <br></br>
+        <h4>Favorite Foods</h4>
+        <p style={pStyle}>{friend.favoriteFoods}</p>
+        <h4>Disliked Foods</h4>
+        <p style={pStyle}>{friend.dislikedFoods}</p>
       </div>
     );
   }

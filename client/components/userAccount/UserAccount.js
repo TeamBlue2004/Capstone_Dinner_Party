@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { userActions } from '../../store/actions/index';
 
 class UserAccount extends Component {
@@ -22,6 +23,7 @@ class UserAccount extends Component {
       isEditing: false,
       favoriteFoods: 'Write in your favorite foods!',
       dislikedFoods: 'Write in your least favorite foods!',
+      selectedFile: '',
     };
     this.toggleEdit = this.toggleEdit.bind(this);
   }
@@ -65,25 +67,6 @@ class UserAccount extends Component {
     }
   }
 
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   console.log('nextProps --- ', nextProps);
-  //   if (nextProps.userData) {
-  //     this.setState({
-  //       username: nextProps.userData.username,
-  //       firstName: nextProps.userData.firstName,
-  //       lastName: nextProps.userData.lastName,
-  //       // profilePic: '',
-  //       email: nextProps.userData.email,
-  //       addressUnit: nextProps.userData.addressUnit,
-  //       addressStreet: nextProps.userData.addressStreet,
-  //       addressCity: nextProps.userData.addressCity,
-  //       addressZip: nextProps.userData.addressZIP,
-  //       addressState: nextProps.userData.addressState,
-  //       id: nextProps.userData.id,
-  //     });
-  //   }
-  // }
-
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -95,13 +78,22 @@ class UserAccount extends Component {
     this.toggleEdit();
   };
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   this.toggleEdit();
-  //   const { editFood } = this.props;
-  //   editFood(this.state);
-  //   console.log('user updated', this.state);
-  // };
+  imageHandler = async (event) => {
+    const { id } = this.props;
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const imgBase = reader.result;
+      await axios
+        .put(`/api/users/updateuser/${id}`, { user: { profilePic: imgBase } })
+        .then((response) => {
+          this.setState({
+            profilePic: response.data.profilePic,
+          });
+        });
+    };
+  };
 
   toggleEdit() {
     const { isEditing } = this.state;
@@ -140,9 +132,25 @@ class UserAccount extends Component {
           <h2>
             {firstName} {lastName}
           </h2>
-          <img className="rounded-circle" alt="profile" src={profilePic} />
+          <div className="circleImage">
+            <img
+              className="rounded-circle img-fluid"
+              alt="profile"
+              src={profilePic}
+            />
+          </div>
+          <input
+            id="file-input"
+            className="file-input"
+            type="file"
+            name="camera"
+            accept="image/*"
+            onChange={this.imageHandler}
+            capture="environment"
+          />
           <br></br>
           <form>
+            <br></br>
             <h4>Favorite Foods</h4>
             {isEditing ? (
               <div>
@@ -163,7 +171,7 @@ class UserAccount extends Component {
               </div>
             ) : (
               <div>
-                <p style={pStyle}>{favoriteFoods}, my favorite!</p>
+                <p style={pStyle}>{favoriteFoods}</p>
                 <button
                   type="button"
                   className="btn btn-success btn-sm"
@@ -173,10 +181,7 @@ class UserAccount extends Component {
                 </button>
               </div>
             )}
-            <br></br>
           </form>
-          <br></br>
-          <br></br>
           <form>
             <h4>Disliked Foods</h4>
             {isEditing ? (
@@ -198,9 +203,7 @@ class UserAccount extends Component {
               </div>
             ) : (
               <div>
-                <p name="dislikedFoods" style={pStyle}>
-                  {dislikedFoods}
-                </p>
+                <p style={pStyle}>{dislikedFoods}</p>
                 <button
                   type="button"
                   className="btn btn-success btn-sm"
@@ -310,16 +313,6 @@ class UserAccount extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-group">
-                <label>Profile Picture URL</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="profilePic"
-                  value={profilePic}
-                  onChange={this.handleChange}
-                />
-              </div>
               <button
                 className="btn btn-success btn-lg"
                 type="button"
@@ -372,17 +365,6 @@ class UserAccount extends Component {
                   <label>Address Zip: </label>
                   <label> {addressZip}</label>
                 </div>
-
-                <div className="form-group">
-                  <label>Profile Picture URL: </label>
-                  <label> {profilePic}</label>
-                </div>
-
-                <div className="form-group">
-                  <label>Favorite Food: </label>
-                  <label> {favoriteFoods}</label>
-                </div>
-
                 <button
                   type="button"
                   className="btn btn-success btn-lg"
