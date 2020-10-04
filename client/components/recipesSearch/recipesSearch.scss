@@ -136,3 +136,12 @@ form {
     font-weight: bold;
     margin-bottom: 2px;
 }
+
+@media only screen and (max-width: 800px) {
+    .sensitivities-list {
+        display: block;
+    }
+    .ingredients .image-preview {
+        top: -20px
+    }
+}
