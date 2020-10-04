@@ -74,8 +74,6 @@ class Friends extends Component {
                 placeholder=" Search users"
                 value={searchTerm}
                 onChange={this.editSearchTerm}
-                onFocus={this.inputFocus}
-                onBlur={this.inputBlur}
               />
               <label className="user-search-label" htmlFor="file-input">
                 <i className="fa fa-search" aria-hidden="true"></i>
