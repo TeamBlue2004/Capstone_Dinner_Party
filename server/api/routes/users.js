@@ -2,6 +2,31 @@ const userRouter = require('express').Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination(__req, _file, cb) {
+    cb(null, './uploads/');
+  },
+  filename(__req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/png'
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
+
 const { User, Session, Recipe, User_Recipe } = require('../../db/Models/index');
 
 userRouter.use(cors());
@@ -127,25 +152,48 @@ userRouter.get('/users/:userId', async (req, res) => {
   }
 });
 
-userRouter.put('/users/updateuser/:userid', async (req, res) => {
-  await User.findByPk(req.params.userid).then((user) => {
-    user.update(
-      {
-        username: req.body.user.username,
-        firstName: req.body.user.firstName,
-        lastName: req.body.user.lastName,
-        email: req.body.user.email,
-        addressUnit: req.body.user.addressUnit,
-        addressStreet: req.body.user.addressStreet,
-        addressCity: req.body.user.addressCity,
-        addressState: req.body.user.addressState,
-        addressZIP: req.body.user.addressZip,
-      },
-      { returning: true, plain: true }
-    );
-  });
-  res.sendStatus(200);
+userRouter.post('users/uploads/', upload.single('profilePic'), (req, res) => {
+  return res.sendStatus(200);
 });
+
+userRouter.put(
+  '/users/updateuser/:userid',
+  // upload.single('profilePic'),
+  async (req, res) => {
+    const updParams = {};
+    const {
+      user: {
+        username,
+        firstName,
+        lastName,
+        email,
+        addressUnit,
+        addressStreet,
+        addressCity,
+        addressState,
+        addressZIP,
+        profilePic,
+        favoriteFoods,
+        dislikedFoods,
+      },
+    } = req.body;
+    if (username) updParams.username = username;
+    if (firstName) updParams.firstName = firstName;
+    if (lastName) updParams.lastName = lastName;
+    if (email) updParams.email = email;
+    if (addressUnit) updParams.addressUnit = addressUnit;
+    if (addressStreet) updParams.addressStreet = addressStreet;
+    if (addressCity) updParams.addressCity = addressCity;
+    if (addressState) updParams.addressState = addressState;
+    if (addressZIP) updParams.addressZIP = addressZIP;
+    if (profilePic) updParams.profilePic = profilePic;
+    if (favoriteFoods) updParams.favoriteFoods = favoriteFoods;
+    if (dislikedFoods) updParams.dislikedFoods = dislikedFoods;
+    const updatedUser = await User.findByPk(req.params.userid);
+    await updatedUser.update(updParams);
+    res.status(200).send(updatedUser);
+  }
+);
 
 userRouter.get('/users', async (req, res) => {
   const usersList = await User.findAll();
