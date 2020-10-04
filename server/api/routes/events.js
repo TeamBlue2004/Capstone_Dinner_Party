@@ -409,4 +409,48 @@ eventsRouter.delete(
   }
 );
 
+eventsRouter.get('/events/commonevents/:friendId/:userId', async (req, res) => {
+  const { friendId, userId } = req.params;
+  try {
+    const myEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: userId,
+          },
+          through: { where: { status: 'Approved' } },
+        },
+      ],
+      raw: true,
+    });
+
+    const friendsEventList = await Event.findAll({
+      include: [
+        {
+          model: User,
+          where: {
+            id: friendId,
+          },
+          through: { where: { status: 'Approved' } },
+        },
+      ],
+    });
+
+    const commonEvents = [];
+    myEventList.forEach((myEvent) => {
+      friendsEventList.forEach((friendEvent) => {
+        if (friendEvent.id === myEvent.id) {
+          commonEvents.push(friendEvent);
+        }
+      });
+    });
+    res.status(200).send(commonEvents);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({
+      message: 'Server error while fetching common events of user & friend',
+    });
+  }
+});
 module.exports = eventsRouter;

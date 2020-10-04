@@ -44,6 +44,10 @@ const setNav = (nav) => {
   };
 };
 
+const getCommonEvents = (events) => ({
+  type: TYPES.SET_COMMON_EVENTS,
+  events,
+});
 const postEvent = (event) => async (dispatch) => {
   await axios.post('/api/events', event);
   const { data } = await axios.get(`/api/events/userevents/${event.hostId}`);
@@ -139,6 +143,13 @@ const deleteEventRecipe = (eventRecipeId, eventRecipeUserId) => async (
   return dispatch(setEventRecipeDelete(data));
 };
 
+const fetchCommonEvents = (friendId, userId) => async (dispatch) => {
+  const { data } = await axios.get(
+    `/api/events/commonevents/${friendId}/${userId}`
+  );
+  return dispatch(getCommonEvents(data));
+};
+
 export const eventsActions = {
   fetchEvents,
   fetchPendingEvents,
@@ -152,4 +163,6 @@ export const eventsActions = {
   updateEventRecipe,
   deleteEventRecipe,
   setNav,
+  fetchCommonEvents,
+  getCommonEvents,
 };
