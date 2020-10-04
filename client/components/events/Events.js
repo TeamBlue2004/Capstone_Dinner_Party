@@ -67,7 +67,7 @@ class Events extends Component {
       <>
         <div className="routesContainer">
           <div className="routes">
-            <div className="d-flex flex-row user-events">
+            <div className="d-flex flex-row user-events align-items-center">
               <h2>My Events</h2>
               <button type="button" onClick={this.handleAddNav}>
                 <i className="fas fa-plus"></i>

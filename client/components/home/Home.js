@@ -105,7 +105,7 @@ class Home extends Component {
               )}
             </div>
             <div className="card" style={cardStyle}>
-              <h2>SAVED RECIPES</h2>
+              <h2>FAVORITE RECIPES</h2>
               {favoriteRecipesList ? (
                 <div className="favorite-recipes">
                   <div

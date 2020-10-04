@@ -126,6 +126,8 @@ const logout = () => {
     };
     dispatch(setLoggedOut());
     dispatch(setUserData(user));
+    const nav = { open: false, eventId: '', recipeId: '', friendId: '' };
+    dispatch(setNav(nav));
   };
 };
 

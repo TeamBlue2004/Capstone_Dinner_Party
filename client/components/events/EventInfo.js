@@ -6,7 +6,7 @@ import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import EventRecipe from './EventRecipe';
 
 import './eventInfo.scss';
-import { eventsActions } from '../../store/actions/index';
+import { eventsActions, userActions } from '../../store/actions/index';
 
 class EventInfo extends Component {
   componentDidMount() {
@@ -78,6 +78,12 @@ class EventInfo extends Component {
     });
   };
 
+  closePane = () => {
+    const { setNav } = this.props;
+    const navObj = { open: false, eventId: '', recipeId: '', friendId: '' };
+    setNav(navObj);
+  };
+
   render() {
     const {
       userId,
@@ -97,11 +103,12 @@ class EventInfo extends Component {
 
     const containerStyle = {
       position: 'relative',
-      width: '100%',
-      height: '50%',
     };
     return (
       <>
+        <button className="exitButton" type="button" onClick={this.closePane}>
+          <i className="fas fa-times"></i>
+        </button>
         <div className="p-2 mb-5 shadow-lg bg-white rounded text-center">
           <h5 className="mb-1">{`${event.eventName} @ ${event.host}`}</h5>
         </div>
@@ -183,6 +190,7 @@ class EventInfo extends Component {
               google={google}
               zoom={15}
               containerStyle={containerStyle}
+              zoomControl
               initialCenter={{
                 lat: event.location.split(';')[1],
                 lng: event.location.split(';')[2],
@@ -221,6 +229,9 @@ const mapDispatchToProps = (dispatch) => {
     loadEventRecipes: (eventId) => {
       dispatch(eventsActions.fetchEventRecipes(eventId));
     },
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
+    },
   };
 };
 
@@ -238,6 +249,7 @@ EventInfo.propTypes = {
   loadEventRecipes: PropTypes.func.isRequired,
   google: PropTypes.oneOfType([PropTypes.object]).isRequired,
   fetchEventGuests: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default GoogleApiWrapper({

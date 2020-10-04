@@ -139,15 +139,20 @@ class UserAccount extends Component {
               src={profilePic}
             />
           </div>
-          <input
-            id="file-input"
-            className="file-input"
-            type="file"
-            name="camera"
-            accept="image/*"
-            onChange={this.imageHandler}
-            capture="environment"
-          />
+          <label className="btn btn-success">
+            <i className="fa fa-image"></i> Upload profile pic
+            <input
+              id="file-input"
+              className="file-input"
+              style={{ display: 'none' }}
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={this.imageHandler}
+              capture="environment"
+            />
+          </label>
+
           <br></br>
           <form>
             <br></br>
@@ -314,7 +319,7 @@ class UserAccount extends Component {
                 />
               </div>
               <button
-                className="btn btn-success btn-lg"
+                className="btn btn-success btn-sm"
                 type="button"
                 onClick={this.updateUser}
               >
@@ -367,7 +372,7 @@ class UserAccount extends Component {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-success btn-lg"
+                  className="btn btn-success btn-sm"
                   onClick={this.toggleEdit}
                 >
                   EDIT

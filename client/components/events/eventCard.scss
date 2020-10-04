@@ -1,46 +1,57 @@
 #clockdiv{
-  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  color: #A83264;
   display: inline-block;
   font-weight: 100;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 #clockdiv > div{
-  padding: 5px;
+  width: 40px;
+  margin: 1px;
+  padding: 2px;
   border-radius: 3px;
-  background: #00BF96;
+  background: #dbf5da;
   display: inline-block;
 }
 
 #clockdiv div > span{
-  padding: 10px;
+  padding: 5px;
   border-radius: 3px;
-  background: #00816A;
+  background: white;
   display: inline-block;
 }
 
 .smalltext{
   padding-top: 5px;
-  font-size: 16px;
+  font-size: 12px;
 }
 
-.event-card {
+.event-card > * {
   position: relative;
+  color: #A83264;
 }
 
-.event-card button {
+.event-card button.eventDelete {
   border: 0;
-  color: white;
+  color: #A83264;
   font-size: 10px;
-  // font-weight: bold;
   padding: 4px;
-  position: absolute;
   bottom: 8%;
-  left: 20px;
+  right: 10px;
   z-index: 9999;
 }
 
 .event-card button:hover {
   transform: scale(1.02)
+}
+
+.item {
+  height: 140px;
+}
+
+.clickable-div {
+  outline: none;
 }
