@@ -5,6 +5,7 @@ const initialEventsState = {
   pendingEvents: [],
   eventGuests: [],
   eventRecipes: [],
+  commonEvents: [],
 };
 
 export const eventsReducer = (state = initialEventsState, action) => {
@@ -42,6 +43,11 @@ export const eventsReducer = (state = initialEventsState, action) => {
         eventRecipes: state.eventRecipes.filter(
           (recipe) => recipe.id !== action.eventRecipeId
         ),
+      };
+    case TYPES.SET_COMMON_EVENTS:
+      return {
+        ...state,
+        commonEvents: action.events,
       };
     default:
       return state;
