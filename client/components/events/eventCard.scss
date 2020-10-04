@@ -31,11 +31,16 @@
 
 .event-card button {
   border: 0;
-  color: black;
+  color: white;
   font-size: 10px;
+  // font-weight: bold;
   padding: 4px;
   position: absolute;
   bottom: 8%;
   left: 20px;
   z-index: 9999;
+}
+
+.event-card button:hover {
+  transform: scale(1.02)
 }

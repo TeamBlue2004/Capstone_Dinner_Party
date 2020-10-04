@@ -1,3 +1,47 @@
-.friendList {
-  width: 70%;
+.user-search-result {
+  align-items: baseline;
+  display: flex;
+}
+
+.user-search-result p {
+  margin-bottom: 0;
+  margin-left: 6px;
+}
+
+.user-image img {
+  border-radius: 50%;
+  width: 40px;
+}
+
+.user-search {
+  position: relative;
+  width: 300px;
+}
+
+.user-search input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 2px;
+  padding-left: 0.5rem;
+  width: 100%;
+}
+
+.user-search-label {
+  bottom: -1px;
+  color: gray;
+  font-size: 18px;
+  position: absolute;
+  right: 6px;
+}
+
+.friendsList {
+  border-radius: 2px;
+  opacity: 0.97;
+  position: absolute;
+  width: 300px;
+  z-index: 9999;
+}
+
+.friendsList li {
+  padding: 0.1rem 0.1rem 0.1rem 0.6rem;
 }

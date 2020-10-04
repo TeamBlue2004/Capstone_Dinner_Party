@@ -49,8 +49,17 @@ class UsersList extends Component {
                 onKeyPress={null}
                 tabIndex={0}
                 role="button"
+                className="user-search-result"
               >
-                {user.firstName} {user.lastName}
+                <div className="user-image">
+                  <img
+                    src={user.profilePic}
+                    alt={`${user.firstName} ${user.lastName}`}
+                  />
+                </div>
+                <p>
+                  {user.firstName} {user.lastName}
+                </p>
               </div>
               <button
                 type="submit"

@@ -14,6 +14,7 @@ class RecipesSearch extends Component {
     vegetarian: false,
     dairyFree: false,
     glutenFree: false,
+    error: '',
   };
 
   componentDidMount() {
@@ -63,12 +64,16 @@ class RecipesSearch extends Component {
     event.preventDefault();
     const { input, ingredients } = this.state;
     const updatedQuery = [...ingredients, input];
-    this.setState(
-      {
-        ingredients: updatedQuery,
-      },
-      () => this.searchRecipes()
-    );
+    if (input !== '') {
+      return this.setState(
+        {
+          ingredients: updatedQuery,
+          error: '',
+        },
+        () => this.searchRecipes()
+      );
+    }
+    return this.setState({ error: 'Please enter an ingredient' });
   };
 
   deleteIngredient = (event) => {
@@ -81,6 +86,7 @@ class RecipesSearch extends Component {
       {
         ingredients: filteredIngredients,
         imgSrc: filteredIngredients.length === 0 ? 'data:,' : imgSrc,
+        error: '',
       },
       () => this.searchRecipes()
     );
@@ -141,6 +147,7 @@ class RecipesSearch extends Component {
       pathname: '/recipes',
       search: searchURL,
     });
+    this.setState({ input: '' });
     loadRecipes(history.location.search);
   };
 
@@ -153,6 +160,7 @@ class RecipesSearch extends Component {
       vegetarian,
       glutenFree,
       dairyFree,
+      error,
     } = this.state;
 
     const dietaryRestrictions = [
@@ -187,6 +195,7 @@ class RecipesSearch extends Component {
             value={input}
             onChange={this.searchHandler}
           />
+          {error !== '' && <span>{error}...</span>}
         </form>
         <div className="filters-dropdown">
           <input name="filters" id="filters-checkbox" type="checkbox" />

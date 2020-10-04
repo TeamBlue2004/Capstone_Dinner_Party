@@ -12,6 +12,7 @@ import './friends.scss';
 class Friends extends Component {
   state = {
     searchTerm: '',
+    focused: true,
   };
 
   componentDidMount() {
@@ -43,7 +44,16 @@ class Friends extends Component {
     return [];
   };
 
+  inputFocus = () => {
+    this.setState({ focused: true });
+  };
+
+  inputBlur = () => {
+    this.setState({ focused: false });
+  };
+
   render() {
+    const { focused } = this.state;
     const {
       pendingFriendsList,
       approvedFriendsList,
@@ -57,21 +67,29 @@ class Friends extends Component {
       <>
         <div className="routesContainer">
           <div className="routes">
-            <input
-              type="text"
-              placeholder="Search for a user"
-              value={searchTerm}
-              onChange={this.editSearchTerm}
-            />
-            <ul className="friendList list-group">
+            <h2>Friends</h2>
+            <div className="user-search">
+              <input
+                type="text"
+                placeholder=" Search users"
+                value={searchTerm}
+                onChange={this.editSearchTerm}
+                onFocus={this.inputFocus}
+                onBlur={this.inputBlur}
+              />
+              <label className="user-search-label" htmlFor="file-input">
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </label>
+            </div>
+            <ul className="friendsList list-group">
               <div>{requestSentMsg}</div>
-              <UsersList users={this.dynamicSearch()} />
+              {focused && <UsersList users={this.dynamicSearch()} />}
             </ul>
             <hr />
             {pendingFriendsList && pendingFriendsList.length !== 0 ? (
               <>
                 <h2>{pendingFriendsList.length} pending friends request </h2>
-                <ul className="friendList list-group">
+                <ul className="friendsList list-group">
                   <div>{approveRequestMsg}</div>
                   <div>{declineRequestMsg}</div>
                   <PendingFriends />
@@ -84,7 +102,7 @@ class Friends extends Component {
             {approvedFriendsList && approvedFriendsList.length !== 0 ? (
               <>
                 <h2>{approvedFriendsList.length} Friends</h2>
-                <ul className="friendList list-group">
+                <ul className="friendLists list-group">
                   <ApprovedFriends />
                 </ul>
               </>

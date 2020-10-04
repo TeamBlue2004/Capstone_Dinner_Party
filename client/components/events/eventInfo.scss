@@ -3,7 +3,7 @@
 }
 
 .event-menu {
-  height: 550px;
+  height: auto;
 }
 
 .event-dish {
@@ -48,4 +48,15 @@ select.event-recipe-update   {
   position: relative !important;
   top: -29px !important;
   width: 100% !important;
+}
+
+.addCalendar {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  transition: transform .2s ease-out;
+}
+
+.addCalendar:hover {
+  transform: scale(1.3); 
 }
