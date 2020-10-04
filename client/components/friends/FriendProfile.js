@@ -6,11 +6,6 @@ import { userActions, eventsActions } from '../../store/actions/index';
 import './friends.scss';
 
 class FriendProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   componentDidMount() {
     const { loadCommonEvents, userId, users, nav } = this.props;
     const friend = users.find((fri) => fri.id === nav.friendId);
@@ -24,6 +19,12 @@ class FriendProfile extends Component {
       loadCommonEvents(friend.id, userId);
     }
   }
+
+  closePane = () => {
+    const { setNav } = this.props;
+    const navObj = { open: false, eventId: '', recipeId: '', friendId: '' };
+    setNav(navObj);
+  };
 
   render() {
     const cardStyle = {
@@ -41,6 +42,9 @@ class FriendProfile extends Component {
     return (
       <>
         <div className="friendInfo" style={cardStyle}>
+          <button className="exitButton" type="button" onClick={this.closePane}>
+            <i className="fas fa-times"></i>
+          </button>
           <h1>{`${friend.firstName} ${friend.lastName}`}</h1>
           <img
             className="rounded-circle"
@@ -100,6 +104,9 @@ const mapDispatchToProps = (dispatch) => {
     loadCommonEvents: (friendId, userId) => {
       dispatch(eventsActions.fetchCommonEvents(friendId, userId));
     },
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
+    },
   };
 };
 
@@ -114,6 +121,7 @@ FriendProfile.propTypes = {
   loadCommonEvents: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   commonEvents: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);

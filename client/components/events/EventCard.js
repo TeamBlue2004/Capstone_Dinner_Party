@@ -62,18 +62,9 @@ class EventCard extends Component {
     const { days, hours } = this.state;
 
     return (
-      <div className="event-card">
-        {userId === hostid ? (
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => deleteEvent(id, userId)}
-          >
-            Delete Event
-          </button>
-        ) : null}
+      <div className="event-card list-group-item list-group-item-action d-flex flex-column justify-content-between">
         <div
-          className="item list-group-item list-group-item-action d-flex flex-row justify-content-between"
+          className="clickable-div d-flex flex-row justify-content-between align-items-center"
           onClick={() => {
             this.handleNavDisplay();
           }}
@@ -86,7 +77,7 @@ class EventCard extends Component {
             <p className="mb-1">{moment(datetime).format('LLLL')}</p>
             <p className="mb-1">{location.split(';')[0]}</p>
           </div>
-          <div id="clockdiv" className="shadow-lg bg-white rounded">
+          <div id="clockdiv" className="rounded">
             <div>
               <span className="days">{days}</span>
               <div className="smalltext">Days</div>
@@ -97,6 +88,15 @@ class EventCard extends Component {
             </div>
           </div>
         </div>
+        {userId === hostid ? (
+          <button
+            type="button"
+            className="eventDelete btn btn-danger"
+            onClick={() => deleteEvent(id, userId)}
+          >
+            Delete Event
+          </button>
+        ) : null}
       </div>
     );
   }

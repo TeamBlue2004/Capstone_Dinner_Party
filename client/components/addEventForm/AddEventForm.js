@@ -49,6 +49,12 @@ class AddEventForm extends Component {
     setEventNav(nav);
   };
 
+  closePane = () => {
+    const { setNav } = this.props;
+    const navObj = { open: false, eventId: '', recipeId: '', friendId: '' };
+    setNav(navObj);
+  };
+
   render() {
     const { eventName, datetime, location } = this.state;
     const { friends } = this.props;
@@ -65,7 +71,16 @@ class AddEventForm extends Component {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="auth-form">
-          <h1 style={{ color: 'black' }}>{`Let's Party`}</h1>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <h1>{`Let's Party`}</h1>
+            <button
+              className="exitButton"
+              type="button"
+              onClick={this.closePane}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
           <div className="form-group">
             <label htmlFor="eventName">Event Name</label>
             <input
@@ -142,7 +157,7 @@ class AddEventForm extends Component {
           </div>
           <button
             type="submit"
-            className="btn btn-lg btn-primary btn-block"
+            className="btn btn-lg btn-success btn-block"
             href="/#/events"
           >
             Add Event
@@ -169,6 +184,9 @@ const mapDispatchToProps = (dispatch) => {
     loadFriends: (userId) => {
       dispatch(userActions.fetchApprovedFriends(userId));
     },
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
+    },
   };
 };
 AddEventForm.propTypes = {
@@ -177,6 +195,7 @@ AddEventForm.propTypes = {
   postEvent: PropTypes.func.isRequired,
   setEventNav: PropTypes.func.isRequired,
   loadFriends: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEventForm);

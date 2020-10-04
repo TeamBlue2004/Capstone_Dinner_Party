@@ -25,12 +25,23 @@ class Recipe extends Component {
     return some;
   };
 
+  closePane = () => {
+    const { setNav } = this.props;
+    const navObj = { open: false, eventId: '', recipeId: '', friendId: '' };
+    setNav(navObj);
+  };
+
   render() {
     const { nav, recipes } = this.props;
     const recipe = recipes.find((rcp) => rcp.id === nav.recipeId);
     return (
       <div className="recipe-card">
-        <h4>{recipe.name}</h4>
+        <div className="d-flex flex-row justify-content-between">
+          <h4>{recipe.name}</h4>
+          <button className="exitButton" type="button" onClick={this.closePane}>
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
         <div className="recipe-image">
           <img src={recipe && recipe.image} alt={recipe && recipe.name} />
         </div>
@@ -82,6 +93,9 @@ const mapDispatchToProps = (dispatch) => {
     updateUserFavoriteRecipe: (userId, recipeId) => {
       dispatch(userActions.updateUserFavoriteRecipe(userId, recipeId));
     },
+    setNav: (nav) => {
+      dispatch(userActions.setNav(nav));
+    },
   };
 };
 
@@ -97,6 +111,7 @@ Recipe.propTypes = {
   favoriteRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateUserFavoriteRecipe: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recipe);
