@@ -114,31 +114,39 @@ class EventInfo extends Component {
           })}
         </div>
         <div className="p-2 mb-5 shadow-lg bg-white rounded text-center event-menu">
-          <h5 className="mb-1">Menu</h5>
-          <h6>Appetizer</h6>
-          <ul className="event-dish">
-            {eventRecipes
-              .filter((recipe) => recipe.Event_Recipe.dish === 'appetizer')
-              .map((appetizer) => {
-                return <EventRecipe key={appetizer.id} recipe={appetizer} />;
-              })}
-          </ul>
-          <h6>Entree</h6>
-          <ul className="event-dish">
-            {eventRecipes
-              .filter((recipe) => recipe.Event_Recipe.dish === 'entree')
-              .map((entree) => {
-                return <EventRecipe key={entree.id} recipe={entree} />;
-              })}
-          </ul>
-          <h6>Dessert</h6>
-          <ul className="event-dish">
-            {eventRecipes
-              .filter((recipe) => recipe.Event_Recipe.dish === 'dessert')
-              .map((dessert) => {
-                return <EventRecipe key={dessert.id} recipe={dessert} />;
-              })}
-          </ul>
+          <h4 className="mb-1">Menu</h4>
+          {eventRecipes.length !== 0 ? (
+            <>
+              <h6>Appetizers</h6>
+              <ul className="event-dish">
+                {eventRecipes
+                  .filter((recipe) => recipe.Event_Recipe.dish === 'appetizer')
+                  .map((appetizer) => {
+                    return (
+                      <EventRecipe key={appetizer.id} recipe={appetizer} />
+                    );
+                  })}
+              </ul>
+              <h6>Entrees</h6>
+              <ul className="event-dish">
+                {eventRecipes
+                  .filter((recipe) => recipe.Event_Recipe.dish === 'entree')
+                  .map((entree) => {
+                    return <EventRecipe key={entree.id} recipe={entree} />;
+                  })}
+              </ul>
+              <h6>Desserts</h6>
+              <ul className="event-dish">
+                {eventRecipes
+                  .filter((recipe) => recipe.Event_Recipe.dish === 'dessert')
+                  .map((dessert) => {
+                    return <EventRecipe key={dessert.id} recipe={dessert} />;
+                  })}
+              </ul>
+            </>
+          ) : (
+            <p>No recipes assigned to this event</p>
+          )}
         </div>
         <div className="p-2 shadow-lg bg-white rounded text-center detailes">
           <h5 className="mb-1">Dinner Party Details</h5>

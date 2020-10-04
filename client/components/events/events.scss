@@ -2,3 +2,16 @@
   margin-top: 5px;
   border: black solid 1px;
 }
+
+.user-events button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 2px;
+  font-size: 20px;
+  margin-left: 4px;
+  outline: none;
+}
+
+.user-events button:hover {
+  transform: scale(1.4);
+}
