@@ -12,8 +12,7 @@
     "start": "node server/index.js",
     "start:dev-server": "node-dev --respawn server/index.js",
     "seed": "node server/db/Data/seed",
-    "syncDB": "node server/db/syncDB",
-    "heroku-postbuild": "webpack --config webpack.prod.js"
+    "syncDB": "node server/db/syncDB"
   },
   "repository": {
     "type": "git",
@@ -88,9 +87,5 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.5"
-  },
-  "engines": {
-    "node": "12.16.1",
-    "npm": "6.14.0"
-   }
+  }
 }
