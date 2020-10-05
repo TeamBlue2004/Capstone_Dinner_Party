@@ -71,7 +71,7 @@ class AddEventForm extends Component {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="auth-form">
-          <div className="d-flex flex-row justify-content-between align-items-center">
+          <div className="create-event d-flex flex-row justify-content-between align-items-center">
             <h1>{`Let's Party`}</h1>
             <button
               className="exitButton"

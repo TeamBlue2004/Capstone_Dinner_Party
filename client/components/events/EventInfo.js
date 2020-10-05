@@ -26,8 +26,9 @@ class EventInfo extends Component {
   handleCalendar = () => {
     const { events } = this.props;
     const { gapi } = window;
-    const CLIENT_ID = process.env.GOOGLE_CALENDAR_CLIENT_ID;
-    const API_KEY = process.env.GOOGLE_CALENDAR_API_KEY;
+    const CLIENT_ID =
+      '56988426454-g99r1ecg3b0d0ge9b1bg36far3u4l014.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyB1lci9jZSY11oDdu55-4ONfDjX15dev9s';
     const DISCOVERY_DOCS = [
       'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
     ];
