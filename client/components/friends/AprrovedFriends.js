@@ -28,7 +28,7 @@ class ApprovedFriends extends Component {
   };
 
   render() {
-    const { approvedFriendsList } = this.props;
+    const { approvedFriendsList, id, deleteFriend } = this.props;
     return (
       <>
         {approvedFriendsList.map((friend) => {
@@ -47,6 +47,13 @@ class ApprovedFriends extends Component {
               >
                 {friend.firstName} {friend.lastName}
               </div>
+              <button
+                type="submit"
+                onClick={() => deleteFriend(friend.id, id)}
+                value="decline"
+              >
+                <i className="fas fa-times fa-2x"></i>
+              </button>
             </li>
           );
         })}
@@ -57,6 +64,7 @@ class ApprovedFriends extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    id: state.user.id,
     approvedFriendsList: state.user.approvedFriendsList,
     nav: state.user.nav,
   };
@@ -67,10 +75,14 @@ const mapDispatchToProps = (dispatch) => {
     setNav: (nav) => {
       dispatch(userActions.setNav(nav));
     },
+    deleteFriend: (friendId, userId) => {
+      dispatch(userActions.deleteFriend(friendId, userId));
+    },
   };
 };
 
 ApprovedFriends.propTypes = {
+  id: PropTypes.string.isRequired,
   approvedFriendsList: PropTypes.arrayOf(PropTypes.object).isRequired,
   nav: PropTypes.shape({
     open: PropTypes.bool.isRequired,
@@ -79,6 +91,7 @@ ApprovedFriends.propTypes = {
     friendId: PropTypes.string.isRequired,
   }).isRequired,
   setNav: PropTypes.func.isRequired,
+  deleteFriend: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApprovedFriends);

@@ -229,6 +229,17 @@ const declineFriend = (friendId, userId) => {
   };
 };
 
+const deleteFriend = (friendId, userId) => {
+  return async (dispatch) => {
+    await axios.post('/api/users/deleteFriend', {
+      friendId,
+      userId,
+    });
+    const friends = await axios.get(`/api/users/approveduserfriends/${userId}`);
+    dispatch(setApprovedFriends(friends.data));
+  };
+};
+
 const fetchPendingFriends = (userId) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/pendinguserfriends/${userId}`);
   return dispatch(setPendingFriends(data));
@@ -279,6 +290,7 @@ export const userActions = {
   setApprovedFriends,
   approveFriend,
   declineFriend,
+  deleteFriend,
   setApproveRequestMsg,
   updateUserFavoriteRecipe,
   fetchUserFavoriteRecipes,

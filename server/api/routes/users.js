@@ -256,6 +256,16 @@ userRouter.post('/users/declineFriend', async (req, res) => {
   });
 });
 
+userRouter.post('/users/deleteFriend', async (req, res) => {
+  const { friendId, userId } = req.body;
+  const user = await User.findByPk(userId);
+  const friend = await User.findByPk(friendId);
+  friend.removeFriend(userId);
+  user.removeFriend(friendId).then(() => {
+    res.status(201).send({ message: 'Friend removed!' });
+  });
+});
+
 // Below method will give approved friends
 userRouter.get('/users/approveduserfriends/:userId', async (req, res) => {
   const { userId } = req.params;
